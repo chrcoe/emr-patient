@@ -29,10 +29,12 @@ ALLOWED_HOSTS = []
 
 
 # Application definition
+# all user apps need to be added here to be included in django operations such as DB migrations, etc.
 USER_APPS = (
     'patient',
 )
 
+# all built in apps that we want to use... these are modules that come with Django
 BUILT_IN_APPS = (
     'django.contrib.admin',
     'django.contrib.auth',
@@ -42,6 +44,7 @@ BUILT_IN_APPS = (
     'django.contrib.staticfiles',
 )
 
+# use both built ins and user apps
 INSTALLED_APPS = USER_APPS + BUILT_IN_APPS
 
 #INSTALLED_APPS = (

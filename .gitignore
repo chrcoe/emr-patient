@@ -1,0 +1,13 @@
+*.pyo
+*.pyc
+
+# eclipse project files are not normally included in the repository
+*.project
+*.pydevproject
+
+# normally this file would NOT be pushed to a repository because it is settings used
+# on each developer's machine, but I am including it so you can see the purpose of it
+#local_settings.py
+
+# the sqlite3 development DB file should not be pushed to the repository
+django_db_emrapp

@@ -30,6 +30,7 @@ ALLOWED_HOSTS = []
 
 # Application definition
 USER_APPS = (
+    'patient',
 )
 
 BUILT_IN_APPS = (

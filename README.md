@@ -40,3 +40,6 @@ You will be able to use the built in Django webserver to test the app locally be
 
 
 For our project, you will most likely be working inside the emrapp folder.  All other folders/files are the config files I use on my production server just so I can keep them together.  Feel free to check them out and ask any questions, but please do not change them!
+
+unfuddle commit message association/auto resolving tickets etc:
+[link](http://unfuddle.com/support/docs/topics/powerful_commit_messages "powerful commit messages")

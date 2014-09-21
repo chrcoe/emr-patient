@@ -17,11 +17,8 @@ ADMIN_MEDIA_PREFIX = '/admin/'
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/1.7/howto/deployment/checklist/
 
-# SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'feewhpnaz^mimihd_y#^yyvg5go!u=(=%er-lfjz&3xbk0i%^d'
-
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 TEMPLATE_DEBUG = True
 
@@ -31,7 +28,7 @@ ALLOWED_HOSTS = []
 # Application definition
 # all user apps need to be added here to be included in django operations such as DB migrations, etc.
 USER_APPS = (
-    'patient',
+    'patient', # this is the main app we are developing
 )
 
 # all built in apps that we want to use... these are modules that come with Django
@@ -46,15 +43,6 @@ BUILT_IN_APPS = (
 
 # use both built ins and user apps
 INSTALLED_APPS = USER_APPS + BUILT_IN_APPS
-
-#INSTALLED_APPS = (
-#    'django.contrib.admin',
-#    'django.contrib.auth',
-#    'django.contrib.contenttypes',
-#    'django.contrib.sessions',
-#    'django.contrib.messages',
-#    'django.contrib.staticfiles',
-#)
 
 MIDDLEWARE_CLASSES = (
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -71,25 +59,8 @@ ROOT_URLCONF = 'emrapp.urls'
 WSGI_APPLICATION = 'emrapp.wsgi.application'
 
 
-# Database
-# https://docs.djangoproject.com/en/1.7/ref/settings/#databases
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.sqlite3',
-#         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
-#     }
-# }
+# Database info is stored in the local/prod settings files
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'django_db_emrapp',
-        'USER': 'dwa',
-        'PASSWORD': 'dwa_test01!',
-        'HOST': '127.0.0.1',
-        'PORT': '5432',
-    }
-}
 
 # Internationalization
 # https://docs.djangoproject.com/en/1.7/topics/i18n/
@@ -109,9 +80,16 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/1.7/howto/static-files/
 
 STATIC_URL = '/static/'
-STATIC_ROOT = '/opt/venv/static/'
 
+# if local_settings.py is in the emrapp/emrapp directory, it is used to add local specifics
 try:
     from local_settings import *
 except ImportError:
     pass
+
+#if prod_settings.py is in the emrapp/emrapp directory, it is used to add production specifics
+try:
+    from prod_settings import *
+except ImportError:
+    pass
+

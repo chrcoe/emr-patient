@@ -9,5 +9,8 @@
 # on each developer's machine, but I am including it so you can see the purpose of it
 #local_settings.py
 
+# don't send production settings to the git repo (you don't need to worry about these settings)
+prod_settings.py
+
 # the sqlite3 development DB file should not be pushed to the repository
 django_db_emrapp

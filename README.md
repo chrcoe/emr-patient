@@ -45,4 +45,11 @@ unfuddle commit message association/auto resolving tickets etc:
 [link](http://unfuddle.com/support/docs/topics/powerful_commit_messages "powerful commit messages")
 
 
+Version History
+===============
 
+#### current develop
+* added develop branch
+
+#### v0.0.1
+* added base project

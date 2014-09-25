@@ -47,6 +47,7 @@ unfuddle commit message association/auto resolving tickets etc:
 
 Version History
 ===============
+_versioning based on [Semantic Versioning 2.0.0](http://semver.org/ "Semantic Versioning 2.0.0")_
 
 #### current develop
 * added develop branch

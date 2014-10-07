@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/1.7/ref/settings/
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 import os
 BASE_DIR = os.path.dirname(os.path.dirname(__file__))
+PROJECT_DIR = os.path.dirname(__file__)
 
 ADMIN_MEDIA_PREFIX = '/admin/'
 
@@ -80,6 +81,24 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/1.7/howto/static-files/
 
 STATIC_URL = '/static/'
+
+STATIC_ROOT = os.path.join(BASE_DIR, 'static/')
+
+STATICFILES_DIRS= (
+    os.path.join(PROJECT_DIR, 'staticfiles'),
+    os.path.join(BASE_DIR, 'staticfiles'),
+#    os.path.join(BASE_DIR, 'static'),
+)
+
+#print (STATICFILES_DIRS)
+
+
+# media files
+MEDIA_ROOT = os.path.join(PROJECT_DIR, 'media')
+MEDIA_URL = '/media/'
+
+# extra templates
+TEMPLATE_DIRS = [os.path.join(BASE_DIR, 'templates')]
 
 # if local_settings.py is in the emrapp/emrapp directory, it is used to add local specifics
 try:

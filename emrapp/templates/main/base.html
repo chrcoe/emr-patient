@@ -1,0 +1,46 @@
+{% load staticfiles %}
+
+{% block css %}
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="stylesheet" type="text/css" href="{% static 'bootstrap/css/bootstrap.min.css' %}" />
+<link rel="stylesheet" type="text/css" href="{% static 'bootstrap/css/bootstrap-theme.min.css' %}" />
+<link rel="stylesheet" type="text/css" href="{% static 'css/style-override.css' %}" />
+{% endblock %}
+
+{% block nav %}
+<div class="container">
+    <nav class="navbar navbar-default" role="navigation">
+        <div class="navbar-header">
+            {% block nav-home %}<a class="navbar-brand" href="{% url 'patient:dashboard' patient.id %}">EMR</a>{% endblock %}
+         </div>
+        <div>
+            <ul class="nav navbar-nav navbar-text">
+                <li class="active">{% block nav-vitals %}<a href="{% url 'patient:vitals' patient.id %}" class="navbar-link">Vitals</a>{% endblock %}</li>
+                <li>{% block nav-allergies %}<a href="{% url 'patient:allergies' patient.id %}" class="navbar-link">Allergies</a>{% endblock %}</li>
+                <li>{% block nav-medication %}<a href="{% url 'patient:medication' patient.id %}" class="navbar-link">Medication</a>{% endblock %}</li>
+                <li>{% block nav-insurance %}<a href="{% url 'patient:insurance' patient.id %}" class="navbar-link">Insurance</a>{% endblock %}</li>
+                <li>{% block nav-conditions %}<a href="{% url 'patient:conditions' patient.id %}" class="navbar-link">Medical Conditions</a>{% endblock %}</li>
+                <li>{% block nav-labresults %}<a href="{% url 'patient:labresults' patient.id %}" class="navbar-link">Lab Results</a>{% endblock %}</li>
+                <li>{% block nav-appts %}<a href="{% url 'patient:appts' patient.id %}" class="navbar-link">Appointments</a>{% endblock %}</li>
+            </ul>
+        </div>
+        <p class="navbar-text navbar-right">
+            Signed in as <a href="#" class="navbar-link">{{ patient.first_name }} {{ patient.last_name }}</a> | <a href="{% url 'index' %}" class="navbar-link">Logout</a>
+        </p>
+    </nav>
+</div>
+{% endblock %}
+
+
+<noscript>
+    <style type="text/css">#forNoScript {display:none;}</style>
+    <div class="container">
+        <div class="row clearfix">
+            <div class="col-md-6 col-md-offset-3">
+                <div class="alert alert-warning marginTop30">
+                    Javascript must be enabled to use this website.
+                </div>
+            </div>
+        </div>
+    </div>
+</noscript>

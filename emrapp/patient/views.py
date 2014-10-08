@@ -54,3 +54,8 @@ def appts(request, patient_id):
     patient = get_object_or_404(Patient, pk=patient_id)
     return render(request, 'patient/appts.html', {'patient': patient, 'page_name':'appts'})
 
+# function for settings, uses settings template
+def settings(request, patient_id):
+    patient = get_object_or_404(Patient, pk=patient_id)
+    return render(request, 'patient/settings.html', {'patient': patient, 'page_name':'settings'})
+

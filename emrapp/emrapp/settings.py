@@ -96,7 +96,7 @@ STATICFILES_DIRS = (
 
 
 # media files
-MEDIA_ROOT = os.path.join(PROJECT_DIR, 'media')
+MEDIA_ROOT = os.path.join(PROJECT_DIR, 'media/')
 MEDIA_URL = '/media/'
 
 # extra templates

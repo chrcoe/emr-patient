@@ -1,5 +1,5 @@
 command = '/opt/venv/bin/gunicorn'
-pythonpath = '/opt/venv/emrapp'
+pythonpath = '/opt/venv/emr-patient/emrapp'
 bind = '127.0.0.1:8001'
 workers = 4
 user = 'nobody'

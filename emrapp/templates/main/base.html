@@ -11,6 +11,8 @@
 <link rel="stylesheet" type="text/css" href="{% static 'css/style-override.css' %}" />
 {% endblock %}
 
+{% block title %}{% endblock %}
+
 {% block nav %}
 <div class="header">
   <div class="container">
@@ -52,15 +54,9 @@
 </div> <!--/.header-->
 {% endblock %}
 
-{% block title %}
-{% endblock %}
-{% block content%}
-{% endblock %}
+{% block content%}{% endblock %}
 
-{% comment "for testing" %}
-
-
-
+{% comment %}
 <noscript>
     <style type="text/css">#forNoScript {display:none;}</style>
     <div class="container">
@@ -73,7 +69,5 @@
         </div>
     </div>
 </noscript>
-
-
 {% endcomment %}
 

@@ -25,7 +25,8 @@
             </ul>
         </div>
         <p class="navbar-text navbar-right">
-            Signed in as <a href="#" class="navbar-link">{{ patient.first_name }} {{ patient.last_name }}</a> | <a href="{% url 'index' %}" class="navbar-link">Logout</a>
+            Signed in as <a href="{% url 'patient:dashboard' patient.id %}" class="navbar-link">{{ patient.first_name }} {{ patient.last_name }}</a>&nbsp;|&nbsp;
+            <a href="{% url 'patient:dashboard' patient.id %}" class="navbar-link">Settings</a>&nbsp;|&nbsp;<a href="{% url 'index' %}" class="navbar-link">Logout</a>&nbsp;&nbsp;
         </p>
     </nav>
 </div>

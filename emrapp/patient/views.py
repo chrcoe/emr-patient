@@ -4,6 +4,7 @@ from django.http import HttpResponse
 from django.shortcuts import get_object_or_404
 
 from django.contrib.auth import get_user_model
+from patient.models import LabResult
 # use our custom Patient model (which extends the AbstractBaseUser)
 Patient = get_user_model()
 
@@ -45,7 +46,8 @@ def conditions(request, patient_id):
 # function for labresults, uses labresults template
 def labresults(request, patient_id):
     patient = get_object_or_404(Patient, pk=patient_id)
-    return render(request, 'patient/labresults.html', {'patient': patient, 'page_name':'labresults'})
+    results = get_object_or_404(LabResult, id_patient=patient_id)
+    return render(request, 'patient/labresults.html', {'patient': patient, 'results': results, 'page_name':'labresults'})
 
 # function for appts, uses appts template
 def appts(request, patient_id):

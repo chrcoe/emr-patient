@@ -3,8 +3,8 @@
 
 # eclipse project files are not normally included in the repository, I will include them
 # for easier setup for everyone...
-#*.project
-#*.pydevproject
+*.project
+*.pydevproject
 
 # normally this file would NOT be pushed to a repository because it is settings used
 # on each developer's machine, but I am including it so you can see the purpose of it

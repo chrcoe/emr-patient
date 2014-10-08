@@ -1,5 +1,5 @@
 [Service]
-ExecStart=/opt/venv/bin/gunicorn -c /opt/venv/gunicorn_emrapp.py emrapp.wsgi:application
+ExecStart=/opt/venv/bin/gunicorn -c /opt/venv/emr-patient/gunicorn/gunicorn_emrapp.py emrapp.wsgi:application
 Restart=always
 User=nobody
 Group=nobody

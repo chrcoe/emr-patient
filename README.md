@@ -45,4 +45,13 @@ unfuddle commit message association/auto resolving tickets etc:
 [link](http://unfuddle.com/support/docs/topics/powerful_commit_messages "powerful commit messages")
 
 
+Version History
+===============
+_versioning based on [Semantic Versioning 2.0.0](http://semver.org/ "Semantic Versioning 2.0.0")_
 
+#### v0.1.0
+* added first models
+* added skeleton dashboard pages and layout
+
+#### v0.0.1
+* added base project

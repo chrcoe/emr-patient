@@ -1,7 +1,8 @@
 *.pyo
 *.pyc
 
-# eclipse project files are not normally included in the repository
+# eclipse project files are not normally included in the repository, I will include them
+# for easier setup for everyone...
 *.project
 *.pydevproject
 
@@ -14,3 +15,5 @@ prod_settings.py
 
 # the sqlite3 development DB file should not be pushed to the repository
 django_db_emrapp
+emrapp/patient/migrations/
+.settings/

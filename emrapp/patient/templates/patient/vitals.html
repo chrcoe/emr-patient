@@ -1,7 +1,5 @@
 {% extends 'main/base.html' %}
-
-{% block nav-vitals %}<li class="active"><a href="{% url 'patient:vitals' patient.id %}">Vitals</a></li>{% endblock %}
-
+{% block nav-vitals %} class="active"{% endblock %}
 {% block title %}
 <TITLE>{{ page_name }}</TITLE>
 {% endblock %} {% block content %}

@@ -1,6 +1,5 @@
 {% extends 'main/base.html' %}
-
-{% block nav-labresults %}<li class="active"><a href="{% url 'patient:labresults' patient.id %}">Lab Results</a></li>{% endblock %}
+{% block nav-labresults %} class="active"{% endblock %}
 {% block title %}
 <TITLE>{{ page_name }}</TITLE>
 {% endblock %} {% block content %}

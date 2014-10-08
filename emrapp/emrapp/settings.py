@@ -27,12 +27,14 @@ ALLOWED_HOSTS = ['*']
 
 
 # Application definition
-# all user apps need to be added here to be included in django operations such as DB migrations, etc.
+# all user apps need to be added here to be included in django operations
+# such as DB migrations, etc.
 USER_APPS = (
-    'patient', # this is the main app we are developing
+    'patient',  # this is the main app we are developing
 )
 
-# all built in apps that we want to use... these are modules that come with Django
+# all built in apps that we want to use... these are modules that come
+# with Django
 BUILT_IN_APPS = (
     'django.contrib.admin',
     'django.contrib.auth',
@@ -84,10 +86,10 @@ STATIC_URL = '/static/'
 
 STATIC_ROOT = os.path.join(BASE_DIR, 'static/')
 
-STATICFILES_DIRS= (
+STATICFILES_DIRS = (
     os.path.join(PROJECT_DIR, 'staticfiles'),
     os.path.join(BASE_DIR, 'staticfiles'),
-#    os.path.join(BASE_DIR, 'static'),
+    #    os.path.join(BASE_DIR, 'static'),
 )
 
 #print (STATICFILES_DIRS)
@@ -98,17 +100,22 @@ MEDIA_ROOT = os.path.join(PROJECT_DIR, 'media')
 MEDIA_URL = '/media/'
 
 # extra templates
-TEMPLATE_DIRS = [os.path.join(BASE_DIR, 'templates')]
+TEMPLATE_DIRS = [os.path.join(BASE_DIR, 'templates'),
+                os.path.join(BASE_DIR, 'emrapp/templates'),
+                 ]
 
-# if local_settings.py is in the emrapp/emrapp directory, it is used to add local specifics
+# print(TEMPLATE_DIRS)
+
+# if local_settings.py is in the emrapp/emrapp directory, it is used to
+# add local specifics
 try:
     from local_settings import *
 except ImportError:
     pass
 
-#if prod_settings.py is in the emrapp/emrapp directory, it is used to add production specifics
+# if prod_settings.py is in the emrapp/emrapp directory, it is used to add
+# production specifics
 try:
     from prod_settings import *
 except ImportError:
     pass
-

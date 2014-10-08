@@ -1,4 +1,8 @@
-{% include 'main/base.html' %} {% block title %}
+{% extends 'main/base.html' %}
+
+{% block nav-allergies %}<li class="active"><a href="{% url 'patient:allergies' patient.id %}">Allergies</a></li>{% endblock %}
+
+{% block title %}
 <TITLE>{{ page_name }}</TITLE>
 {% endblock %} {% block content %}
 <div class="container">

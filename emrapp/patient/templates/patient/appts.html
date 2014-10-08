@@ -1,4 +1,6 @@
-{% include 'main/base.html' %} {% load staticfiles %}
+{% extends 'main/base.html' %}
+{% block nav-appts %}<li class="active"><a href="{% url 'patient:appts' patient.id %}">Appointments</a></li>{% endblock %}
+{% load staticfiles %}
 <link rel="stylesheet" type="text/css"
   href="{% static 'css/specific-override.css' %}" />
 

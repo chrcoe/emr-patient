@@ -10,28 +10,44 @@
 {% block nav %}
 <div class="container">
   <nav class="navbar navbar-default" role="navigation">
-    <div class="navbar-header">
-      {% block nav-home %}<a class="navbar-brand" href="{% url 'patient:dashboard' patient.id %}">EMR</a>{% endblock %}
-     </div>
-    <div>
-      <ul class="nav navbar-nav navbar-text">
-        <li class="active">{% block nav-vitals %}<a href="{% url 'patient:vitals' patient.id %}" class="navbar-link">Vitals</a>{% endblock %}</li>
-        <li>{% block nav-allergies %}<a href="{% url 'patient:allergies' patient.id %}" class="navbar-link">Allergies</a>{% endblock %}</li>
-        <li>{% block nav-medication %}<a href="{% url 'patient:medication' patient.id %}" class="navbar-link">Medication</a>{% endblock %}</li>
-        <li>{% block nav-insurance %}<a href="{% url 'patient:insurance' patient.id %}" class="navbar-link">Insurance</a>{% endblock %}</li>
-        <li>{% block nav-conditions %}<a href="{% url 'patient:conditions' patient.id %}" class="navbar-link">Medical Conditions</a>{% endblock %}</li>
-        <li>{% block nav-labresults %}<a href="{% url 'patient:labresults' patient.id %}" class="navbar-link">Lab Results</a>{% endblock %}</li>
-        <li>{% block nav-appts %}<a href="{% url 'patient:appts' patient.id %}" class="navbar-link">Appointments</a>{% endblock %}</li>
-      </ul>
+    <div class="container-fluid">
+      <div class="navbar-header">
+        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target=".navbar-collapse">
+          <span class="sr-only">Toggle navigation</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        {% block nav-home %}<a class="navbar-brand" href="{% url 'patient:dashboard' patient.id %}">EMR</a>{% endblock %}
+      </div>
+      <div class="collapse navbar-collapse">
+        <ul class="nav navbar-nav">
+          {% block nav-vitals %}<li><a href="{% url 'patient:vitals' patient.id %}">Vitals</a></li>{% endblock %}
+          {% block nav-allergies %}<li><a href="{% url 'patient:allergies' patient.id %}">Allergies</a></li>{% endblock %}
+          {% block nav-medication %}<li><a href="{% url 'patient:medication' patient.id %}">Medication</a></li>{% endblock %}
+          {% block nav-insurance %}<li><a href="{% url 'patient:insurance' patient.id %}">Insurance</a></li>{% endblock %}
+          {% block nav-conditions %}<li><a href="{% url 'patient:conditions' patient.id %}">Medical Conditions</a></li>{% endblock %}
+          {% block nav-labresults %}<li><a href="{% url 'patient:labresults' patient.id %}">Lab Results</a></li>{% endblock %}
+          {% block nav-appts %}<li><a href="{% url 'patient:appts' patient.id %}">Appointments</a></li>{% endblock %}
+        </ul>
+        <p class="navbar-text navbar-right">
+          Signed in as <a href="{% url 'patient:dashboard' patient.id %}" class="navbar-link">{{ patient.first_name }} {{ patient.last_name }}</a>&nbsp;|&nbsp;
+          <a href="{% url 'patient:settings' patient.id %}" class="navbar-link">Settings</a>&nbsp;|&nbsp;
+          <a href="{% url 'login' %}" class="navbar-link">Logout</a>
+        </p>
+      </div>
     </div>
-    <p class="navbar-text navbar-right">
-      Signed in as <a href="{% url 'patient:dashboard' patient.id %}" class="navbar-link">{{ patient.first_name }} {{ patient.last_name }}</a>&nbsp;|&nbsp;
-      <a href="{% url 'patient:settings' patient.id %}" class="navbar-link">Settings</a>&nbsp;|&nbsp;
-      <a href="{% url 'login' %}" class="navbar-link">Logout</a>&nbsp;&nbsp;
-    </p>
   </nav>
 </div>
 {% endblock %}
+
+{% block title %}
+{% endblock %}
+{% block content%}
+{% endblock %}
+
+{% comment "for testing" %}
+
 
 
 <noscript>
@@ -46,3 +62,7 @@
         </div>
     </div>
 </noscript>
+
+
+{% endcomment %}
+

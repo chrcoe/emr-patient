@@ -49,6 +49,9 @@ Version History
 ===============
 _versioning based on [Semantic Versioning 2.0.0](http://semver.org/ "Semantic Versioning 2.0.0")_
 
+#### v0.1.1
+* hotfix for navbar - javascript was not being included properly on all pages
+
 #### v0.1.0
 * added first models
 * added skeleton dashboard pages and layout

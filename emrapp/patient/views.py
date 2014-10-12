@@ -5,6 +5,12 @@ from django.shortcuts import get_object_or_404
 
 from django.contrib.auth import get_user_model
 from patient.models import LabResult
+from patient.models import Allergy
+from patient.models import Appointment
+from patient.models import InsurancePolicy
+from patient.models import MedicalCondition
+from patient.models import Medication
+from patient.models import Vital
 # use our custom Patient model (which extends the AbstractBaseUser)
 Patient = get_user_model()
 
@@ -25,7 +31,7 @@ def dashboard(request, patient_id):
     # syntax is {'key':value}
     
     return render(request, 'patient/dashboard.html',
-                  {'patient': patient, 'dashboard' : dashboard, 'page_name': 'dashboard'})
+                  {'patient': patient, 'dashboard' : dashboard, 'page_name': 'Dashboard'})
 
 
 def vitals(request, patient_id):
@@ -33,7 +39,7 @@ def vitals(request, patient_id):
     patient = get_object_or_404(Patient, pk=patient_id)
     vitals = get_object_or_404(Vital, id_patient=patient_id)
     return render(request, 'patient/vitals.html',
-                  {'patient': patient, 'vitals' : vitals, 'page_name': 'vitals'})
+                  {'patient': patient, 'vitals' : vitals, 'page_name': 'Vitals'})
 
 
 def allergies(request, patient_id):
@@ -41,7 +47,7 @@ def allergies(request, patient_id):
     patient = get_object_or_404(Patient, pk=patient_id)
     allergies = get_object_or_404(Allergy, id_patient=patient_id)
     return render(request, 'patient/allergies.html',
-                  {'patient': patient, 'allergies': allergies, 'page_name': 'allergies'})
+                  {'patient': patient, 'allergies': allergies, 'page_name': 'Allergies'})
 
 
 def medication(request, patient_id):
@@ -49,7 +55,7 @@ def medication(request, patient_id):
     patient = get_object_or_404(Patient, pk=patient_id)
     medication = get_object_or_404(Medication, id_patient=patient_id)
     return render(request, 'patient/medication.html',
-                  {'patient': patient, 'medication' : medication, 'page_name': 'medication'})
+                  {'patient': patient, 'medication' : medication, 'page_name': 'Medication'})
 
 
 def insurance(request, patient_id):
@@ -57,7 +63,7 @@ def insurance(request, patient_id):
     patient = get_object_or_404(Patient, pk=patient_id)
     insurance = get_object_or_404(InsurancePolicy, id_patient=patient_id)
     return render(request, 'patient/insurance.html',
-                  {'patient': patient, 'insurance' : insurance, 'page_name' : 'insurance'})
+                  {'patient': patient, 'insurance' : insurance, 'page_name' : 'Insurance Policies'})
 
 
 def conditions(request, patient_id):
@@ -65,15 +71,15 @@ def conditions(request, patient_id):
     patient = get_object_or_404(Patient, pk=patient_id)
     conditions = get_object_or_404(MedicalCondition, id_patient=patient_id)
     return render(request, 'patient/conditions.html',
-                  {'patient': patient, 'conditions' : conditions,'page_name': 'conditions'})
+                  {'patient': patient, 'conditions' : conditions,'page_name': 'Medical Conditions'})
 
 
 def labresults(request, patient_id):
     '''function for labresults, uses labresults template'''
     patient = get_object_or_404(Patient, pk=patient_id)
-    results = get_object_or_404(LabResult, id_patient=patient_id)
+    labresults = get_object_or_404(LabResult, id_patient=patient_id)
     return render(request, 'patient/labresults.html',
-                  {'patient': patient, 'results': results, 'page_name': 'labresults'})
+                  {'patient': patient, 'labresults': labresults, 'page_name': 'lab Results'})
 
 
 def appts(request, patient_id):
@@ -81,11 +87,11 @@ def appts(request, patient_id):
     patient = get_object_or_404(Patient, pk=patient_id)
     appts = get_object_or_404(Appointment, id_patient=patient_id)
     return render(request, 'patient/appts.html',
-                  {'patient': patient, 'appts' : appts, 'page_name': 'appts'})
+                  {'patient': patient, 'appts' : appts, 'page_name': 'Appointments'})
 
 
 def settings(request, patient_id):
     '''function for settings, uses settings template'''
     patient = get_object_or_404(Patient, pk=patient_id)
     return render(request, 'patient/settings.html',
-                  {'patient': patient, 'settings' : settings, 'page_name': 'settings'})
+                  {'patient': patient, 'settings' : settings, 'page_name': 'Settings'})

@@ -18,46 +18,54 @@ def index(request):
 def dashboard(request, patient_id):
     # gets the patient object based on the patient_id
     patient = get_object_or_404(Patient, pk=patient_id)
+    #gets the dashboard object based on the patient id matching the id passed in
+    dashboard = get_object_or_404(dashboard, id_patient=patient_id )
     # renders the page dynamically from the template passed in here (ie: 'patient/dashboard.html')
     # using the dictionary passed to that template: reminder -> dictionary
     # syntax is {'key':value}
+    
     return render(request, 'patient/dashboard.html',
-                  {'patient': patient, 'page_name': 'DASHBOARD'})
+                  {'patient': patient, 'dashboard' : dashboard, 'page_name': 'dashboard'})
 
 
 def vitals(request, patient_id):
     '''function for vitals, uses vitals template'''
     patient = get_object_or_404(Patient, pk=patient_id)
+    vitals = get_object_or_404(Vitals, id_patient=patient_id)
     return render(request, 'patient/vitals.html',
-                  {'patient': patient, 'page_name': 'VITALS'})
+                  {'patient': patient, 'vitals' : vitals, 'page_name': 'vitals'})
 
 
 def allergies(request, patient_id):
     '''function for allergies, uses allergies template'''
     patient = get_object_or_404(Patient, pk=patient_id)
+    allergies = get_object_or_404(Allergies, id_patient=patient_id)
     return render(request, 'patient/allergies.html',
-                  {'patient': patient, 'page_name': 'allergies'})
+                  {'patient': patient, 'allergies': allergies, 'page_name': 'allergies'})
 
 
 def medication(request, patient_id):
     '''function for medication, uses medication template'''
     patient = get_object_or_404(Patient, pk=patient_id)
+    medication = get_object_or_404(Medication, id_patient=patient_id)
     return render(request, 'patient/medication.html',
-                  {'patient': patient, 'page_name': 'medication'})
+                  {'patient': patient, 'medication' : medication, 'page_name': 'medication'})
 
 
 def insurance(request, patient_id):
     '''function for insurance, uses insurance template'''
     patient = get_object_or_404(Patient, pk=patient_id)
+    insurance = get_object_or_404(Insurance, id_patient=patient_id)
     return render(request, 'patient/insurance.html',
-                  {'patient': patient, 'page_name': 'insurance'})
+                  {'patient': patient, 'insurance' : insurance, 'page_name' : 'insurance'})
 
 
 def conditions(request, patient_id):
     '''function for conditions, uses conditions template'''
     patient = get_object_or_404(Patient, pk=patient_id)
+    conditions = get_object_or_404(Conditions, pk=patient_id)
     return render(request, 'patient/conditions.html',
-                  {'patient': patient, 'page_name': 'conditions'})
+                  {'patient': patient, 'conditions' : conditions,'page_name': 'conditions'})
 
 
 def labresults(request, patient_id):
@@ -71,12 +79,13 @@ def labresults(request, patient_id):
 def appts(request, patient_id):
     '''function for appts, uses appts template'''
     patient = get_object_or_404(Patient, pk=patient_id)
+    appts = get_object_or_404(Appts, id_patient=patient_id)
     return render(request, 'patient/appts.html',
-                  {'patient': patient, 'page_name': 'appts'})
+                  {'patient': patient, 'appts' : appts, 'page_name': 'appts'})
 
 
 def settings(request, patient_id):
     '''function for settings, uses settings template'''
     patient = get_object_or_404(Patient, pk=patient_id)
     return render(request, 'patient/settings.html',
-                  {'patient': patient, 'page_name': 'settings'})
+                  {'patient': patient, 'settings' : settings, 'page_name': 'settings'})

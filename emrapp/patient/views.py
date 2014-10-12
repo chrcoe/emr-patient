@@ -25,13 +25,15 @@ def dashboard(request, patient_id):
     # gets the patient object based on the patient_id
     patient = get_object_or_404(Patient, pk=patient_id)
     #gets the dashboard object based on the patient id matching the id passed in
-    dashboard = get_object_or_404(dashboard, id_patient=patient_id )
+#    dashboard = get_object_or_404(dashboard, id_patient=patient_id )
     # renders the page dynamically from the template passed in here (ie: 'patient/dashboard.html')
     # using the dictionary passed to that template: reminder -> dictionary
     # syntax is {'key':value}
     
     return render(request, 'patient/dashboard.html',
-                  {'patient': patient, 'dashboard' : dashboard, 'page_name': 'Dashboard'})
+                  {'patient': patient,
+		 #  'dashboard' : dashboard,
+                   'page_name': 'Dashboard'})
 
 
 def vitals(request, patient_id):
@@ -79,7 +81,7 @@ def labresults(request, patient_id):
     patient = get_object_or_404(Patient, pk=patient_id)
     labresults = get_object_or_404(LabResult, id_patient=patient_id)
     return render(request, 'patient/labresults.html',
-                  {'patient': patient, 'labresults': labresults, 'page_name': 'lab Results'})
+                  {'patient': patient, 'labresults': labresults, 'page_name': 'Lab Results'})
 
 
 def appts(request, patient_id):

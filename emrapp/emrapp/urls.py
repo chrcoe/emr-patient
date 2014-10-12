@@ -17,7 +17,8 @@ urlpatterns = patterns('',
    url(r'^admin/', include(admin.site.urls)),
    # additional app pages go here (ie: patient app etc)
    url(r'^patient/',
-       include('patient.urls', namespace='patient')),
+       #include('patient.urls', namespace='patient')),
+       views.login, name='login'),
 
 ) + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 

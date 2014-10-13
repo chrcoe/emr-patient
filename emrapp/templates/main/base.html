@@ -48,7 +48,7 @@
           <p class="navbar-text navbar-right">
             Signed in as <a href="{% url 'patient:dashboard' patient.id %}" class="navbar-link">{{ patient.first_name }} {{ patient.last_name }}</a>&nbsp;|&nbsp;
             <a href="{% url 'patient:settings' patient.id %}" class="navbar-link">Settings</a>&nbsp;|&nbsp;
-            <a href="{% url 'login' %}" class="navbar-link">Logout</a>
+            <a href="{% url 'logout' %}" class="navbar-link">Logout</a>
           </p>
         </div>
       </div> <!--/.navbar-collapse-->

@@ -25,6 +25,8 @@ TEMPLATE_DEBUG = True
 
 ALLOWED_HOSTS = ['*']
 
+# tell Django which User Model to use
+AUTH_USER_MODEL = 'patient.Patient'
 
 # Application definition
 # all user apps need to be added here to be included in django operations

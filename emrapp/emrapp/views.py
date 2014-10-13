@@ -1,22 +1,29 @@
-from django.http import HttpResponse
-from django.shortcuts import render, render_to_response
-from django.contrib.auth import authenticate, login
+from django.contrib.auth import authenticate, login, logout
+from django.shortcuts import render_to_response, redirect
+from django.template.context import RequestContext
 
-def login(request):
-    state = "Please enter Username and Password"
+def login_page(request):
+    errMsg = '' # default to no error message
     username = password = ''
     if request.POST:
         username = request.POST.get('username')
         password = request.POST.get('password')
 
-        user = authenticate(username=username, password=password)
-        if user is not None:
-            if user.is_active:
-                login(request, user)
-                state = "Logged in."
+        patient = authenticate(username=username, password=password)
+        if patient is not None:
+            if patient.is_active:
+                login(request, patient) # this handles setting the session info
+#                 state = "User is valid, active and authenticated"
+                # redirect to dashboard
+                return redirect('/patient/{}'.format(patient.id))
             else:
-                state = "Account is not active. Contact your system administrator."
+                errMsg = "Account is not active. Contact your system administrator."
         else:
-            state = "Your username and/or password were incorrect."
+            errMsg = "Your username and/or password were incorrect."
 
-    return render_to_response('main/base-login.html',{'state':state, 'username': username})
+    context = RequestContext(request, {'errMsg':errMsg, 'username': username})
+    return render_to_response('main/login.html', context)
+
+def logout_page(request):
+    logout(request)
+    return redirect('/') # redirects to the login page

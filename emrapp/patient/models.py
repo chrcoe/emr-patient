@@ -1,16 +1,16 @@
-from django.contrib.auth.models import AbstractBaseUser, BaseUserManager
 from django.conf import settings
+from django.contrib.auth.models import AbstractBaseUser, BaseUserManager
 from django.db import models
 
 
-class MyUserManager(BaseUserManager):
+class PatientManager(BaseUserManager):
 
     def create_user(self, email, password=None):
         if not email:
             raise ValueError('Users must have an email address')
 
         user = self.model(
-            email=MyUserManager.normalize_email(email),
+            email=PatientManager.normalize_email(email),
         )
 
         user.set_password(password)
@@ -18,39 +18,24 @@ class MyUserManager(BaseUserManager):
         return user
 
     def create_superuser(self, email, password):
-        user = self.create_user(email,
-                                password=password,
-                                )
+        user = self.create_user(
+            email=email,
+            password=password,
+        )
+        user.first_name = ''
+        user.last_name = ''
         user.is_admin = True
+        user.is_staff = True
         user.save(using=self._db)
         return user
 
-    def get_full_name(self):
-        return Patient.first_name, Patient.last_name
-
-    def get_short_name(self):
-        return Patient.first_name
-
-    def __unicode__(self):
-        return self.email
-
-    def has_perm(self, perm, obj=None):
-        return True
-
-    def has_module_perms(self, app_label):
-        return True
-
-    @property
-    def is_staff(self):
-        return self.is_admin
-
 
 class Patient(AbstractBaseUser):
-    username = models.CharField(max_length=255, unique=True)
+    #     username = models.CharField(max_length=255, unique=True)
     # don't need this, it uses
     # password from AbstractBaseUser
     # password = models.CharField(max_length=255)
-    email = models.EmailField(max_length=254, unique=True)
+    email = models.EmailField(max_length=254, unique=True, db_index=True)
     first_name = models.CharField(
         ('first_name'), max_length=30, blank=True, null=True)
     last_name = models.CharField(
@@ -64,15 +49,37 @@ class Patient(AbstractBaseUser):
     ssn = models.IntegerField(null=True)
 
     is_active = models.BooleanField(default=True)
+    is_staff = models.BooleanField(default=False)
     is_admin = models.BooleanField(default=False)
 
-    objects = MyUserManager()
+    objects = PatientManager()
 
     USERNAME_FIELD = 'email'
-    REQUIRED_FIELD = []
+    REQUIRED_FIELD = ['first_name', 'last_name']
+
+    def get_full_name(self):
+        return '{} {}'.format(Patient.first_name, Patient.last_name)
+
+    def get_short_name(self):
+        return 'FIRST NAME'
+#         return Patient.first_name
+
+    def __unicode__(self):
+        return self.email
+
+    def has_perm(self, perm, obj=None):
+        return True
+
+    def has_module_perms(self, app_label):
+        return True
+
+#     @property
+#     def is_staff(self):
+#         return self.is_admin
 
 
 class Allergy(models.Model):
+#     id_patient = models.ForeignKey(settings.AUTH_USER_MODEL)
     id_patient = models.ForeignKey(Patient)
     allergy_name = models.CharField(max_length=255, null=True)
     severity = models.CharField(max_length=255)
@@ -104,7 +111,8 @@ class InsurancePolicy(models.Model):
 
 
 class LabResult(models.Model):
-    id_patient = models.ForeignKey(Patient)
+    id_patient = models.ForeignKey(settings.AUTH_USER_MODEL)
+#     id_patient = models.ForeignKey(Patient)
     lab_title = models.CharField(max_length=255)
     lab_date = models.DateTimeField('lab results date')
     lab_description = models.CharField(max_length=255)

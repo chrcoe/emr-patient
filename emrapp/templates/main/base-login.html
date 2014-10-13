@@ -14,55 +14,59 @@
 <link rel="stylesheet" type="text/css" href="{% static 'css/style-override.css' %}" />
 {% endblock %}
 
+{% block title %}{% endblock %}
+
 {% block content %}
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
-<head>
-<title>Patient Login</title>
-<meta http-equiv="Content-type" content="text/html; charset=utf-8" />
-<style>
-body{
-    font-family:Arial,Helvetica,sans-serif;
-    font-size: 12px;
-}
-</style>
-</head>
-<body>
-    <div align="center">
-        <br />
+<div class="container">
+  <div class="row">
+    <div class="col-md-12 col-lg-12">
+      <div class="well well-lg clearfix">
         <h3>Welcome to "Franklin14" The Electronic Medical Record</h3>
-        <br /><br />
-        <div style="width:150px;height:260px;margin-right: 50%;border:1px solid #000;">
-        <b>Login with the username and password provided and have access to view:</b>
-		<br /><br />
-        Your History
-        <br /><br />
-        Appointments
-        <br /><br />
-        Lab Results
-        <br /><br />
-        Current Meds
-        <br /><br />
-        Notes
-        <br /><br />
-        Vitals
-        </div>
-	    {{ state }}
-	    <form action="/login/" method="post">
-            {% if next %}
-            <input type="hidden" name="next" value="{{ next }}" />
-            {% endif %}
-			<br />
-            Username:
-            <input type="text" name="username" value="{{ username}}" /><br /><br />
-            Password:
-            <input type="password" name="password" value="" /><br /><br />
-            <input type="submit" value="Log In" />
-        </form>
+      </div>
     </div>
-</body>
-</html>
+    <div class="col-md-4 col-lg-4"></div>
+    <div class="col-md-4 col-lg-4">
+      {% if errMsg %}
+        <div class="alert alert-danger alert-dismissible" role="alert">
+          <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+        {{ errMsg }}
+        </div>
+      {% endif %}
+      <h2 class="form-signin-heading">Please sign in</h2>
+      <form class="form-signin" role="form" action="{% url 'login' %}" method="post">
+        {% csrf_token %}
+        {% if next %}
+          <input type="hidden" class="form-control" name="next" value="{{ next }}" />
+        {% endif %}
+        <input type="text" class="form-control" name="username" placeholder="Email" value="{{ username}}" />
+        <input type="password" class="form-control" name="password" placeholder="Password" value="" />
+        <button class="btn btn-lg btn-primary btn-block" type="submit">Login</button>
+      </form>
+    </div>
+    <div class="col-lg-1 col-md-1 hidden-sm hidden-xs">
+        <!-- center buffer div -->
+    </div>
+    <div class="col-md-4 col-lg-4">
+      <div class="well well-lg clearfix">
+        <h4>Login with the username and password provided and have
+          access to view your:
+        </h4>
+        <ul class="login-list">
+          <li>History</li>
+          <li>Appointments</li>
+          <li>Allergies</li>
+          <li>Conditions</li>
+          <li>Insurance</li>
+          <li>Lab Results</li>
+          <li>Medications</li>
+          <li>Vitals</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
 {% endblock %}
+
 
 {% comment %}
 <noscript>

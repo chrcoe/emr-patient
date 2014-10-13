@@ -1,7 +1,7 @@
 from django import forms
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
-from django.contrib.auth.forms import UserChangeForm, ReadOnlyPasswordHashField
+from django.contrib.auth.forms import ReadOnlyPasswordHashField
 
 from patient.models import Vital, Patient, Appointment, InsurancePolicy,\
     LabResult, MedicalCondition, Medication, Allergy
@@ -83,7 +83,7 @@ class PatientChangeForm(forms.ModelForm):
 
 class PatientAdmin(UserAdmin):
     # The forms to add and change user instances
-    form = UserChangeForm
+    form = PatientChangeForm
     add_form = PatientCreationForm
 
     # The fields to be used in displaying the User model.

@@ -27,6 +27,7 @@ ALLOWED_HOSTS = ['*']
 
 # tell Django which User Model to use
 AUTH_USER_MODEL = 'patient.Patient'
+LOGIN_URL = '/logout' # /logout clears all session data and redirects to login URL
 
 # Application definition
 # all user apps need to be added here to be included in django operations

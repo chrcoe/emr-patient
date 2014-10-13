@@ -60,15 +60,18 @@ class PatientChangeForm(forms.ModelForm):
         model = Patient
         fields = (
             'email',
-            'date_of_birth',
             'first_name',
             'last_name',
-            'ssn',
             'phone_num',
             'street_address',
             'city',
             'state',
             'zip_code',
+            'date_of_birth',
+            'ssn',
+            'is_active',
+            'is_staff',
+            'is_admin',
         )
 
     def clean_password(self):

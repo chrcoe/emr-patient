@@ -100,7 +100,7 @@ class Appointment(models.Model):
     appointment_date = models.DateTimeField('appointment date')
 
     def __unicode__(self):
-        return self.appoinment_notes
+        return self.appointment_notes
 
 
 class InsurancePolicy(models.Model):
@@ -162,4 +162,4 @@ class Vital(models.Model):
     vitals_notes = models.CharField(max_length=255, blank=True)
 
     def __unicode__(self):
-        return self.pulse
+        return unicode(self.pulse)

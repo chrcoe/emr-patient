@@ -19,7 +19,13 @@ class PatientCreationForm(forms.ModelForm):
 
     class Meta:
         model = Patient
-        fields = ('email', 'date_of_birth')
+        fields = (
+            'email',
+            'date_of_birth',
+            'first_name',
+            'last_name',
+            'ssn'
+        )
 
     def clean_password2(self):
         # Check that the two password entries match
@@ -52,6 +58,18 @@ class PatientChangeForm(forms.ModelForm):
 
     class Meta:
         model = Patient
+        fields = (
+            'email',
+            'date_of_birth',
+            'first_name',
+            'last_name',
+            'ssn',
+            'phone_num',
+            'street_address',
+            'city',
+            'state',
+            'zip_code',
+        )
 
     def clean_password(self):
         # Regardless of what the user provides, return the initial value.
@@ -69,18 +87,30 @@ class PatientAdmin(UserAdmin):
     # These override the definitions on the base UserAdmin
     # that reference specific fields on auth.User.
     list_display = (
-        'email', 'date_of_birth', 'is_admin', 'is_staff', 'is_active')
+        'email', 'date_of_birth', 'first_name', 'last_name', 'is_staff', 'is_active')
     list_filter = ('is_admin',)
     fieldsets = (
         (None, {'fields': ('email', 'password')}),
-        ('Personal info', {'fields': ('date_of_birth',)}),
-        ('Permissions', {'fields': ('is_admin',)}),
+        ('Personal info', {'fields': (
+            'date_of_birth',
+            'first_name',
+            'last_name',
+            'ssn',
+            'phone_num',
+            'street_address',
+            'city',
+            'state',
+            'zip_code',
+        )}),
+        ('Permissions', {'fields': ('is_admin', 'is_active', 'is_staff')}),
         ('Important dates', {'fields': ('last_login',)}),
     )
     add_fieldsets = (
         (None, {
             'classes': ('wide',),
-            'fields': ('email', 'date_of_birth', 'password1', 'password2')}
+            'fields': ('email', 'date_of_birth', 'ssn', 'first_name',
+                       'last_name', 'password1', 'password2',
+                       'is_admin', 'is_staff', 'is_active')}
          ),
     )
     search_fields = ('email',)

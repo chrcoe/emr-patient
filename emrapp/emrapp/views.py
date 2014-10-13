@@ -3,6 +3,9 @@ from django.shortcuts import render_to_response, redirect
 from django.template.context import RequestContext
 
 def login_page(request):
+    # check if already logged in, redirect to their dashboard
+    if request.user.is_authenticated():
+        return redirect('/patient/{}'.format(request.user.id))
     errMsg = '' # default to no error message
     username = password = ''
     if request.POST:

@@ -1,12 +1,7 @@
 {% extends 'main/base.html' %}
 {% block nav-appts %} class="active"{% endblock %}
-{% load staticfiles %}
-<link rel="stylesheet" type="text/css"
-  href="{% static 'css/specific-override.css' %}" />
 
-{% block title %}
-<TITLE>{{ page_name }}</TITLE>
-{% endblock %} {% block content %}
+{% block content %}
 <div class="container">
   <div class="well well-lg clearfix">
     <h1>This is the {{ page_name }} page</h1>

@@ -14,7 +14,9 @@
 <link rel="stylesheet" type="text/css" href="{% static 'css/style-override.css' %}" />
 {% endblock %}
 
-{% block title %}{% endblock %}
+{% block title %}
+<TITLE>{{ page_name }}</TITLE>
+{% endblock %}
 
 {% block nav %}
 <div class="header">

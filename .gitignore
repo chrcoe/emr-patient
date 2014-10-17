@@ -8,7 +8,7 @@
 
 # normally this file would NOT be pushed to a repository because it is settings used
 # on each developer's machine, but I am including it so you can see the purpose of it
-#local_settings.py
+local_settings.py
 
 # don't send production settings to the git repo (you don't need to worry about these settings)
 prod_settings.py

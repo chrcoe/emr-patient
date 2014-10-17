@@ -3,7 +3,7 @@ from django.conf.urls import patterns, url
 from patient import views
 
 urlpatterns = patterns('',
-    url(r'^$', views.index, name='index'),
+#    url(r'^$', views.index, name='index'),
 
     # /patient/patient_id/
     url(r'^(?P<patient_id>\d+)/$', views.dashboard, name='dashboard'), # after the patient logs in, you do not need to build this view yet

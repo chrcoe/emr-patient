@@ -6,18 +6,19 @@ from django.conf.urls.static import static
 
 from emrapp import views
 
-urlpatterns = patterns('',
-   # Examples:
-   # url(r'^$', 'emrapp.views.home', name='home'),
-   # url(r'^blog/', include('blog.urls')),
+urlpatterns = patterns(
+    '',
+    # Examples:
+    # url(r'^$', 'emrapp.views.home', name='home'),
+    # url(r'^blog/', include('blog.urls')),
 
-   # points to base index page (emrapp/views.py etc.)
-   url(r'^$', views.login, name='login'),
-   # built in admin page
-   url(r'^admin/', include(admin.site.urls)),
-   # additional app pages go here (ie: patient app etc)
-   url(r'^patient/',
-       include('patient.urls', namespace='patient')),
+    # points to base index page (emrapp/views.py etc.)
+    url(r'^$', views.login_page, name='login'),
+    # built in admin page
+    url(r'^admin/', include(admin.site.urls)),
+    # additional app pages go here (ie: patient app etc)
+    url(r'^patient/', include('patient.urls', namespace='patient')),
+    url(r'^logout/', views.logout_page, name='logout'),
 
 ) + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 

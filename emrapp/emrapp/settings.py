@@ -25,6 +25,10 @@ TEMPLATE_DEBUG = True
 
 ALLOWED_HOSTS = ['*']
 
+# tell Django which User Model to use
+AUTH_USER_MODEL = 'patient.Patient'
+# /logout clears all session data and redirects to login URL
+LOGIN_URL = '/logout'
 
 # Application definition
 # all user apps need to be added here to be included in django operations
@@ -96,13 +100,19 @@ STATICFILES_DIRS = (
 
 
 # media files
-MEDIA_ROOT = os.path.join(PROJECT_DIR, 'media/')
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media/')
 MEDIA_URL = '/media/'
 
 # extra templates
-TEMPLATE_DIRS = [os.path.join(BASE_DIR, 'templates'),
-                os.path.join(BASE_DIR, 'emrapp/templates'),
-                 ]
+TEMPLATE_DIRS = [
+    os.path.join(BASE_DIR, 'templates'),
+    os.path.join(BASE_DIR, 'emrapp/templates'),
+]
+
+TEMPLATE_LOADERS = (
+    'django.template.loaders.filesystem.Loader',
+    'django.template.loaders.app_directories.Loader'
+)
 
 # print(TEMPLATE_DIRS)
 

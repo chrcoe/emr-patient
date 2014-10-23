@@ -4,8 +4,17 @@
 {% block content %}
 <div class="container">
   <div class="well well-lg clearfix">
-    <h1>This is the {{ page_name }} page</h1>
-    <p>Hello, This page is EMPTY!!!! Except of course but this text, WOOT!!!</p>
+    <h1>Welcome to your {{ page_name }} page {{ patient.first_name }} </h1>
+    
+        <h3>Your last recorded allergy is below:</h3>
+    <ul>
+    	<li><b>Alergy name:</b> {{ allergies.allergy_name }}
+    	<li><b>Severity:</b> {{ allergies.severity }}
+    	<li><b>Allergy description:</b> {{ allergies.allergy_description }}
+    </ul>
+    
+    <p>Notes: {{ allergies.allergy_notes }}
+    
   </div>
 </div>
 {% endblock %}

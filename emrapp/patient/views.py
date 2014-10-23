@@ -39,6 +39,18 @@ def vitals(request, patient_id):
     if patient.is_admin or patient.is_staff:
         return redirect('/admin/')
     vitals = get_list_or_404(Vital, id_patient=patient_id)
+
+    # need to handle the POST data for all notes
+    if request.method == 'POST':
+        #         posted = request.POST
+        for i in vitals:
+            # update ONLY the notes that the patient wanted to update
+            if i.id == int(request.POST['vitals_id']):
+                # set the notes on THIS record to the new notes
+                i.vitals_notes = request.POST['vitals_notes']
+                # save changes to the DB
+                i.save()
+
     return render(request, 'patient/vitals.html',
                   {'patient': patient, 'vitals': vitals, 'page_name': 'Vitals'})
 

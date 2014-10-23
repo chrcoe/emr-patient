@@ -6,14 +6,16 @@
   <div class="well well-lg clearfix">
     <h1>Welcome to your {{ page_name }} page {{ patient.first_name }} </h1>
     
-        <h3>Your last recorded allergy is below:</h3>
+    <h3>Your recorded allergies:</h3>
+    {% for i in allergies %}
     <ul>
-    	<li><b>Alergy name:</b> {{ allergies.allergy_name }}
-    	<li><b>Severity:</b> {{ allergies.severity }}
-    	<li><b>Allergy description:</b> {{ allergies.allergy_description }}
+    	<li><b>Alergy name:</b> {{ i.allergy_name }}
+    	<li><b>Severity:</b> {{ i.severity }}
+    	<li><b>Allergy description:</b> {{ i.allergy_description }}
+    	<p>Allergy notes: {{ i.allergy_notes }}
     </ul>
+    {% endfor %}
     
-    <p>Notes: {{ allergies.allergy_notes }}
     
   </div>
 </div>

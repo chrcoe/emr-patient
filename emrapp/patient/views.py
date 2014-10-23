@@ -1,7 +1,7 @@
 #from patient.models import Patient
 from django.contrib.auth import get_user_model
 from django.contrib.auth.decorators import login_required
-from django.shortcuts import get_object_or_404, redirect
+from django.shortcuts import get_object_or_404, redirect, get_list_or_404
 from django.shortcuts import render
 
 from patient.models import Allergy
@@ -24,8 +24,9 @@ def dashboard(request, patient_id):
     patient = get_object_or_404(Patient, pk=patient_id)
     if patient.is_admin or patient.is_staff:
         return redirect('/admin/')
+    vitals = get_list_or_404(Vital, id_patient=patient_id)
     return render(request, 'patient/dashboard.html',
-                  {'patient': patient,
+                  {'patient': patient, 'vitals': vitals,
                    'page_name': 'Dashboard'})
 
 
@@ -37,7 +38,7 @@ def vitals(request, patient_id):
     patient = get_object_or_404(Patient, pk=patient_id)
     if patient.is_admin or patient.is_staff:
         return redirect('/admin/')
-    vitals = get_object_or_404(Vital, id_patient=patient_id)
+    vitals = get_list_or_404(Vital, id_patient=patient_id)
     return render(request, 'patient/vitals.html',
                   {'patient': patient, 'vitals': vitals, 'page_name': 'Vitals'})
 
@@ -50,7 +51,7 @@ def allergies(request, patient_id):
     patient = get_object_or_404(Patient, pk=patient_id)
     if patient.is_admin or patient.is_staff:
         return redirect('/admin/')
-    allergies = get_object_or_404(Allergy, id_patient=patient_id)
+    allergies = get_list_or_404(Allergy, id_patient=patient_id)
     return render(request, 'patient/allergies.html',
                   {'patient': patient, 'allergies': allergies, 'page_name': 'Allergies'})
 
@@ -61,7 +62,7 @@ def medication(request, patient_id):
     if request.user.id <> patient_id:
         patient_id = request.user.id
     patient = get_object_or_404(Patient, pk=patient_id)
-    medication = get_object_or_404(Medication, id_patient=patient_id)
+    medication = get_list_or_404(Medication, id_patient=patient_id)
     if patient.is_admin or patient.is_staff:
         return redirect('/admin/')
     return render(request, 'patient/medication.html',
@@ -76,7 +77,7 @@ def insurance(request, patient_id):
     patient = get_object_or_404(Patient, pk=patient_id)
     if patient.is_admin or patient.is_staff:
         return redirect('/admin/')
-    insurance = get_object_or_404(InsurancePolicy, id_patient=patient_id)
+    insurance = get_list_or_404(InsurancePolicy, id_patient=patient_id)
     return render(request, 'patient/insurance.html',
                   {'patient': patient, 'insurance': insurance, 'page_name': 'Insurance Policies'})
 
@@ -89,7 +90,7 @@ def conditions(request, patient_id):
     patient = get_object_or_404(Patient, pk=patient_id)
     if patient.is_admin or patient.is_staff:
         return redirect('/admin/')
-    conditions = get_object_or_404(MedicalCondition, id_patient=patient_id)
+    conditions = get_list_or_404(MedicalCondition, id_patient=patient_id)
     return render(request, 'patient/conditions.html',
                   {'patient': patient, 'conditions': conditions, 'page_name': 'Medical Conditions'})
 
@@ -102,7 +103,7 @@ def labresults(request, patient_id):
     patient = get_object_or_404(Patient, pk=patient_id)
     if patient.is_admin or patient.is_staff:
         return redirect('/admin/')
-    labresults = get_object_or_404(LabResult, id_patient=patient_id)
+    labresults = get_list_or_404(LabResult, id_patient=patient_id)
     return render(request, 'patient/labresults.html',
                   {'patient': patient, 'labresults': labresults, 'page_name': 'Lab Results'})
 

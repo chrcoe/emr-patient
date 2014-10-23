@@ -6,14 +6,17 @@
   <div class="well well-lg clearfix">
     <h1>Welcome to your {{ page_name }} page {{ patient.first_name }} </h1>
     
-    <h3>Your last recorded data is below:</h3>
+    <h3>Your recorded vitals:</h3>
+    {% for i in vitals %}
     <ul>
-    	<li><b>Height:</b> {{ vitals.height_inches }} inches
-    	<li><b>Weight:</b> {{ vitals.weight_pounds }} pounds
-    	<li><b>Blood Pressure:</b> {{ vitals.blood_pressure }}
-    	<li><b>Pulse:</b> {{ vitals.pulse }} beats per minute - A resting pulse of 60 to 80 is ideal.
+    	<li><b>Height:</b> {{ i.height_inches }} inches
+    	<li><b>Weight:</b> {{ i.weight_pounds }} pounds
+    	<li><b>Blood Pressure:</b> {{ i.blood_pressure }}
+    	<li><b>Pulse:</b> {{ i.pulse }} beats per minute - A resting pulse of 60 to 80 is ideal.
+    	<p>Visit notes: {{ i.vitals_notes }}
     </ul>
-    <p>Notes: {{ vitals.vitals_notes }}
+    {% endfor %}
+    
   </div>
 </div>
 {% endblock %}

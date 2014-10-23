@@ -25,8 +25,11 @@ def dashboard(request, patient_id):
     if patient.is_admin or patient.is_staff:
         return redirect('/admin/')
     vitals = get_list_or_404(Vital, id_patient=patient_id)
+    medication = get_list_or_404(Medication, id_patient=patient_id)
+    appts = get_list_or_404(Appointment, id_patient=patient_id)
+    labresults = get_list_or_404(LabResult, id_patient=patient_id)
     return render(request, 'patient/dashboard.html',
-                  {'patient': patient, 'vitals': vitals,
+                  {'patient': patient, 'vitals': vitals, 'medication': medication, 'appts': appts, 'labresults': labresults,
                    'page_name': 'Dashboard'})
 
 
@@ -116,7 +119,7 @@ def appts(request, patient_id):
     patient = get_object_or_404(Patient, pk=patient_id)
     if patient.is_admin or patient.is_staff:
         return redirect('/admin/')
-    appts = get_object_or_404(Appointment, id_patient=patient_id)
+    appts = get_list_or_404(Appointment, id_patient=patient_id)
     return render(request, 'patient/appts.html',
                   {'patient': patient, 'appts': appts, 'page_name': 'Appointments'})
 

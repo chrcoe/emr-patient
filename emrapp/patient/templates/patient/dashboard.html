@@ -3,32 +3,52 @@
 
 {% block content %}
 <div class="container">
-  <div class="well well-lg clearfix">
+ 	<div class="well well-lg clearfix">
     <center><h1>Welcome to your {{ page_name }} {{ patient.first_name }} </h1></center>
 
-	<div style="float:left;">
-		<h3>Current Notes:</h3>
-		Vitals: {{ vitals.vitals_notes }} <br />
-		Medications: {{ medications.medication_notes }} <br />
-		Lab Results: {{ labresults.lab_notes }} <br />
-		Conditions: {{ conditions.condition_notes }} <br />
-		Allergies: {{ allergies.allergy_notes }} <br />
+		<div style="float:left;">
+			<h3>Current Notes:</h3>
+			<b>Vitals:</b> {{ vitals.0.vitals_notes }} <br />
+			<b>Medications:</b> {{ medication.0.medication_notes }} <br />
+			<b>Lab Results:</b> {{ labresults.0.lab_notes }} <br />
+			<b>Conditions:</b> {{ conditions.0.condition_notes }} <br />
+			<b>Allergies:</b> {{ allergies.0.allergy_notes }} <br />
+			
+			<h3>Current Medications:</h3>
+			{% for i in medication %}
+				<p><b>Medication:</b> {{ i.medication_name }}</p>
+				<p><b>Dosage:</b> {{ i.dosage }}</p>
+				<p><b>Description:</b> {{ i.medication_description }}</p>
+				<p><b>Notes:</b> {{ i.medication_notes }}</p>
+				<p>-----------------------------------------------</p>
+			{% endfor %}
+			
+			<h3>Lab Results:</h3>
+			{% for i in labresults %}
+				<p><b>Lab:</b> {{ i.lab_title }}</p>
+				<p><b>Date:</b> {{ i.lab_date }}</p>
+				<p><b>Description:</b> {{ i.lab_description }}</p>
+				<p><b>Notes:</b> {{ i.lab_notes }}</p>
+				<p>-----------------------------------------------</p>
+			{% endfor %}
+			
+		</div>
 		
-		<h3>Current Medications:</h3>
-		{% for i in medications %}
-			<p>{{ medications.medication_name }}</p>
-		{% endfor %}
-	</div>
+		<div style="float:right;">
+			<h3>Last recorded vitals</h3>
+			<p><b>Height:</b> {{ vitals.0.height_inches }}</p>
+			<p><b>Weight:</b> {{ vitals.0.weight_pounds }}</p>
+			<p><b>BP:</b> {{ vitals.0.blood_pressure }}</p>
+			<p><b>Pulse:</b> {{ vitals.0.pulse }}</p>
+		   	<a href="http://prohealthsys.com/site/resources/assessment/physical-assessment/vital-signs/vital_signs_table/">Table of normal vital ranges.</a>
 		
-	<div style="float:right;">
-		<h3>Last recorded vitals</h3>
-	  	<p><b>Height:</b> {{ vitals.height_inches }}</p>
-	   	<p><b>Weight:</b> {{ 0.weight_pounds }}</p>
-	    <p><b>BP:</b> {{ vitals.blood_pressure }}</p>
-	    <p><b>Pulse:</b> {{ vitals.pulse }}</p>
-	   	<a href="http://prohealthsys.com/site/resources/assessment/physical-assessment/vital-signs/vital_signs_table/">Table of normal vital ranges.</a>
+			<h3>Appointments:</h3>
+			{% for i in appts %}
+				<p><b>Date:</b> {{ i.appointment_date }}</p>
+				<p><b>Notes:</b> {{ i.appointment_notes }}</p>
+				<p>-----------------------------------------------</p>
+			{% endfor %}
+		</div>
 	</div>
-
-  </div>
 </div>
 {% endblock %}

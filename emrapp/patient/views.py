@@ -7,7 +7,7 @@ from django.shortcuts import render
 from patient.models import Allergy
 from patient.models import Appointment
 from patient.models import InsurancePolicy
-from patient.models import DiagnosticResults
+from patient.models import DiagnosticResult
 from patient.models import MedicalHistory
 from patient.models import Medication
 from patient.models import Vital
@@ -115,8 +115,8 @@ def diagnosticresults(request, patient_id):
     patient = get_object_or_404(Patient, pk=patient_id)
     if patient.is_admin or patient.is_staff:
         return redirect('/admin/')
-    diagnosticresults = get_list_or_404(DiagnosticResults, id_patient=patient_id)
-    return render(request, 'patient/labresults.html',
+    diagnosticresults = get_list_or_404(DiagnosticResult, id_patient=patient_id)
+    return render(request, 'patient/diagnosticresults.html',
                   {'patient': patient, 'diagnosticresults': diagnosticresults, 'page_name': 'Diagnostic Results'})
 
 

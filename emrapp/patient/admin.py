@@ -4,7 +4,7 @@ from django.contrib.auth.admin import UserAdmin
 from django.contrib.auth.forms import ReadOnlyPasswordHashField
 
 from patient.models import Vital, Patient, Appointment, InsurancePolicy,\
-    DiagnosticResults, MedicalHistory, Medication, Allergy
+    DiagnosticResult, MedicalHistory, Medication, Allergy
 
 # http://stackoverflow.com/questions/15456964/changing-password-in-django-admin
 
@@ -97,7 +97,7 @@ class InsuranceInline(admin.TabularInline):
     extra = 1
 
 class DiagResultsInline(admin.TabularInline):
-    model = DiagnosticResults
+    model = DiagnosticResult
     extra = 1
 
 class MedHisInline(admin.TabularInline):
@@ -155,10 +155,3 @@ class PatientAdmin(UserAdmin):
 
 # Register your models here.
 admin.site.register(Patient, PatientAdmin)
-# admin.site.register(Allergy)
-# admin.site.register(Appointment)
-# admin.site.register(InsurancePolicy)
-# admin.site.register(LabResult)
-# admin.site.register(MedicalCondition)
-# admin.site.register(Medication)
-# admin.site.register(Vital)

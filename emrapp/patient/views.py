@@ -7,8 +7,8 @@ from django.shortcuts import render
 from patient.models import Allergy
 from patient.models import Appointment
 from patient.models import InsurancePolicy
-from patient.models import LabResult
-from patient.models import MedicalCondition
+from patient.models import DiagnosticResults
+from patient.models import MedicalHistory
 from patient.models import Medication
 from patient.models import Vital
 # use our custom Patient model (which extends the AbstractBaseUser)
@@ -102,22 +102,22 @@ def conditions(request, patient_id):
     patient = get_object_or_404(Patient, pk=patient_id)
     if patient.is_admin or patient.is_staff:
         return redirect('/admin/')
-    conditions = get_list_or_404(MedicalCondition, id_patient=patient_id)
+    conditions = get_list_or_404(MedicalHistory, id_patient=patient_id)
     return render(request, 'patient/conditions.html',
-                  {'patient': patient, 'conditions': conditions, 'page_name': 'Medical Conditions'})
+                  {'patient': patient, 'conditions': conditions, 'page_name': 'Medical History'})
 
 
 @login_required
-def labresults(request, patient_id):
+def diagnosticresults(request, patient_id):
     '''function for labresults, uses labresults template'''
     if request.user.id <> patient_id:
         patient_id = request.user.id
     patient = get_object_or_404(Patient, pk=patient_id)
     if patient.is_admin or patient.is_staff:
         return redirect('/admin/')
-    labresults = get_list_or_404(LabResult, id_patient=patient_id)
+    diagnosticresults = get_list_or_404(DiagnosticResults, id_patient=patient_id)
     return render(request, 'patient/labresults.html',
-                  {'patient': patient, 'labresults': labresults, 'page_name': 'Lab Results'})
+                  {'patient': patient, 'diagnosticresults': diagnosticresults, 'page_name': 'Diagnostic Results'})
 
 
 @login_required

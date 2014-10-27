@@ -5,6 +5,7 @@ from django.contrib.auth.models import (
     BaseUserManager, AbstractBaseUser
 )
 from django.db import models
+import datetime
 
 
 class PatientManager(BaseUserManager):
@@ -158,7 +159,7 @@ class Vital(models.Model):
     bp_sys = models.IntegerField(default=0)
     bp_dias = models.IntegerField(default=0)
     pulse = models.IntegerField(default=0)
-    vitals_date = models.DateField('vitals date')
+    vitals_date = models.DateField('vitals date', default=datetime.date.today())
     vitals_notes = models.CharField(max_length=255, null=True, blank=True)
 
     def __unicode__(self):

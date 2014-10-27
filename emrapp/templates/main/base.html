@@ -38,8 +38,8 @@
             <li{% block nav-allergies %}{% endblock %}><a href="{% url 'patient:allergies' patient.id %}">Allergies</a></li>
             <li{% block nav-medication %}{% endblock %}><a href="{% url 'patient:medication' patient.id %}">Medication</a></li>
             <li{% block nav-insurance %}{% endblock %}><a href="{% url 'patient:insurance' patient.id %}">Insurance</a></li>
-            <li{% block nav-conditions %}{% endblock %}><a href="{% url 'patient:conditions' patient.id %}">Medical Conditions</a></li>
-            <li{% block nav-labresults %}{% endblock %}><a href="{% url 'patient:diagnosticresults' patient.id %}">Lab Results</a></li>
+            <li{% block nav-conditions %}{% endblock %}><a href="{% url 'patient:conditions' patient.id %}">Medical History</a></li>
+            <li{% block nav-labresults %}{% endblock %}><a href="{% url 'patient:diagnosticresults' patient.id %}">Diagnostic Results</a></li>
             <li{% block nav-appts %}{% endblock %}><a href="{% url 'patient:appts' patient.id %}">Appointments</a></li>
 
             <!--

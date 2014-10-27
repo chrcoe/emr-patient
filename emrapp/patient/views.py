@@ -128,7 +128,7 @@ def appts(request, patient_id):
     patient = get_object_or_404(Patient, pk=patient_id)
     if patient.is_admin or patient.is_staff:
         return redirect('/admin/')
-    appts = get_object_or_404(Appointment, id_patient=patient_id)
+    appts = get_list_or_404(Appointment, id_patient=patient_id)
     return render(request, 'patient/appts.html',
                   {'patient': patient, 'appts': appts, 'page_name': 'Appointments'})
 

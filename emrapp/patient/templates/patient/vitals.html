@@ -6,6 +6,7 @@
   <div class="well well-lg clearfix">
     <h1>Welcome to your {{ page_name }} page {{ patient.first_name }} </h1>
     <div id="vitals_item">
+    	<h3>Your recorded vitals:</h3>
     	{% for i in vitals %}
     		<ul>
         		<li><b>Height:</b> {{ i.height_inches }} inches

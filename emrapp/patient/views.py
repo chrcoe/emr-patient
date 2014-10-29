@@ -70,6 +70,18 @@ def allergies(request, patient_id):
     if patient.is_admin or patient.is_staff:
         return redirect('/admin/')
     allergies = get_list_or_404(Allergy, id_patient=patient_id)
+    
+        # need to handle the POST data for all notes
+    if request.method == 'POST':
+        #         posted = request.POST
+        for i in allergies:
+            # update ONLY the notes that the patient wanted to update
+            if i.id == int(request.POST['allergies_id']):
+                # set the notes on THIS record to the new notes
+                i.allergy_notes = request.POST['allergy_notes']
+                # save changes to the DB
+                i.save()
+                
     return render(request, 'patient/allergies.html',
                   {'patient': patient, 'allergies': allergies, 'page_name': 'Allergies'})
 

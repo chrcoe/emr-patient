@@ -7,8 +7,8 @@ from django.shortcuts import render
 from patient.models import Allergy
 from patient.models import Appointment
 from patient.models import InsurancePolicy
-from patient.models import LabResult
-from patient.models import MedicalCondition
+from patient.models import DiagnosticResult
+from patient.models import MedicalHistory
 from patient.models import Medication
 from patient.models import Vital
 # use our custom Patient model (which extends the AbstractBaseUser)
@@ -42,6 +42,18 @@ def vitals(request, patient_id):
     if patient.is_admin or patient.is_staff:
         return redirect('/admin/')
     vitals = get_list_or_404(Vital, id_patient=patient_id)
+
+    # need to handle the POST data for all notes
+    if request.method == 'POST':
+        #         posted = request.POST
+        for i in vitals:
+            # update ONLY the notes that the patient wanted to update
+            if i.id == int(request.POST['vitals_id']):
+                # set the notes on THIS record to the new notes
+                i.vitals_notes = request.POST['vitals_notes']
+                # save changes to the DB
+                i.save()
+
     return render(request, 'patient/vitals.html',
                   {'patient': patient, 'vitals': vitals, 'page_name': 'Vitals'})
 
@@ -93,22 +105,22 @@ def conditions(request, patient_id):
     patient = get_object_or_404(Patient, pk=patient_id)
     if patient.is_admin or patient.is_staff:
         return redirect('/admin/')
-    conditions = get_list_or_404(MedicalCondition, id_patient=patient_id)
+    conditions = get_list_or_404(MedicalHistory, id_patient=patient_id)
     return render(request, 'patient/conditions.html',
-                  {'patient': patient, 'conditions': conditions, 'page_name': 'Medical Conditions'})
+                  {'patient': patient, 'conditions': conditions, 'page_name': 'Medical History'})
 
 
 @login_required
-def labresults(request, patient_id):
+def diagnosticresults(request, patient_id):
     '''function for labresults, uses labresults template'''
     if request.user.id <> patient_id:
         patient_id = request.user.id
     patient = get_object_or_404(Patient, pk=patient_id)
     if patient.is_admin or patient.is_staff:
         return redirect('/admin/')
-    labresults = get_list_or_404(LabResult, id_patient=patient_id)
-    return render(request, 'patient/labresults.html',
-                  {'patient': patient, 'labresults': labresults, 'page_name': 'Lab Results'})
+    diagnosticresults = get_list_or_404(DiagnosticResult, id_patient=patient_id)
+    return render(request, 'patient/diagnosticresults.html',
+                  {'patient': patient, 'diagnosticresults': diagnosticresults, 'page_name': 'Diagnostic Results'})
 
 
 @login_required

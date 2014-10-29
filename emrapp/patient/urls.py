@@ -23,12 +23,12 @@ urlpatterns = patterns('',
     # /patient/patient_id/conditions/
     url(r'^(?P<patient_id>\d+)/conditions/$', views.conditions, name='conditions'), # this calls the views.conditions() function when this link is requested
 
-    # /patient/patient_id/labresults/
-    url(r'^(?P<patient_id>\d+)/labresults/$', views.labresults, name='labresults'), # this calls the views.labresults() function when this link is requested
+    # /patient/patient_id/diagnosticresults/
+    url(r'^(?P<patient_id>\d+)/diagnosticresults/$', views.diagnosticresults, name='diagnosticresults'), # this calls the views.labresults() function when this link is requested
 
     # /patient/patient_id/appts/
     url(r'^(?P<patient_id>\d+)/appts/$', views.appts, name='appts'), # this calls the views.appts() function when this link is requested
-     
+
      # /patient/patient_id/settings/
     url(r'^(?P<patient_id>\d+)/settings/$', views.settings, name='settings'), # this calls the views.settings() function when this link is requested
 

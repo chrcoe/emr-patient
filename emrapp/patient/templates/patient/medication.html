@@ -4,8 +4,27 @@
 {% block content %}
 <div class="container">
   <div class="well well-lg clearfix">
-    <h1>This is the {{ page_name }} page</h1>
-    <p>Hello, This page is EMPTY!!!! Except of course but this text, WOOT!!!</p>
+    <h1>Welcome to your {{ page_name }} page {{ patient.first_name }} </h1>
+    <div id="medication_item">
+    {% for i in medication %}
+    <ul>
+        <li><b>Medication:</b> {{ i.medication_name }}
+        <li><b>Dosage:</b> {{ i.dosage }}
+        <li><b>Description:</b> {{ i.medication_description }}
+        <p>Patient notes: {{ i.medication_notes }}
+    </ul>
+    <form class="form-horizontal" role="form" action="{% url 'patient:medication' patient.id %}" method='post'>
+      {% csrf_token %}
+      <div class="form-group">
+        <textarea class="form-control" name="medication_notes" placeholder="enter new notes here" textarea></textarea>
+        <input type="hidden" name="medication_id" value='{{ i.id }}' />
+      </div>
+      <div class="form-group">
+        <button type="submit" class="btn btn-default">Submit</button>
+      </div>
+    </form>
+    {% endfor %}
+    </div>
   </div>
 </div>
 {% endblock %}

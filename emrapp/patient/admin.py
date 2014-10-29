@@ -4,7 +4,7 @@ from django.contrib.auth.admin import UserAdmin
 from django.contrib.auth.forms import ReadOnlyPasswordHashField
 
 from patient.models import Vital, Patient, Appointment, InsurancePolicy,\
-    LabResult, MedicalCondition, Medication, Allergy
+    DiagnosticResult, MedicalHistory, Medication, Allergy
 
 # http://stackoverflow.com/questions/15456964/changing-password-in-django-admin
 
@@ -80,11 +80,40 @@ class PatientChangeForm(forms.ModelForm):
         # field does not have access to the initial value
         return self.initial["password"]
 
+class VitalsInline(admin.TabularInline):
+    model = Vital
+    extra = 1
+
+class AllergyInline(admin.TabularInline):
+    model = Allergy
+    extra = 1
+
+class AppointmentInline(admin.TabularInline):
+    model = Appointment
+    extra = 1
+
+class InsuranceInline(admin.TabularInline):
+    model = InsurancePolicy
+    extra = 1
+
+class DiagResultsInline(admin.TabularInline):
+    model = DiagnosticResult
+    extra = 1
+
+class MedHisInline(admin.TabularInline):
+    model = MedicalHistory
+    extra = 1
+
+class MedicationInline(admin.TabularInline):
+    model = Medication
+    extra = 1
 
 class PatientAdmin(UserAdmin):
     # The forms to add and change user instances
     form = PatientChangeForm
     add_form = PatientCreationForm
+
+
 
     # The fields to be used in displaying the User model.
     # These override the definitions on the base UserAdmin
@@ -104,9 +133,9 @@ class PatientAdmin(UserAdmin):
             'city',
             'state',
             'zip_code',
-        )}),
-        ('Permissions', {'fields': ('is_admin', 'is_active', 'is_staff')}),
-        ('Important dates', {'fields': ('last_login',)}),
+        ), 'classes' : ['collapse']}),
+        ('Permissions', {'fields': ('is_admin', 'is_active', 'is_staff'), 'classes' : ['collapse']}),
+        ('Important dates', {'fields': ('last_login',), 'classes' : ['collapse']}),
     )
     add_fieldsets = (
         (None, {
@@ -120,13 +149,9 @@ class PatientAdmin(UserAdmin):
     ordering = ('email',)
     filter_horizontal = ()
 
+    inlines = [VitalsInline, AllergyInline, AppointmentInline, InsuranceInline,
+               DiagResultsInline, MedHisInline, MedicationInline, ]
+
 
 # Register your models here.
 admin.site.register(Patient, PatientAdmin)
-admin.site.register(Allergy)
-admin.site.register(Appointment)
-admin.site.register(InsurancePolicy)
-admin.site.register(LabResult)
-admin.site.register(MedicalCondition)
-admin.site.register(Medication)
-admin.site.register(Vital)

@@ -7,13 +7,6 @@
     <center><h1>Welcome to your {{ page_name }} {{ patient.first_name }} </h1></center>
 
 		<div style="float:left;">
-			<h3>Current Notes:</h3>
-			<b>Vitals:</b> {{ vitals.0.vitals_notes }} <br />
-			<b>Medications:</b> {{ medication.0.medication_notes }} <br />
-			<b>Lab Results:</b> {{ labresults.0.lab_notes }} <br />
-			<b>Conditions:</b> {{ conditions.0.condition_notes }} <br />
-			<b>Allergies:</b> {{ allergies.0.allergy_notes }} <br />
-			
 			<h3>Current Medications:</h3>
 			{% for i in medication %}
 				<p><b>Medication:</b> {{ i.medication_name }}</p>
@@ -23,14 +16,33 @@
 				<p>-----------------------------------------------</p>
 			{% endfor %}
 			
-			<h3>Lab Results:</h3>
-			{% for i in labresults %}
-				<p><b>Lab:</b> {{ i.lab_title }}</p>
-				<p><b>Date:</b> {{ i.lab_date }}</p>
-				<p><b>Description:</b> {{ i.lab_description }}</p>
-				<p><b>Notes:</b> {{ i.lab_notes }}</p>
+			<h3>Current Allergies:</h3>
+			{% for i in allergies %}
+				<p><b>Name:</b> {{ i.allergy_name }}</p>
+				<p><b>Severity:</b> {{ i.severity }}</p>
+				<p><b>Description:</b> {{ i.allergy_description }}</p>
+				<p><b>Notes:</b> {{ i.allergy_notes }}</p>
 				<p>-----------------------------------------------</p>
 			{% endfor %}
+			
+			<h3>Latest Diagnostic Result:</h3>
+			{% with diagnosticresults|last as last_item %}
+				<p><b>Lab:</b> {{ last_item.lab_title }}</p>
+				<p><b>Date:</b> {{ last_item.lab_date }}</p>
+				<p><b>Description:</b> {{ last_item.lab_description }}</p>
+				<p><b>Notes:</b> {{ last_item.lab_notes }}</p>
+				<p>-----------------------------------------------</p>
+			{% endwith %}
+			
+			<h3>Latest Medical History:</h3>
+			{% with conditions|last as last_item %}
+				<p><b>Name:</b> {{ last_item.history_item_name }}</p>
+				<p><b>Runs in Family:</b> {{ last_item.is_family_item }}</p>
+				<p><b>Date of diagnosis:</b> {{ last_item.history_item_date }}</p>
+				<p><b>Description:</b> {{ last_item.history_description }}</p>
+				<p><b>Notes:</b> {{ last_item.history_notes }}</p>
+				<p>-----------------------------------------------</p>
+			{% endwith %}
 			
 		</div>
 		
@@ -41,15 +53,25 @@
 				<p><b>Weight:</b> {{ last_item.weight_pounds }}</p>
 				<p><b>BP:</b> {{ last_item.blood_pressure }}</p>
 				<p><b>Pulse:</b> {{ last_item.pulse }}</p>
+				<p><b>Notes:</b> {{ last_item.vitals_notes }}</p>
 			{% endwith %} 
 		   	<a href="http://prohealthsys.com/site/resources/assessment/physical-assessment/vital-signs/vital_signs_table/">Table of normal vital ranges.</a>
 			
-			<h3>Appointments:</h3>
-			{% for i in appts %}
-				<p><b>Date:</b> {{ i.appointment_date }}</p>
-				<p><b>Notes:</b> {{ i.appointment_notes }}</p>
+			<h3>Latest Appointment:</h3>
+			{% with appts|last as last_item %}
+				<p><b>Date:</b> {{ last_item.appointment_date }}</p>
+				<p><b>Notes:</b> {{ last_item.appointment_notes }}</p>
 				<p>-----------------------------------------------</p>
-			{% endfor %}
+			{% endwith %} 
+			
+			<h3>Insurance Information:</h3>
+			{% with insurance|last as last_item %}
+				<p><b>Policy #:</b> {{ last_item.policy_num }}</p>
+				<p><b>Exp. Date:</b> {{ last_item.exp_date }}</p>
+				<p><b>Company Name:</b> {{ last_item.comp_name }}</p>
+				<p><b>Group Number:</b> {{ last_item.group_num }}</p>
+				<p>-----------------------------------------------</p>
+			{% endwith %}
 		</div>
 	</div>
 </div>

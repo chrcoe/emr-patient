@@ -27,9 +27,12 @@ def dashboard(request, patient_id):
     vitals = get_list_or_404(Vital, id_patient=patient_id)
     medication = get_list_or_404(Medication, id_patient=patient_id)
     appts = get_list_or_404(Appointment, id_patient=patient_id)
-    labresults = get_list_or_404(LabResult, id_patient=patient_id)
+    diagnosticresults = get_list_or_404(DiagnosticResult, id_patient=patient_id)
+    allergies = get_list_or_404(Allergy, id_patient=patient_id)
+    insurance = get_list_or_404(InsurancePolicy, id_patient=patient_id)
+    conditions = get_list_or_404(MedicalHistory, id_patient=patient_id)
     return render(request, 'patient/dashboard.html',
-                  {'patient': patient, 'vitals': vitals, 'medication': medication, 'appts': appts, 'labresults': labresults,
+                  {'patient': patient, 'vitals': vitals, 'medication': medication, 'appts': appts, 'diagnosticresults': diagnosticresults, 'allergies': allergies, 'insurance': insurance, 'conditions': conditions,
                    'page_name': 'Dashboard'})
 
 

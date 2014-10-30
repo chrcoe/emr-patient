@@ -147,6 +147,18 @@ def appts(request, patient_id):
     if patient.is_admin or patient.is_staff:
         return redirect('/admin/')
     appts = get_list_or_404(Appointment, id_patient=patient_id)
+    
+    # need to handle the POST data for all notes
+    if request.method == 'POST':
+        #         posted = request.POST
+        for i in appts:
+            # update ONLY the notes that the patient wanted to update
+            if i.id == int(request.POST['appts_id']):
+                # set the notes on THIS record to the new notes
+                i.appointment_notes = request.POST['appts_notes']
+                # save changes to the DB
+                i.save()
+                
     return render(request, 'patient/appts.html',
                   {'patient': patient, 'appts': appts, 'page_name': 'Appointments'})
 

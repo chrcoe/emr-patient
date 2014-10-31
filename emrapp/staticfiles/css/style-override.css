@@ -26,3 +26,57 @@ body {
   padding: 0;
   margin: 0;
 }
+
+#fullBg  {
+  z-index: -1;
+  height: 100%;
+  width: 100%;
+  position: absolute;
+  top: 0px;
+  background-image: url('/static/img/login-bg.jpg');
+  background-size: cover;
+
+}
+
+input[type="text"] {
+  margin-bottom: -1px;
+   border-top: 1px solid transparent;
+   border-right: 1px solid transparent;
+   border-left: 1px solid transparent;
+   box-shadow: none;
+  border-radius: 3px 3px 0px 0px;
+
+    &:focus {
+    box-shadow: inset 0 1px 1px rgba(0,0,0,0.075);
+    }
+}
+
+input[type="password"] {
+  z-index: 2;
+  margin-bottom: 20px;
+  border-top: none;
+  border-bottom: 1px solid transparent;
+  border-right: 1px solid transparent;
+  border-left: 1px solid transparent;
+  border-radius: 0px 0px 3px 3px;
+  box-shadow: inset 0 1px 1px rgba(0,0,0,0.075);
+
+    &:focus {
+    box-shadow: inset 0 1px 1px rgba(0,0,0,0.075), 0px 1px 0px 0px rgba(255,255,255,0.5);
+    }
+}
+
+.form-signin-heading {
+  text-align: center;
+  font-weight: bold;
+  color: #fff;
+    margin-bottom: 20px;
+}
+
+.btn {
+  font-weight: bold;
+  border-radius: 3px;
+  border: none;
+}
+
+

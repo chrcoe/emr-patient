@@ -11,7 +11,7 @@
         <li><b>Medication:</b> {{ i.medication_name }}
         <li><b>Dosage:</b> {{ i.dosage }}
         <li><b>Description:</b> {{ i.medication_description }}
-        <p>Patient notes: {{ i.medication_notes }}
+        <p>Patient notes: {{ i.medication_notes }}</p>
     </ul>
     <form class="form-horizontal" role="form" action="{% url 'patient:medication' patient.id %}" method='post'>
       {% csrf_token %}

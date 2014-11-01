@@ -4,28 +4,28 @@
 {% block content %}
 <div class="container">
   <div class="well well-lg clearfix">
-    <h1>Welcome to your {{ page_name }} page {{ patient.first_name }} </h1>
+    <h1>Welcome to your {{ page_name }} page, {{ patient.first_name }} </h1>
     <div id="allergy_item">
-    	<h3>Your recorded allergies:</h3>
-    	{% for i in allergies %}
-    		<ul>
-    			<li><b>Allergy name:</b> {{ i.allergy_name }}
-    			<li><b>Severity:</b> {{ i.severity }}
-    			<li><b>Allergy description:</b> {{ i.allergy_description }}
-    			<p>Allergy notes: {{ i.allergy_notes }}
-    		</ul>
-    		<form class="form-horizontal" role="form" action="{% url 'patient:allergies' patient.id %}" method='post'>
-	      		{% csrf_token %}
-    	  		<div class="form-group">
-        			<textarea class="form-control" name="allergy_notes" placeholder="enter new notes here" textarea></textarea>
-        			<input type="hidden" name="allergies_id" value='{{ i.id }}' />
-      			</div>
-      			<div class="form-group">
-      				<button type="submit" class="btn btn-default">Submit</button>
-		   		</div>
-    		</form>
-    	{% endfor %}
-  	</div>
+        <h3>Your recorded allergies:</h3>
+        {% for i in allergies reversed %}
+            <ul>
+                <li><b>Allergy name:</b> {{ i.allergy_name }}
+                <li><b>Severity:</b> {{ i.severity }}
+                <li><b>Allergy description:</b> {{ i.allergy_description }}
+                <p>Allergy notes: {{ i.allergy_notes }}
+            </ul>
+            <form class="form-horizontal" role="form" action="{% url 'patient:allergies' patient.id %}" method='post'>
+                  {% csrf_token %}
+                  <div class="form-group">
+                    <textarea class="form-control" name="allergy_notes" placeholder="enter new notes here" textarea></textarea>
+                    <input type="hidden" name="allergies_id" value='{{ i.id }}' />
+                  </div>
+                  <div class="form-group">
+                      <button type="submit" class="btn btn-default">Submit</button>
+                   </div>
+            </form>
+        {% endfor %}
+      </div>
   </div>
 </div>
 {% endblock %}

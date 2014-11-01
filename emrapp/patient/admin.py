@@ -145,7 +145,7 @@ class PatientAdmin(UserAdmin):
                        'is_admin', 'is_staff', 'is_active')}
          ),
     )
-    search_fields = ('email',)
+    search_fields = ('email','first_name','last_name','date_of_birth')
     ordering = ('email',)
     filter_horizontal = ()
 

@@ -4,9 +4,9 @@
 {% block content %}
 <div class="container">
   <div class="well well-lg clearfix">
-    <h1>Welcome to your {{ page_name }} page {{ patient.first_name }} </h1>
+    <h1>Welcome to your {{ page_name }} page, {{ patient.first_name }} </h1>
     <div id="medication_item">
-    {% for i in medication %}
+    {% for i in medication reversed %}
     <ul>
         <li><b>Medication:</b> {{ i.medication_name }}
         <li><b>Dosage:</b> {{ i.dosage }}

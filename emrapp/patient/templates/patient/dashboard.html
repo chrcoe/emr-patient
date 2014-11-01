@@ -8,7 +8,7 @@
 
         <div style="float:left;">
             <h3>Current Medications:</h3>
-            {% for i in medication %}
+            {% for i in medication reversed %}
                 <p><b>Medication:</b> {{ i.medication_name }}</p>
                 <p><b>Dosage:</b> {{ i.dosage }}</p>
                 <p><b>Description:</b> {{ i.medication_description }}</p>
@@ -17,7 +17,7 @@
             {% endfor %}
 
             <h3>Current Allergies:</h3>
-            {% for i in allergies %}
+            {% for i in allergies reversed %}
                 <p><b>Name:</b> {{ i.allergy_name }}</p>
                 <p><b>Severity:</b> {{ i.severity }}</p>
                 <p><b>Description:</b> {{ i.allergy_description }}</p>

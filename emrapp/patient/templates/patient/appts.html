@@ -10,7 +10,7 @@
         {% if appts %}
 
             <h3>Your Scheduled Appointments:</h3>
-            {% for i in appts %}
+            {% for i in appts reversed %}
                 <ul>
                     <li><b>Date:</b> {{ i.appointment_date }}
                     <li>Appointment notes: {{ i.appointment_notes }}

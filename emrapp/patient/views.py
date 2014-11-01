@@ -26,7 +26,8 @@ def dashboard(request, patient_id):
         return redirect('/admin/')
     vitals = get_list_or_404(Vital, id_patient=patient_id)
     medication = get_list_or_404(Medication, id_patient=patient_id)
-    appts = get_list_or_404(Appointment, id_patient=patient_id)
+#     appts = get_list_or_404(Appointment, id_patient=patient_id)
+    appts = list(Appointment.objects.filter(id_patient=patient_id))
     diagnosticresults = get_list_or_404(DiagnosticResult, id_patient=patient_id)
     allergies = get_list_or_404(Allergy, id_patient=patient_id)
     insurance = get_list_or_404(InsurancePolicy, id_patient=patient_id)
@@ -70,7 +71,7 @@ def allergies(request, patient_id):
     if patient.is_admin or patient.is_staff:
         return redirect('/admin/')
     allergies = get_list_or_404(Allergy, id_patient=patient_id)
-    
+
         # need to handle the POST data for all notes
     if request.method == 'POST':
         #         posted = request.POST
@@ -81,7 +82,7 @@ def allergies(request, patient_id):
                 i.allergy_notes = request.POST['allergy_notes']
                 # save changes to the DB
                 i.save()
-                
+
     return render(request, 'patient/allergies.html',
                   {'patient': patient, 'allergies': allergies, 'page_name': 'Allergies'})
 
@@ -146,8 +147,9 @@ def appts(request, patient_id):
     patient = get_object_or_404(Patient, pk=patient_id)
     if patient.is_admin or patient.is_staff:
         return redirect('/admin/')
-    appts = get_list_or_404(Appointment, id_patient=patient_id)
-    
+#     appts = get_list_or_404(Appointment, id_patient=patient_id)
+    appts = list(Appointment.objects.filter(id_patient=patient_id))
+
     # need to handle the POST data for all notes
     if request.method == 'POST':
         #         posted = request.POST
@@ -158,7 +160,7 @@ def appts(request, patient_id):
                 i.appointment_notes = request.POST['appts_notes']
                 # save changes to the DB
                 i.save()
-                
+
     return render(request, 'patient/appts.html',
                   {'patient': patient, 'appts': appts, 'page_name': 'Appointments'})
 

@@ -69,8 +69,9 @@ input[type="password"] {
 .form-signin-heading {
   text-align: center;
   font-weight: bold;
+  text-shadow: -1px 0 gray, 0 1px gray, 1px 0 gray, 0 -1px gray;
   color: #fff;
-    margin-bottom: 20px;
+  margin-bottom: 20px;
 }
 
 .btn {
@@ -79,4 +80,6 @@ input[type="password"] {
   border: none;
 }
 
-
+.well {
+  background: rgba(245, 245, 245, 0.7);
+}

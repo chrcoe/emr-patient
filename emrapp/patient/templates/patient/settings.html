@@ -1,10 +1,47 @@
 {% extends 'main/base.html' %}
+{% block nav-settings %} class="active"{% endblock %}
 
 {% block content %}
 <div class="container">
   <div class="well well-lg clearfix">
-    <h1>This is the {{ page_name }} page</h1>
-    <p>Hello, This page is EMPTY!!!! Except of course but this text, WOOT!!!</p>
+    <h1>Welcome to your {{ page_name }} page, {{ patient.first_name }} </h1>
+    {% if messages %}
+      <div class='row'>
+        <div class='col-sm-2'>
+          {% for message in messages %}
+          <p{% if message.tags == "success" %} class="alert alert-success"{% endif %}>{{ message }}</p>
+          {% endfor %}
+        </div>
+      </div>
+    {% endif %}
+    <form class="form-horizontal" role="form" action="{% url 'patient:settings' patient.id %}" method='post'>
+      {% csrf_token %}
+      <div class="form-group">
+        <b>Phone Number:</b><textarea class="form-control" name="phone_num" style="resize:none">{{ patient.phone_num }}</textarea>
+        <input type="hidden" name="patient_id" value='{{ patient.id }}' />
+      </div>
+      <div class="form-group">
+        <b>Street Address:</b><textarea class="form-control" name="street_address" style="resize:none">{{ patient.street_address}}</textarea>
+        <input type="hidden" name="patient_id" value='{{ patient.id }}' />
+      </div>
+      <div class="form-group">
+        <b>City:</b><textarea class="form-control" name="city" style="resize:none">{{ patient.city }}</textarea>
+        <input type="hidden" name="patient_id" value='{{ patient.id }}' />
+      </div>
+      <div class="form-group">
+        <b>State:</b><textarea class="form-control" name="state" style="resize:none">{{ patient.state }}</textarea>
+        <input type="hidden" name="patient_id" value='{{ patient.id }}' />
+      </div>
+      <div class="form-group">
+        <b>Zip Code:</b><textarea class="form-control" name="zip_code" style="resize:none">{{ patient.zip_code }}</textarea>
+        <input type="hidden" name="patient_id" value='{{ patient.id }}' />
+      </div>	  
+      <a href="">Change Password</a></br></br>
+      <div class="form-group">
+        <button type="submit" class="btn btn-default" onclick="return confirm('Save Changes?')">Submit</button>
+      </div>
+    </form>
+    </div>
   </div>
 </div>
 {% endblock %}

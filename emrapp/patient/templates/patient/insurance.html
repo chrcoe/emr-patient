@@ -4,31 +4,38 @@
 {% block content %}
 <div class="container">
   <div class="well well-lg clearfix">
-    <h1>This is the {{ page_name }} page {{ patient.first_name }}</h1>
+    <h1>This is the {{ page_name }} page, {{ patient.first_name }}</h1>
     <div id="insurance_info">
-    	<h3>Your insurance on file is:</h3>
-    	{% for i in insurance %}
-    	    <ul>
-    	        <li><b>Insurance Plan/Program Name:</b> {{ i.insurance_name }}
-    	        <li><b>Name of Insured:</b>
-    	        <li><b>Relationship to Insured:</b> {{ i.insured }} Another individual
-       			<li><b>Employers Name:</b> {{ i.employer }} of insured        		
-        		<li><b>Policy Group/Number:</b> {{ i.number }} 
-        		<p>Patient notes: {{ i.insurance_notes }}
-    	    </ul>
+        {% if insurance %}
+            <h3>Your insurance on file is:</h3>
+            {% for i in insurance %}
+                <ul>
+                    <li><b>Insurance Plan/Program Name:</b> {{ i.insurance_name }}
+                    <li><b>Name of Insured:</b>
+                    <li><b>Relationship to Insured:</b> {{ i.insured }} Another individual
+                       <li><b>Employers Name:</b> {{ i.employer }} of insured
+                    <li><b>Policy Group/Number:</b> {{ i.number }}
+
+{% comment %}
+insurance model has no place for patient notes based on our current design
+                <p>Patient notes: {{ i.insurance_notes }}
+            </ul>
             <form class="form-horizontal" role="form" action="{% url 'patient:insurance' patient.id %}" method='post'>
-      			{% csrf_token %}
-      			<div class="form-group">
-        			<textarea class="form-control" name="insurance_notes" placeholder="enter new notes here" textarea></textarea>
-        			<input type="hidden" name="insurance_id" value='{{ i.id }}' />
-      			</div>
-      			<div class="form-group">
-      				<button type="submit" class="btn btn-default">Submit</button>
-      			</div>
-    		</form>
-    	{% endfor %}
+                  {% csrf_token %}
+                  <div class="form-group">
+                    <textarea class="form-control" name="insurance_notes" placeholder="enter new notes here" textarea></textarea>
+                    <input type="hidden" name="insurance_id" value='{{ i.id }}' />
+                  </div>
+                  <div class="form-group">
+                      <button type="submit" class="btn btn-default">Submit</button>
+                  </div>
+            </form>
+{% endcomment %}
+            {% endfor %}
+        {% else %}
+            <p>You currently have no insurance policies on file.</p>
+        {% endif %}
     </div>
   </div>
 </div>
 {% endblock %}
-            

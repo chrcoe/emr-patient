@@ -1,55 +1,58 @@
 {% extends 'main/base.html' %}
-{% block nav-conditions %} class="active"{% endblock %}
+{% block nav-medicalHistory %} class="active"{% endblock %}
 
 {% block content %}
 <div class="container">
   <div class="well well-lg clearfix">
-    <h1>This is the {{ page_name }} page {{ patient.first_name }}</h1>
+    <h1>This is the {{ page_name }} page, {{ patient.first_name }}</h1>
     <div id="medical_History">
-    	<h3>Your Recorded History is:</h3>
-    	{% for i in medicalHistory %}
-    	    <ul>
-        		<li><b>Family History:</b> {{ i.familyHx }} 
-       			<li><b>Social History:</b> 
-       			    <ul>
-       			        <li><b>Tobacco Use:</b> {{ i.packsPerDay }} N/A if none
-       			        <li><b>Alcohol Use:</b> {{ i.consumption }} daily, weekly, 
-       			               occasional, or N/A for none
-       			        <li><b>Illicit Drug Use:</b> {{ i.whatDrug }} N/A if none
-       			    </ul>
-        		<li><b>Medical History:</b> Could this be a table or is this unnecessary 
-        		                            do we only need this if a condition exists.
-											How can I do it if so?
-        		    <ul>
-        		        <li><b>Eyes:</b> {{ i.eye }} negative or positive and comments for eyes - genitourinary
-        		        <li><b>Ear, Nose, Throat:</b> {{ i.ENT }}
-        		        <li><b>Cardiovascular:</b> {{ i.cardio }}
-        		        <li><b>Gastrointestinal:</b> {{ i.gastro }}
-        		        <li><b>Respiratory:</b> {{ i.resp }}
-        		        <li><b>Musculoskeletal:</b> {{ i.musculo }}
-        		        <li><b>Integumentary:</b> {{ i.skin }}
-        		        <li><b>Neurologic:</b> {{ i.neuro }}
-        		        <li><b>Endocrinologic:</b> {{ i.endo }}
-        		        <li><b>Psychiatric:</b> {{ i.psych }}
-        		        <li><b>Hematologic/Lymphatic:</b> {{ i.Hem_lym }}
-        		        <li><b>Genitourinary:</b> {{ i.geni }}
-        		        
-        		<p>Patient notes: {{ i.medicalHistory_notes }}
-    		</ul>
-    		<form class="form-horizontal" role="form" action="{% url 'patient:medicalHistory' patient.id %}" method='post'>
-      			{% csrf_token %}
-      			<div class="form-group">
-        			<textarea class="form-control" name="medicalHistory_notes" placeholder="enter new notes here" textarea></textarea>
-        			<input type="hidden" name="medicalHistory_id" value='{{ i.id }}' />
-      			</div>
-      			<div class="form-group">
-      				<button type="submit" class="btn btn-default">Submit</button>
-      			</div>
-    		</form>
-    	{% endfor %}
+        {% if medicalHistory %}
+            <h3>Your Recorded History is:</h3>
+            {% for i in medicalHistory reversed %}
+                <ul>
+                    <li><b>Family History:</b> {{ i.familyHx }}
+                       <li><b>Social History:</b>
+                           <ul>
+                               <li><b>Tobacco Use:</b> {{ i.packsPerDay }} N/A if none
+                               <li><b>Alcohol Use:</b> {{ i.consumption }} daily, weekly,
+                                      occasional, or N/A for none
+                               <li><b>Illicit Drug Use:</b> {{ i.whatDrug }} N/A if none
+                           </ul>
+                    <li><b>Medical History:</b> Could this be a table or is this unnecessary
+                                                do we only need this if a condition exists.
+                                                How can I do it if so?
+                        <ul>
+                            <li><b>Eyes:</b> {{ i.eye }} negative or positive and comments for eyes - genitourinary
+                            <li><b>Ear, Nose, Throat:</b> {{ i.ENT }}
+                            <li><b>Cardiovascular:</b> {{ i.cardio }}
+                            <li><b>Gastrointestinal:</b> {{ i.gastro }}
+                            <li><b>Respiratory:</b> {{ i.resp }}
+                            <li><b>Musculoskeletal:</b> {{ i.musculo }}
+                            <li><b>Integumentary:</b> {{ i.skin }}
+                            <li><b>Neurologic:</b> {{ i.neuro }}
+                            <li><b>Endocrinologic:</b> {{ i.endo }}
+                            <li><b>Psychiatric:</b> {{ i.psych }}
+                            <li><b>Hematologic/Lymphatic:</b> {{ i.Hem_lym }}
+                            <li><b>Genitourinary:</b> {{ i.geni }}
+
+                    <p>Patient notes: {{ i.history_notes }}
+                </ul>
+                <form class="form-horizontal" role="form" action="{% url 'patient:medicalHistory' patient.id %}" method='post'>
+                      {% csrf_token %}
+                      <div class="form-group">
+                        <textarea class="form-control" name="history_notes" placeholder="enter new notes here" textarea></textarea>
+                        <input type="hidden" name="history_id" value='{{ i.id }}' />
+                      </div>
+                      <div class="form-group">
+                          <button type="submit" class="btn btn-default">Submit</button>
+                      </div>
+                </form>
+            {% endfor %}
+        {% else %}
+            <p>You currently have no medical history on file.</p>
+        {% endif %}
     </div>
   </div>
 </div>
 {% endblock %}
-    	
-  
+

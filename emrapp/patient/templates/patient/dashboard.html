@@ -4,62 +4,85 @@
 {% block content %}
 <div class="container">
      <div class="well well-lg clearfix">
-    <center><h1>Welcome to your {{ page_name }}, {{ patient.first_name }} </h1></center>
+         <div class="text-center">
+            <h1>Welcome to your {{ page_name }}, {{ patient.first_name }}</h1>
+         </div>
 
         <div style="float:left;">
             <h3>Current Medications:</h3>
-            {% for i in medication reversed %}
-                <p><b>Medication:</b> {{ i.medication_name }}</p>
-                <p><b>Dosage:</b> {{ i.dosage }}</p>
-                <p><b>Description:</b> {{ i.medication_description }}</p>
-                <p><b>Notes:</b> {{ i.medication_notes }}</p>
-                <p>-----------------------------------------------</p>
-            {% endfor %}
+            {% if medication %}
+                {% for i in medication reversed %}
+                    <p><b>Medication:</b> {{ i.medication_name }}</p>
+                    <p><b>Dosage:</b> {{ i.dosage }}</p>
+                    <p><b>Description:</b> {{ i.medication_description }}</p>
+                    <p><b>Notes:</b> {{ i.medication_notes }}</p>
+                    <p>-----------------------------------------------</p>
+                {% endfor %}
+            {% else %}
+                <p>You currently have no medications on file</p>
+            {% endif %}
 
             <h3>Current Allergies:</h3>
-            {% for i in allergies reversed %}
-                <p><b>Name:</b> {{ i.allergy_name }}</p>
-                <p><b>Severity:</b> {{ i.severity }}</p>
-                <p><b>Description:</b> {{ i.allergy_description }}</p>
-                <p><b>Notes:</b> {{ i.allergy_notes }}</p>
-                <p>-----------------------------------------------</p>
-            {% endfor %}
+            {% if allergies %}
+                {% for i in allergies reversed %}
+                    <p><b>Name:</b> {{ i.allergy_name }}</p>
+                    <p><b>Severity:</b> {{ i.severity }}</p>
+                    <p><b>Description:</b> {{ i.allergy_description }}</p>
+                    <p><b>Notes:</b> {{ i.allergy_notes }}</p>
+                    <p>-----------------------------------------------</p>
+                {% endfor %}
+            {% else %}
+                <p>You currently have no allergies on file</p>
+            {% endif %}
+
 
             <h3>Latest Diagnostic Result:</h3>
-            {% with diagnosticresults|first as first_item %}
-                <p><b>Lab:</b> {{ first_item.lab_title }}</p>
-                <p><b>Date:</b> {{ first_item.lab_date }}</p>
-                <p><b>Description:</b> {{ first_item.lab_description }}</p>
-                <p><b>Notes:</b> {{ first_item.lab_notes }}</p>
-                <p>-----------------------------------------------</p>
-            {% endwith %}
+            {% if diagnosticresults %}
+                {% with diagnosticresults|last as first_item %}
+                    <p><b>Lab:</b> {{ first_item.lab_title }}</p>
+                    <p><b>Date:</b> {{ first_item.lab_date }}</p>
+                    <p><b>Description:</b> {{ first_item.lab_description }}</p>
+                    <p><b>Notes:</b> {{ first_item.lab_notes }}</p>
+                    <p>-----------------------------------------------</p>
+                {% endwith %}
+            {% else %}
+                   <p>You currently have no diagnostic results on file.</p>
+            {% endif %}
 
             <h3>Latest Medical History:</h3>
-            {% with conditions|first as first_item %}
-                <p><b>Name:</b> {{ first_item.history_item_name }}</p>
-                <p><b>Runs in Family:</b> {{ first_item.is_family_item }}</p>
-                <p><b>Date of diagnosis:</b> {{ first_item.history_item_date }}</p>
-                <p><b>Description:</b> {{ first_item.history_description }}</p>
-                <p><b>Notes:</b> {{ first_item.history_notes }}</p>
-                <p>-----------------------------------------------</p>
-            {% endwith %}
+            {% if medicalHistory %}
+                {% with medicalHistory|last as first_item %}
+                    <p><b>Name:</b> {{ first_item.history_item_name }}</p>
+                    <p><b>Runs in Family:</b> {{ first_item.is_family_item }}</p>
+                    <p><b>Date of diagnosis:</b> {{ first_item.history_item_date }}</p>
+                    <p><b>Description:</b> {{ first_item.history_description }}</p>
+                    <p><b>Notes:</b> {{ first_item.history_notes }}</p>
+                    <p>-----------------------------------------------</p>
+                {% endwith %}
+            {% else %}
+                <p>You currently have no medical history on file.</p>
+            {% endif %}
 
         </div>
 
         <div style="float:right;">
             <h3>Last recorded vitals</h3>
-            {% with vitals|first as first_item %}
-                <p><b>Height:</b> {{ first_item.height_inches }}</p>
-                <p><b>Weight:</b> {{ first_item.weight_pounds }}</p>
-                <p><b>BP:</b> {{ first_item.blood_pressure }}</p>
-                <p><b>Pulse:</b> {{ first_item.pulse }}</p>
-                <p><b>Notes:</b> {{ first_item.vitals_notes }}</p>
-            {% endwith %}
-               <a href="http://prohealthsys.com/site/resources/assessment/physical-assessment/vital-signs/vital_signs_table/">Table of normal vital ranges.</a>
+            {% if vitals %}
+                {% with vitals|last as first_item %}
+                    <p><b>Height:</b> {{ first_item.height_inches }}</p>
+                    <p><b>Weight:</b> {{ first_item.weight_pounds }}</p>
+                    <p><b>BP:</b> {{ first_item.blood_pressure }}</p>
+                    <p><b>Pulse:</b> {{ first_item.pulse }}</p>
+                    <p><b>Notes:</b> {{ first_item.vitals_notes }}</p>
+                {% endwith %}
+            {% else %}
+              <p>You currently have no vitals on file</p>
+            {% endif %}
+           <a href="http://prohealthsys.com/site/resources/assessment/physical-assessment/vital-signs/vital_signs_table/">Table of normal vital ranges.</a>
 
             <h3>Latest Appointment:</h3>
             {% if appts %}
-                {% with appts|first as first_item %}
+                {% with appts|last as first_item %}
                     <p><b>Date:</b> {{ first_item.appointment_date }}</p>
                     <p><b>Notes:</b> {{ first_item.appointment_notes }}</p>
                     <p>-----------------------------------------------</p>
@@ -69,13 +92,17 @@
             {% endif %}
 
             <h3>Insurance Information:</h3>
-            {% with insurance|first as first_item %}
-                <p><b>Policy #:</b> {{ first_item.policy_num }}</p>
-                <p><b>Exp. Date:</b> {{ first_item.exp_date }}</p>
-                <p><b>Company Name:</b> {{ first_item.comp_name }}</p>
-                <p><b>Group Number:</b> {{ first_item.group_num }}</p>
-                <p>-----------------------------------------------</p>
-            {% endwith %}
+            {% if insurance %}
+                {% with insurance|last as first_item %}
+                    <p><b>Policy #:</b> {{ first_item.policy_num }}</p>
+                    <p><b>Exp. Date:</b> {{ first_item.exp_date }}</p>
+                    <p><b>Company Name:</b> {{ first_item.comp_name }}</p>
+                    <p><b>Group Number:</b> {{ first_item.group_num }}</p>
+                    <p>-----------------------------------------------</p>
+                {% endwith %}
+            {% else %}
+                <p>You currently have no insurance policies on file.</p>
+            {% endif %}
         </div>
     </div>
 </div>

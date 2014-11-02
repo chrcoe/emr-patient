@@ -1,11 +1,11 @@
 from django.conf import settings
-from django.core.exceptions import ValidationError
+# from django.core.exceptions import ValidationError
 from django.core.validators import RegexValidator, MaxValueValidator
 from django.contrib.auth.models import (
     BaseUserManager, AbstractBaseUser
 )
 from django.db import models
-import datetime
+# import datetime
 
 
 class PatientManager(BaseUserManager):
@@ -41,8 +41,11 @@ class PatientManager(BaseUserManager):
         user.save(using=self._db)
         return user
 
-AlphaValidator = RegexValidator(r'^[a-z :A-Z]*$', 'Only letter characters are allowed.')
-AlphanumericValidator = RegexValidator(r'^[0-9 a-z:A-Z]*$', 'Only alphanumeric characters are allowed.')
+AlphaValidator = RegexValidator(
+    r'^[a-z :A-Z]*$', 'Only letter characters are allowed.')
+AlphanumericValidator = RegexValidator(
+    r'^[0-9 a-z:A-Z]*$', 'Only alphanumeric characters are allowed.')
+
 
 class Patient(AbstractBaseUser):
     # http://stackoverflow.com/questions/11351619/how-to-make-djangos-datetimefield-optional
@@ -53,11 +56,14 @@ class Patient(AbstractBaseUser):
         ('Last Name'), max_length=30, blank=True, null=True, validators=[AlphaValidator])
     phone_num = models.CharField(max_length=12, blank=True, null=True)
     street_address = models.CharField(max_length=255, blank=True, null=True)
-    city = models.CharField(max_length=255, blank=True, null=True, validators=[AlphaValidator])
+    city = models.CharField(
+        max_length=255, blank=True, null=True, validators=[AlphaValidator])
     state = models.CharField(max_length=255, blank=True, null=True)
-    zip_code = models.IntegerField(blank=True, null=True, validators=[MaxValueValidator(99999)])
+    zip_code = models.IntegerField(
+        blank=True, null=True, validators=[MaxValueValidator(99999)])
     date_of_birth = models.DateField(blank=True, null=True)
-    ssn = models.IntegerField(blank=True, null=True, validators=[MaxValueValidator(999999999)])
+    ssn = models.IntegerField(
+        blank=True, null=True, validators=[MaxValueValidator(999999999)])
 
     is_active = models.BooleanField(default=True)
     is_staff = models.BooleanField(default=False)
@@ -88,10 +94,14 @@ class Patient(AbstractBaseUser):
 
 class Allergy(models.Model):
     id_patient = models.ForeignKey(settings.AUTH_USER_MODEL)
-    allergy_name = models.CharField(max_length=255, null=True, validators=[AlphaValidator])
-    severity = models.CharField(max_length=255, validators=[AlphanumericValidator])
-    allergy_description = models.CharField(max_length=255, validators=[AlphanumericValidator])
-    allergy_notes = models.CharField(max_length=255, blank=True, validators=[AlphanumericValidator])
+    allergy_name = models.CharField(
+        max_length=255, null=True, validators=[AlphaValidator])
+    severity = models.CharField(
+        max_length=255, validators=[AlphanumericValidator])
+    allergy_description = models.CharField(
+        max_length=255, validators=[AlphanumericValidator])
+    allergy_notes = models.CharField(
+        max_length=255, blank=True, validators=[AlphanumericValidator])
 
     def __unicode__(self):
         return self.allergy_name
@@ -99,7 +109,8 @@ class Allergy(models.Model):
 
 class Appointment(models.Model):
     id_patient = models.ForeignKey(settings.AUTH_USER_MODEL)
-    appointment_notes = models.CharField(max_length=255, null=True, validators=[AlphanumericValidator])
+    appointment_notes = models.CharField(
+        max_length=255, null=True, validators=[AlphanumericValidator])
     appointment_date = models.DateField('appointment date')
 
     def __unicode__(self):
@@ -108,10 +119,13 @@ class Appointment(models.Model):
 
 class InsurancePolicy(models.Model):
     id_patient = models.ForeignKey(settings.AUTH_USER_MODEL)
-    policy_num = models.CharField(max_length=255, validators=[AlphanumericValidator])
+    policy_num = models.CharField(
+        max_length=255, validators=[AlphanumericValidator])
     exp_date = models.DateField('expiration date')
-    comp_name = models.CharField(max_length=255, validators=[AlphanumericValidator])
-    group_num = models.CharField(max_length=255, validators=[AlphanumericValidator])
+    comp_name = models.CharField(
+        max_length=255, validators=[AlphanumericValidator])
+    group_num = models.CharField(
+        max_length=255, validators=[AlphanumericValidator])
 
     def __unicode__(self):
         return self.policy_num
@@ -132,7 +146,7 @@ class MedicalHistory(models.Model):
     id_patient = models.ForeignKey(settings.AUTH_USER_MODEL)
     history_item_name = models.CharField(max_length=255)
     is_family_item = models.BooleanField(default=False)
-    history_item_date = models.DateField('medical condition diagnosed date')
+    history_item_date = models.DateField('Diagnosis date of History Item')
     history_description = models.CharField(max_length=255)
     history_notes = models.CharField(max_length=255, null=True, blank=True)
 
@@ -154,12 +168,12 @@ class Medication(models.Model):
 
 class Vital(models.Model):
     id_patient = models.ForeignKey(settings.AUTH_USER_MODEL)
-    height_inches = models.IntegerField(default=0)
-    weight_pounds = models.IntegerField(default=0)
-    bp_sys = models.IntegerField(default=0)
-    bp_dias = models.IntegerField(default=0)
-    pulse = models.IntegerField(default=0)
-    vitals_date = models.DateField('vitals date', default=datetime.date.today())
+    height_inches = models.IntegerField(null=True, blank=True)
+    weight_pounds = models.IntegerField(null=True, blank=True)
+    bp_sys = models.IntegerField(null=True, blank=True)
+    bp_dias = models.IntegerField(null=True, blank=True)
+    pulse = models.IntegerField(null=True, blank=True)
+    vitals_date = models.DateField('vitals date', null=True, blank=True)
     vitals_notes = models.CharField(max_length=255, null=True, blank=True)
 
     def __unicode__(self):

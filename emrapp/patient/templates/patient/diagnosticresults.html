@@ -4,31 +4,35 @@
 {% block content %}
 <div class="container">
   <div class="well well-lg clearfix">
-    <h1>This is the {{ page_name }} page {{ patient.first_name }}</h1>
+    <h1>This is the {{ page_name }} page, {{ patient.first_name }}</h1>
     <div id="insurance_info">
-    	<h3>Your diagnostic results are:</h3>
-    	{% for i in diagnosticresults %}
-    	    <ul>
-    	        <li><b>Diagnostic/Lab Test:</b> {{ i.test_name }}
-    	        <li><b>Date of Test:</b> {{ i.date }}
-    	        <li><b>Description of Test:</b> {{ i.description }} 
-       			<li><b>Employers Name:</b> {{ i.employer }} of insured        		
-        		<li><b>Results:</b> {{ i.results }} 
-        		<p>Patient notes: {{ i.diagnostic_notes }}
-    	    </ul>
-            <form class="form-horizontal" role="form" action="{% url 'patient:diagnosticresults' patient.id %}" method='post'>
-      			{% csrf_token %}
-      			<div class="form-group">
-        			<textarea class="form-control" name="diagnosticresults_notes" placeholder="enter new notes here" textarea></textarea>
-        			<input type="hidden" name="diagnosticresults_id" value='{{ i.id }}' />
-      			</div>
-      			<div class="form-group">
-      				<button type="submit" class="btn btn-default">Submit</button>
-      			</div>
-    		</form>
-    	{% endfor %}
+        {% if diagnosticresults %}
+            <h3>Your diagnostic results are:</h3>
+            {% for i in diagnosticresults reversed %}
+                <ul>
+                    <li><b>Diagnostic/Lab Test:</b> {{ i.test_name }}
+                    <li><b>Date of Test:</b> {{ i.date }}
+                    <li><b>Description of Test:</b> {{ i.description }}
+                       <li><b>Employers Name:</b> {{ i.employer }} of insured
+                    <li><b>Results:</b> {{ i.results }}
+                    <p>Patient notes: {{ i.lab_notes }}
+                </ul>
+                <form class="form-horizontal" role="form" action="{% url 'patient:diagnosticresults' patient.id %}" method='post'>
+                      {% csrf_token %}
+                      <div class="form-group">
+                        <textarea class="form-control" name="lab_notes" placeholder="enter new notes here" textarea></textarea>
+                        <input type="hidden" name="lab_id" value='{{ i.id }}' />
+                      </div>
+                      <div class="form-group">
+                          <button type="submit" class="btn btn-default">Submit</button>
+                      </div>
+                </form>
+            {% endfor %}
+        {% else %}
+            <p>You currently have no medical history on file.</p>
+        {% endif %}
     </div>
   </div>
 </div>
 {% endblock %}
-    
+

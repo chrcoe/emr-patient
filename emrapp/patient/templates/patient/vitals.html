@@ -4,28 +4,32 @@
 {% block content %}
 <div class="container">
   <div class="well well-lg clearfix">
-    <h1>Welcome to your {{ page_name }} page {{ patient.first_name }} </h1>
+    <h1>Welcome to your {{ page_name }} page, {{ patient.first_name }} </h1>
     <div id="vitals_item">
-    	<h3>Your recorded vitals:</h3>
-    	{% for i in vitals %}
-    		<ul>
-        		<li><b>Height:</b> {{ i.height_inches }} inches
-       			<li><b>Weight:</b> {{ i.weight_pounds }} pounds
-        		<li><b>Blood Pressure:</b> {{ i.blood_pressure }}
-        		<li><b>Pulse:</b> {{ i.pulse }} beats per minute - A resting pulse of 60 to 80 is ideal.
-        		<p>Patient notes: {{ i.vitals_notes }}
-    		</ul>
-    		<form class="form-horizontal" role="form" action="{% url 'patient:vitals' patient.id %}" method='post'>
-      			{% csrf_token %}
-      			<div class="form-group">
-        			<textarea class="form-control" name="vitals_notes" placeholder="enter new notes here" textarea></textarea>
-        			<input type="hidden" name="vitals_id" value='{{ i.id }}' />
-      			</div>
-      			<div class="form-group">
-      				<button type="submit" class="btn btn-default">Submit</button>
-      			</div>
-    		</form>
-    	{% endfor %}
+        {% if vitals %}
+            <h3>Your recorded vitals:</h3>
+            {% for i in vitals %}
+                <ul>
+                    <li><b>Height:</b> {{ i.height_inches }} inches
+                       <li><b>Weight:</b> {{ i.weight_pounds }} pounds
+                    <li><b>Blood Pressure:</b> {{ i.blood_pressure }}
+                    <li><b>Pulse:</b> {{ i.pulse }} beats per minute - A resting pulse of 60 to 80 is ideal.
+                    <p>Patient notes: {{ i.vitals_notes }}
+                </ul>
+                <form class="form-horizontal" role="form" action="{% url 'patient:vitals' patient.id %}" method='post'>
+                      {% csrf_token %}
+                      <div class="form-group">
+                        <textarea class="form-control" name="vitals_notes" placeholder="enter new notes here" textarea></textarea>
+                        <input type="hidden" name="vitals_id" value='{{ i.id }}' />
+                      </div>
+                      <div class="form-group">
+                          <button type="submit" class="btn btn-default">Submit</button>
+                      </div>
+                </form>
+            {% endfor %}
+        {% else %}
+            <p>You currently have no vitals on file</p>
+        {% endif %}
     </div>
   </div>
 </div>

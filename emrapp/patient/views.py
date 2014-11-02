@@ -1,7 +1,7 @@
 #from patient.models import Patient
 from django.contrib.auth import get_user_model
 from django.contrib.auth.decorators import login_required
-from django.shortcuts import get_object_or_404, redirect, get_list_or_404
+from django.shortcuts import get_object_or_404, redirect
 from django.shortcuts import render
 from django.contrib import messages
 
@@ -25,14 +25,13 @@ def dashboard(request, patient_id):
     patient = get_object_or_404(Patient, pk=patient_id)
     if patient.is_admin or patient.is_staff:
         return redirect('/admin/')
-    vitals = get_list_or_404(Vital, id_patient=patient_id)
-    medication = get_list_or_404(Medication, id_patient=patient_id)
-#     appts = get_list_or_404(Appointment, id_patient=patient_id)
+    vitals = list(Vital.objects.filter(id_patient=patient_id))
+    medication = list(Medication.objects.filter(id_patient=patient_id))
     appts = list(Appointment.objects.filter(id_patient=patient_id))
-    diagnosticresults = get_list_or_404(DiagnosticResult, id_patient=patient_id)
-    allergies = get_list_or_404(Allergy, id_patient=patient_id)
-    insurance = get_list_or_404(InsurancePolicy, id_patient=patient_id)
-    medicalHistory = get_list_or_404(MedicalHistory, id_patient=patient_id)
+    diagnosticresults = list(DiagnosticResult.objects.filter(id_patient=patient_id))
+    allergies = list(Allergy.objects.filter(id_patient=patient_id))
+    insurance = list(InsurancePolicy.objects.filter(id_patient=patient_id))
+    medicalHistory = list(MedicalHistory.objects.filter(id_patient=patient_id))
     return render(request, 'patient/dashboard.html',
                   {'patient': patient, 'vitals': vitals, 'medication': medication, 'appts': appts, 'diagnosticresults': diagnosticresults, 'allergies': allergies, 'insurance': insurance, 'medicalHistory': medicalHistory,
                    'page_name': 'Dashboard'})
@@ -46,7 +45,8 @@ def vitals(request, patient_id):
     patient = get_object_or_404(Patient, pk=patient_id)
     if patient.is_admin or patient.is_staff:
         return redirect('/admin/')
-    vitals = get_list_or_404(Vital, id_patient=patient_id)
+#     vitals = get_list_or_404(Vital, id_patient=patient_id)
+    vitals = list(Vital.objects.filter(id_patient=patient_id))
 
     # need to handle the POST data for all notes
     if request.method == 'POST':
@@ -71,9 +71,9 @@ def allergies(request, patient_id):
     patient = get_object_or_404(Patient, pk=patient_id)
     if patient.is_admin or patient.is_staff:
         return redirect('/admin/')
-    allergies = get_list_or_404(Allergy, id_patient=patient_id)
+    allergies = list(Allergy.objects.filter(id_patient=patient_id))
 
-        # need to handle the POST data for all notes
+    # need to handle the POST data for all notes
     if request.method == 'POST':
         #         posted = request.POST
         for i in allergies:
@@ -94,7 +94,7 @@ def medication(request, patient_id):
     if request.user.id <> patient_id:
         patient_id = request.user.id
     patient = get_object_or_404(Patient, pk=patient_id)
-    medication = get_list_or_404(Medication, id_patient=patient_id)
+    medication = list(Medication.objects.filter(id_patient=patient_id))
     if patient.is_admin or patient.is_staff:
         return redirect('/admin/')
 
@@ -108,7 +108,7 @@ def medication(request, patient_id):
                 i.medication_notes = request.POST['medication_notes']
                 # save changes to the DB
                 i.save()
-				
+
     return render(request, 'patient/medication.html',
                   {'patient': patient, 'medication': medication, 'page_name': 'Medication'})
 
@@ -121,7 +121,19 @@ def insurance(request, patient_id):
     patient = get_object_or_404(Patient, pk=patient_id)
     if patient.is_admin or patient.is_staff:
         return redirect('/admin/')
-    insurance = get_list_or_404(InsurancePolicy, id_patient=patient_id)
+    insurance = list(InsurancePolicy.objects.filter(id_patient=patient_id))
+
+#     # need to handle the POST data for all notes
+#     if request.method == 'POST':
+#         #         posted = request.POST
+#         for i in insurance:
+#             # update ONLY the notes that the patient wanted to update
+#             if i.id == int(request.POST['insurance_id']):
+#                 # set the notes on THIS record to the new notes
+#                 i.insurance_notes = request.POST['insurance_notes']
+#                 # save changes to the DB
+#                 i.save()
+
     return render(request, 'patient/insurance.html',
                   {'patient': patient, 'insurance': insurance, 'page_name': 'Insurance Policies'})
 
@@ -134,7 +146,19 @@ def medicalHistory(request, patient_id):
     patient = get_object_or_404(Patient, pk=patient_id)
     if patient.is_admin or patient.is_staff:
         return redirect('/admin/')
-    medicalHistory = get_list_or_404(MedicalHistory, id_patient=patient_id)
+    medicalHistory = list(MedicalHistory.objects.filter(id_patient=patient_id))
+
+    # need to handle the POST data for all notes
+    if request.method == 'POST':
+        #         posted = request.POST
+        for i in medicalHistory:
+            # update ONLY the notes that the patient wanted to update
+            if i.id == int(request.POST['history_id']):
+                # set the notes on THIS record to the new notes
+                i.history_notes = request.POST['history_notes']
+                # save changes to the DB
+                i.save()
+
     return render(request, 'patient/medicalHistory.html',
                   {'patient': patient, 'medicalHistory': medicalHistory, 'page_name': 'Medical History'})
 
@@ -147,7 +171,19 @@ def diagnosticresults(request, patient_id):
     patient = get_object_or_404(Patient, pk=patient_id)
     if patient.is_admin or patient.is_staff:
         return redirect('/admin/')
-    diagnosticresults = get_list_or_404(DiagnosticResult, id_patient=patient_id)
+    diagnosticresults = list(DiagnosticResult.objects.filter(id_patient=patient_id))
+
+    # need to handle the POST data for all notes
+    if request.method == 'POST':
+        #         posted = request.POST
+        for i in diagnosticresults:
+            # update ONLY the notes that the patient wanted to update
+            if i.id == int(request.POST['lab_id']):
+                # set the notes on THIS record to the new notes
+                i.lab_notes = request.POST['lab_notes']
+                # save changes to the DB
+                i.save()
+
     return render(request, 'patient/diagnosticresults.html',
                   {'patient': patient, 'diagnosticresults': diagnosticresults, 'page_name': 'Diagnostic Results'})
 
@@ -186,7 +222,7 @@ def settings(request, patient_id):
     patient = get_object_or_404(Patient, pk=patient_id)
     if patient.is_admin or patient.is_staff:
         return redirect('/admin/')
-		
+
     # need to handle the POST data for all info
     if request.method == 'POST':
         # set the info on THIS record to the new info
@@ -203,6 +239,6 @@ def settings(request, patient_id):
         # save changes to the DB
         patient.save()
         messages.success(request, 'Saved changes.')
-				
+
     return render(request, 'patient/settings.html',
                   {'patient': patient, 'settings': settings, 'page_name': 'Settings'})

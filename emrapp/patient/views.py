@@ -32,9 +32,9 @@ def dashboard(request, patient_id):
     diagnosticresults = get_list_or_404(DiagnosticResult, id_patient=patient_id)
     allergies = get_list_or_404(Allergy, id_patient=patient_id)
     insurance = get_list_or_404(InsurancePolicy, id_patient=patient_id)
-    conditions = get_list_or_404(MedicalHistory, id_patient=patient_id)
+    medicalHistory = get_list_or_404(MedicalHistory, id_patient=patient_id)
     return render(request, 'patient/dashboard.html',
-                  {'patient': patient, 'vitals': vitals, 'medication': medication, 'appts': appts, 'diagnosticresults': diagnosticresults, 'allergies': allergies, 'insurance': insurance, 'conditions': conditions,
+                  {'patient': patient, 'vitals': vitals, 'medication': medication, 'appts': appts, 'diagnosticresults': diagnosticresults, 'allergies': allergies, 'insurance': insurance, 'medicalHistory': medicalHistory,
                    'page_name': 'Dashboard'})
 
 
@@ -127,16 +127,16 @@ def insurance(request, patient_id):
 
 
 @login_required
-def conditions(request, patient_id):
-    '''function for conditions, uses conditions template'''
+def medicalHistory(request, patient_id):
+    '''function for medicalHistory, uses medicalHistory template'''
     if request.user.id <> patient_id:
         patient_id = request.user.id
     patient = get_object_or_404(Patient, pk=patient_id)
     if patient.is_admin or patient.is_staff:
         return redirect('/admin/')
-    conditions = get_list_or_404(MedicalHistory, id_patient=patient_id)
-    return render(request, 'patient/conditions.html',
-                  {'patient': patient, 'conditions': conditions, 'page_name': 'Medical History'})
+    medicalHistory = get_list_or_404(MedicalHistory, id_patient=patient_id)
+    return render(request, 'patient/medicalHistory.html',
+                  {'patient': patient, 'medicalHistory': medicalHistory, 'page_name': 'Medical History'})
 
 
 @login_required

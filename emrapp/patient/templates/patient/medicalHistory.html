@@ -5,7 +5,7 @@
 <div class="container">
   <div class="well well-lg clearfix">
     <h1>This is the {{ page_name }} page {{ patient.first_name }}</h1>
-    <div id="med_hx">
+    <div id="medical_History">
     	<h3>Your Recorded History is:</h3>
     	{% for i in medicalHistory %}
     	    <ul>
@@ -19,8 +19,9 @@
        			    </ul>
         		<li><b>Medical History:</b> Could this be a table or is this unnecessary 
         		                            do we only need this if a condition exists.
+											How can I do it if so?
         		    <ul>
-        		        <li><b>Eyes:</b> {{ i.eye }} negative or positive and comments
+        		        <li><b>Eyes:</b> {{ i.eye }} negative or positive and comments for eyes - genitourinary
         		        <li><b>Ear, Nose, Throat:</b> {{ i.ENT }}
         		        <li><b>Cardiovascular:</b> {{ i.cardio }}
         		        <li><b>Gastrointestinal:</b> {{ i.gastro }}
@@ -30,7 +31,7 @@
         		        <li><b>Neurologic:</b> {{ i.neuro }}
         		        <li><b>Endocrinologic:</b> {{ i.endo }}
         		        <li><b>Psychiatric:</b> {{ i.psych }}
-        		        <li><b>Hematologic/lymphatic:</b> {{ i.Hem_lym }}
+        		        <li><b>Hematologic/Lymphatic:</b> {{ i.Hem_lym }}
         		        <li><b>Genitourinary:</b> {{ i.geni }}
         		        
         		<p>Patient notes: {{ i.medicalHistory_notes }}
@@ -45,6 +46,10 @@
       				<button type="submit" class="btn btn-default">Submit</button>
       			</div>
     		</form>
+    	{% endfor %}
+    </div>
   </div>
 </div>
 {% endblock %}
+    	
+  

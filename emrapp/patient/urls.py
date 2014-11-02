@@ -21,7 +21,7 @@ urlpatterns = patterns('',
     url(r'^(?P<patient_id>\d+)/insurance/$', views.insurance, name='insurance'), # this calls the views.insurance() function when this link is requested
 
     # /patient/patient_id/conditions/
-    url(r'^(?P<patient_id>\d+)/conditions/$', views.conditions, name='conditions'), # this calls the views.conditions() function when this link is requested
+    url(r'^(?P<patient_id>\d+)/medicalHistory/$', views.medicalHistory, name='medicalHistory'), # this calls the views.conditions() function when this link is requested
 
     # /patient/patient_id/diagnosticresults/
     url(r'^(?P<patient_id>\d+)/diagnosticresults/$', views.diagnosticresults, name='diagnosticresults'), # this calls the views.labresults() function when this link is requested

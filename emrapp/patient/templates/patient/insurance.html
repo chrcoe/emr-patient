@@ -8,11 +8,11 @@
     <div id="insurance_info">
         {% if insurance %}
             <h3>Your insurance currently on file is:</h3>
-            {% for i in insurance %}
+            {% for i in insurance reversed %}
                 <ul>
                     <li><b>Insurance Plan/Program Name:</b> {{ i.comp_name }}
                     <li><b>Policy Number:</b> {{ i.policy_num }}
-					<li><b>Group Number:</b> {{ i.group_num
+		    <li><b>Group Number:</b> {{ i.group_num }}
                     <li><b>Expiration Date:</b> {{ i.exp_date }} 
                 </ul>
             {% endfor %}

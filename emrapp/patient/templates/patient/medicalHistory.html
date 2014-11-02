@@ -8,13 +8,13 @@
     <div id="medical_History">
         {% if medicalHistory %}
             <h3>Your Recorded Medical History is:</h3>
-            {% for i in medicalHistory %}
+            {% for i in medicalHistory reversed %}
                 <ul>
                     <li><b>Name of condition:</b> {{ i.history_item_name }}
                     <li><b>Is there a family history of condition:</b> {{ i.is_family_item }}
                     <li><b>Date history was diagnosed:</b> {{ i.history_item_date }}
-                    <li><b>Description of history:</b> {{ i.history_description }} beats per minute
-					<p>Patient notes: {{ i.history_notes }}
+                    <li><b>Description of history:</b> {{ i.history_description }}
+			<p>Patient notes: {{ i.history_notes }}
                 </ul>
                 <form class="form-horizontal" role="form" action="{% url 'patient:medicalHistory' patient.id %}" method='post'>
                       {% csrf_token %}

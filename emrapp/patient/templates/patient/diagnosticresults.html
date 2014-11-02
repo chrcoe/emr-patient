@@ -5,15 +5,14 @@
 <div class="container">
   <div class="well well-lg clearfix">
     <h1>Welcome to your {{ page_name }} page, {{ patient.first_name }} </h1>
-    <div id="insurance_info">
+    <div id="diagnosticsresults_info">
         {% if diagnosticresults %}
             <h3>Your diagnostic results are:</h3>
-            {% for i in diagnosticresults %}
+            {% for i in diagnosticresults reversed %}
                 <ul>
                     <li><b>Lab Name:</b> {{ i.lab_title }}
                     <li><b>Date of Lab:</b> {{ i.lab_date }}
                     <li><b>Description of Lab:</b> {{ i.lab_description }}
-                    <li><b>Employers Name:</b> {{ i.lab_date }}
                     <p>Patient notes: {{ i.lab_notes }}
                 </ul>
                 <form class="form-horizontal" role="form" action="{% url 'patient:diagnosticresults' patient.id %}" method='post'>

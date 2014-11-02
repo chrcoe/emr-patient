@@ -14,7 +14,11 @@
                     <li><b>Is there a family history of condition:</b> {{ i.is_family_item }}
                     <li><b>Date history was diagnosed:</b> {{ i.history_item_date }}
                     <li><b>Description of history:</b> {{ i.history_description }}
+<<<<<<< HEAD
 			<p>Patient notes: {{ i.history_notes }}
+=======
+					<p>Patient notes: {{ i.history_notes }}
+>>>>>>> 2930be417b43300785a3e7322b00c7841b922b17
                 </ul>
                 <form class="form-horizontal" role="form" action="{% url 'patient:medicalHistory' patient.id %}" method='post'>
                       {% csrf_token %}

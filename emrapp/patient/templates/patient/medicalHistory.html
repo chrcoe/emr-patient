@@ -4,38 +4,17 @@
 {% block content %}
 <div class="container">
   <div class="well well-lg clearfix">
-    <h1>This is the {{ page_name }} page, {{ patient.first_name }}</h1>
+    <h1>Welcome to your {{ page_name }} page, {{ patient.first_name }} </h1>
     <div id="medical_History">
         {% if medicalHistory %}
-            <h3>Your Recorded History is:</h3>
-            {% for i in medicalHistory reversed %}
+            <h3>Your Recorded Medical History is:</h3>
+            {% for i in medicalHistory %}
                 <ul>
-                    <li><b>Family History:</b> {{ i.familyHx }}
-                       <li><b>Social History:</b>
-                           <ul>
-                               <li><b>Tobacco Use:</b> {{ i.packsPerDay }} N/A if none
-                               <li><b>Alcohol Use:</b> {{ i.consumption }} daily, weekly,
-                                      occasional, or N/A for none
-                               <li><b>Illicit Drug Use:</b> {{ i.whatDrug }} N/A if none
-                           </ul>
-                    <li><b>Medical History:</b> Could this be a table or is this unnecessary
-                                                do we only need this if a condition exists.
-                                                How can I do it if so?
-                        <ul>
-                            <li><b>Eyes:</b> {{ i.eye }} negative or positive and comments for eyes - genitourinary
-                            <li><b>Ear, Nose, Throat:</b> {{ i.ENT }}
-                            <li><b>Cardiovascular:</b> {{ i.cardio }}
-                            <li><b>Gastrointestinal:</b> {{ i.gastro }}
-                            <li><b>Respiratory:</b> {{ i.resp }}
-                            <li><b>Musculoskeletal:</b> {{ i.musculo }}
-                            <li><b>Integumentary:</b> {{ i.skin }}
-                            <li><b>Neurologic:</b> {{ i.neuro }}
-                            <li><b>Endocrinologic:</b> {{ i.endo }}
-                            <li><b>Psychiatric:</b> {{ i.psych }}
-                            <li><b>Hematologic/Lymphatic:</b> {{ i.Hem_lym }}
-                            <li><b>Genitourinary:</b> {{ i.geni }}
-
-                    <p>Patient notes: {{ i.history_notes }}
+                    <li><b>Name of condition:</b> {{ i.history_item_name }}
+                    <li><b>Is there a family history of condition:</b> {{ i.is_family_item }}
+                    <li><b>Date history was diagnosed:</b> {{ i.history_item_date }}
+                    <li><b>Description of history:</b> {{ i.history_description }} beats per minute
+					<p>Patient notes: {{ i.history_notes }}
                 </ul>
                 <form class="form-horizontal" role="form" action="{% url 'patient:medicalHistory' patient.id %}" method='post'>
                       {% csrf_token %}

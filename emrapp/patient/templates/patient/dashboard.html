@@ -4,18 +4,18 @@
 {% block content %}
 <div class="container">
      <div class="well well-lg clearfix">
-         <div class="text-center">
-            <h1>Welcome to your {{ page_name }}, {{ patient.first_name }}</h1>
-         </div>
+     	<!-- Display and Center Page Heading --> 
+        <h1><p class="text-center">Welcome to your {{ page_name }}, {{ patient.first_name }}</p></h1>
         <div class="col-md-4 col-lg-4">
             <h3>Last recorded vitals</h3>
             {% if vitals %}
-                {% with vitals|last as first_item %}
-                    <p><b>Height:</b> {{ first_item.height_inches }}</p>
-                    <p><b>Weight:</b> {{ first_item.weight_pounds }}</p>
-                    <p><b>BP:</b> {{ first_item.blood_pressure }}</p>
-                    <p><b>Pulse:</b> {{ first_item.pulse }}</p>
-                    <p><b>Notes:</b> {{ first_item.vitals_notes }}</p>
+            	<!-- Display the last item entered into array -->
+                {% with vitals|last as last_item %}
+                    <p><b>Height:</b> {{ last_item.height_inches }}</p>
+                    <p><b>Weight:</b> {{ last_item.weight_pounds }}</p>
+                    <p><b>BP:</b> {{ last_item.blood_pressure }}</p>
+                    <p><b>Pulse:</b> {{ last_item.pulse }}</p>
+                    <p><b>Notes:</b> {{ last_item.vitals_notes }}</p>
                 {% endwith %}
             {% else %}
               <p>You currently have no vitals on file</p>
@@ -24,9 +24,10 @@
 
             <h3>Latest Appointment:</h3>
             {% if appts %}
-                {% with appts|last as first_item %}
-                    <p><b>Date:</b> {{ first_item.appointment_date }}</p>
-                    <p><b>Notes:</b> {{ first_item.appointment_notes }}</p>
+               	<!-- Display the last item entered into array -->
+                {% with appts|last as last_item %}
+                    <p><b>Date:</b> {{ last_item.appointment_date }}</p>
+                    <p><b>Notes:</b> {{ last_item.appointment_notes }}</p>
                     <p>-----------------------------------------------</p>
                 {% endwith %}
             {% else %}
@@ -35,11 +36,12 @@
 
             <h3>Insurance Information:</h3>
             {% if insurance %}
-                {% with insurance|last as first_item %}
-                    <p><b>Policy #:</b> {{ first_item.policy_num }}</p>
-                    <p><b>Exp. Date:</b> {{ first_item.exp_date }}</p>
-                    <p><b>Company Name:</b> {{ first_item.comp_name }}</p>
-                    <p><b>Group Number:</b> {{ first_item.group_num }}</p>
+                <!-- Display the last item entered into array -->
+                {% with insurance|last as last_item %}
+                    <p><b>Policy #:</b> {{ last_item.policy_num }}</p>
+                    <p><b>Exp. Date:</b> {{ last_item.exp_date }}</p>
+                    <p><b>Company Name:</b> {{ last_item.comp_name }}</p>
+                    <p><b>Group Number:</b> {{ last_item.group_num }}</p>
                     <p>-----------------------------------------------</p>
                 {% endwith %}
             {% else %}
@@ -50,11 +52,12 @@
         <!-- empty column -->
                     <h3>Latest Diagnostic Result:</h3>
             {% if diagnosticresults %}
-                {% with diagnosticresults|last as first_item %}
-                    <p><b>Lab:</b> {{ first_item.lab_title }}</p>
-                    <p><b>Date:</b> {{ first_item.lab_date }}</p>
-                    <p><b>Description:</b> {{ first_item.lab_description }}</p>
-                    <p><b>Notes:</b> {{ first_item.lab_notes }}</p>
+            	<!-- Display the last item entered into array -->
+                {% with diagnosticresults|last as last_item %}
+                    <p><b>Lab:</b> {{ last_item.lab_title }}</p>
+                    <p><b>Date:</b> {{ last_item.lab_date }}</p>
+                    <p><b>Description:</b> {{ last_item.lab_description }}</p>
+                    <p><b>Notes:</b> {{ last_item.lab_notes }}</p>
                     <p>-----------------------------------------------</p>
                 {% endwith %}
             {% else %}
@@ -63,12 +66,13 @@
 
             <h3>Latest Medical History:</h3>
             {% if medicalHistory %}
-                {% with medicalHistory|last as first_item %}
-                    <p><b>Name:</b> {{ first_item.history_item_name }}</p>
-                    <p><b>Runs in Family:</b> {{ first_item.is_family_item }}</p>
-                    <p><b>Date of diagnosis:</b> {{ first_item.history_item_date }}</p>
-                    <p><b>Description:</b> {{ first_item.history_description }}</p>
-                    <p><b>Notes:</b> {{ first_item.history_notes }}</p>
+            	<!-- Display the last item entered into array -->
+                {% with medicalHistory|last as last_item %}
+                    <p><b>Name:</b> {{ last_item.history_item_name }}</p>
+                    <p><b>Runs in Family:</b> {{ last_item.is_family_item }}</p>
+                    <p><b>Date of diagnosis:</b> {{ last_item.history_item_date }}</p>
+                    <p><b>Description:</b> {{ last_item.history_description }}</p>
+                    <p><b>Notes:</b> {{ last_item.history_notes }}</p>
                     <p>-----------------------------------------------</p>
                 {% endwith %}
             {% else %}
@@ -78,6 +82,7 @@
         <div class="col-md-4 col-lg-4">
             <h3>Current Medications:</h3>
             {% if medication %}
+            	<!-- Display all items in medication -->
                 {% for i in medication reversed %}
                     <p><b>Medication:</b> {{ i.medication_name }}</p>
                     <p><b>Dosage:</b> {{ i.dosage }}</p>
@@ -91,6 +96,7 @@
 
             <h3>Current Allergies:</h3>
             {% if allergies %}
+            	<!-- Display all items in allergies -->
                 {% for i in allergies reversed %}
                     <p><b>Name:</b> {{ i.allergy_name }}</p>
                     <p><b>Severity:</b> {{ i.severity }}</p>

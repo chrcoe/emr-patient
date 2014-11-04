@@ -3,11 +3,11 @@ from django.shortcuts import render_to_response, redirect
 from django.template.context import RequestContext
 
 
-def login_page(request):
+def login_page(request, success_msg):
     # check if already logged in, redirect to their dashboard
     if request.user.is_authenticated():
         return redirect('/patient/{}'.format(request.user.id))
-    errMsg = ''  # default to no error message
+    err_msg = ''  # default to no error message
     username = password = ''
     if request.POST:
         username = request.POST.get('username')
@@ -24,13 +24,13 @@ def login_page(request):
                 # redirect to dashboard if not staff or admin
                 return redirect('/patient/{}'.format(patient.id))
             else:
-                errMsg = "Account is not active. Contact your system administrator."
+                err_msg = "Account is not active. Contact your system administrator."
         else:
-            errMsg = "Your username and/or password were incorrect."
+            err_msg = "Your username and/or password were incorrect."
 
     context = RequestContext(
-        request, {'errMsg': errMsg, 'username': username,
-                  'page_name': 'Patient Login'}
+        request, {'err_msg': err_msg, 'username': username,
+                  'page_name': 'Patient Login', 'success_msg': success_msg}
     )
     return render_to_response('main/login.html', context)
 

@@ -21,6 +21,12 @@ body {
   float: right;
 }
 
+.forget {
+font-size: 13px;
+text-align: center;
+display: block;
+}
+
 .login-list {
   list-style-type: none;
   padding: 0;
@@ -37,6 +43,11 @@ body {
   background-size: cover;
 
 }
+
+.btn-custom {
+  background-color: #1fa67b;
+}
+
 
 input[type="text"] {
   margin-bottom: -1px;

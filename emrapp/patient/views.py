@@ -1,20 +1,21 @@
 #from patient.models import Patient
-from django.contrib.auth import get_user_model
+from django.contrib import messages
+from django.contrib.auth import get_user_model, update_session_auth_hash
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.forms import PasswordChangeForm
 from django.shortcuts import get_object_or_404, redirect
 from django.shortcuts import render
-from django.contrib import messages
+from django.views.decorators.csrf import csrf_protect
 
 from patient.models import Allergy
 from patient.models import Appointment
-from patient.models import InsurancePolicy
 from patient.models import DiagnosticResult
+from patient.models import InsurancePolicy
 from patient.models import MedicalHistory
 from patient.models import Medication
 from patient.models import Vital
 # use our custom Patient model (which extends the AbstractBaseUser)
 Patient = get_user_model()
-
 
 @login_required
 def dashboard(request, patient_id):
@@ -36,7 +37,7 @@ def dashboard(request, patient_id):
                   {'patient': patient, 'vitals': vitals, 'medication': medication, 'appts': appts, 'diagnosticresults': diagnosticresults, 'allergies': allergies, 'insurance': insurance, 'medicalHistory': medicalHistory,
                    'page_name': 'Dashboard'})
 
-
+@csrf_protect
 @login_required
 def vitals(request, patient_id):
     '''function for vitals, uses vitals template'''
@@ -62,7 +63,7 @@ def vitals(request, patient_id):
     return render(request, 'patient/vitals.html',
                   {'patient': patient, 'vitals': vitals, 'page_name': 'Vitals'})
 
-
+@csrf_protect
 @login_required
 def allergies(request, patient_id):
     '''function for allergies, uses allergies template'''
@@ -87,7 +88,7 @@ def allergies(request, patient_id):
     return render(request, 'patient/allergies.html',
                   {'patient': patient, 'allergies': allergies, 'page_name': 'Allergies'})
 
-
+@csrf_protect
 @login_required
 def medication(request, patient_id):
     '''function for medication, uses medication template'''
@@ -112,7 +113,7 @@ def medication(request, patient_id):
     return render(request, 'patient/medication.html',
                   {'patient': patient, 'medication': medication, 'page_name': 'Medication'})
 
-
+@csrf_protect
 @login_required
 def insurance(request, patient_id):
     '''function for insurance, uses insurance template'''
@@ -137,7 +138,7 @@ def insurance(request, patient_id):
     return render(request, 'patient/insurance.html',
                   {'patient': patient, 'insurance': insurance, 'page_name': 'Insurance Policies'})
 
-
+@csrf_protect
 @login_required
 def medicalHistory(request, patient_id):
     '''function for medicalHistory, uses medicalHistory template'''
@@ -162,7 +163,7 @@ def medicalHistory(request, patient_id):
     return render(request, 'patient/medicalHistory.html',
                   {'patient': patient, 'medicalHistory': medicalHistory, 'page_name': 'Medical History'})
 
-
+@csrf_protect
 @login_required
 def diagnosticresults(request, patient_id):
     '''function for labresults, uses labresults template'''
@@ -187,7 +188,7 @@ def diagnosticresults(request, patient_id):
     return render(request, 'patient/diagnosticresults.html',
                   {'patient': patient, 'diagnosticresults': diagnosticresults, 'page_name': 'Diagnostic Results'})
 
-
+@csrf_protect
 @login_required
 def appts(request, patient_id):
     '''function for appts, uses appts template'''
@@ -214,6 +215,7 @@ def appts(request, patient_id):
                   {'patient': patient, 'appts': appts, 'page_name': 'Appointments'})
 
 
+@csrf_protect
 @login_required
 def settings(request, patient_id):
     '''function for settings, uses settings template'''
@@ -223,22 +225,42 @@ def settings(request, patient_id):
     if patient.is_admin or patient.is_staff:
         return redirect('/admin/')
 
+    pw_form = PasswordChangeForm(user=request.user)
+    errMsg = ''
+    successMsg = ''
+    pwSuccessMsg = ''
     # need to handle the POST data for all info
     if request.method == 'POST':
-        # set the info on THIS record to the new info
-        if 'phone_num' in request.POST:
-            patient.phone_num = request.POST['phone_num']
-        if 'street_address' in request.POST:
-            patient.street_address = request.POST['street_address']
-        if 'city' in request.POST:
-            patient.city = request.POST['city']
-        if 'state' in request.POST:
-            patient.state = request.POST['state']
-        if 'zip_code' in request.POST:
-            patient.zip_code = request.POST['zip_code']
-        # save changes to the DB
-        patient.save()
-        messages.success(request, 'Saved changes.')
+        if 'is_changing_demographics' in request.POST:
+            # set the info on THIS record to the new info
+            if 'phone_num' in request.POST:
+                patient.phone_num = request.POST['phone_num']
+            if 'street_address' in request.POST:
+                patient.street_address = request.POST['street_address']
+            if 'city' in request.POST:
+                patient.city = request.POST['city']
+            if 'state' in request.POST:
+                patient.state = request.POST['state']
+            if 'zip_code' in request.POST:
+                patient.zip_code = request.POST['zip_code']
+            # save changes to the DB
+            patient.save()
+            successMsg = 'Saved changes.'
+
+        if 'is_changing_password' in request.POST:
+            pw_form = PasswordChangeForm(user=request.user, data=request.POST)
+            if pw_form.is_valid():
+                pw_form.save()
+                # Updating the password logs out all other sessions for the user
+                # except the current one if
+                # django.contrib.auth.middleware.SessionAuthenticationMiddleware
+                # is enabled.
+                update_session_auth_hash(request, pw_form.user)
+                pwSuccessMsg = 'Password successfully updated.'
+    #             return HttpResponseRedirect(post_change_redirect)
 
     return render(request, 'patient/settings.html',
-                  {'patient': patient, 'settings': settings, 'page_name': 'Settings'})
+                  {'patient' : patient, 'settings' : settings,
+                   'page_name' : 'Settings', 'pw_form' : pw_form,
+                   'errMsg' : errMsg, 'successMsg' : successMsg,
+                   'pwSuccessMsg' : pwSuccessMsg})

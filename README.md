@@ -53,6 +53,10 @@ _versioning based on [Semantic Versioning 2.0.0](http://semver.org/ "Semantic Ve
 - addressed data type bugs in staff site
 - built out basic patient pages
 - moved child class edits to the patient section on the staff site
+- added user password change functionality
+- added user password reset functionality
+- added responsive design to all pages except the staff site pages
+- added staff site form validation for entering patient information
 
 #### v0.2.0
 - setup authentication for the site

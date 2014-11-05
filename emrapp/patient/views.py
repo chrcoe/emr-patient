@@ -17,6 +17,7 @@ from patient.models import Vital
 # use our custom Patient model (which extends the AbstractBaseUser)
 Patient = get_user_model()
 
+
 @login_required
 def dashboard(request, patient_id):
     # check current id matches the requested id
@@ -29,13 +30,15 @@ def dashboard(request, patient_id):
     vitals = list(Vital.objects.filter(id_patient=patient_id))
     medication = list(Medication.objects.filter(id_patient=patient_id))
     appts = list(Appointment.objects.filter(id_patient=patient_id))
-    diagnosticresults = list(DiagnosticResult.objects.filter(id_patient=patient_id))
+    diagnosticresults = list(
+        DiagnosticResult.objects.filter(id_patient=patient_id))
     allergies = list(Allergy.objects.filter(id_patient=patient_id))
     insurance = list(InsurancePolicy.objects.filter(id_patient=patient_id))
     medicalHistory = list(MedicalHistory.objects.filter(id_patient=patient_id))
     return render(request, 'patient/dashboard.html',
                   {'patient': patient, 'vitals': vitals, 'medication': medication, 'appts': appts, 'diagnosticresults': diagnosticresults, 'allergies': allergies, 'insurance': insurance, 'medicalHistory': medicalHistory,
                    'page_name': 'Dashboard'})
+
 
 @csrf_protect
 @login_required
@@ -46,13 +49,13 @@ def vitals(request, patient_id):
     patient = get_object_or_404(Patient, pk=patient_id)
     if patient.is_admin or patient.is_staff:
         return redirect('/admin/')
-#     vitals = get_list_or_404(Vital, id_patient=patient_id)
-    vitals = list(Vital.objects.filter(id_patient=patient_id))
+#     data = get_list_or_404(Vital, id_patient=patient_id)
+    data = list(Vital.objects.filter(id_patient=patient_id))
 
     # need to handle the POST data for all notes
     if request.method == 'POST':
         #         posted = request.POST
-        for i in vitals:
+        for i in data:
             # update ONLY the notes that the patient wanted to update
             if i.id == int(request.POST['vitals_id']):
                 # set the notes on THIS record to the new notes
@@ -61,7 +64,8 @@ def vitals(request, patient_id):
                 i.save()
 
     return render(request, 'patient/vitals.html',
-                  {'patient': patient, 'vitals': vitals, 'page_name': 'Vitals'})
+                  {'patient': patient, 'data': data, 'page_name': 'Vitals'})
+
 
 @csrf_protect
 @login_required
@@ -72,12 +76,12 @@ def allergies(request, patient_id):
     patient = get_object_or_404(Patient, pk=patient_id)
     if patient.is_admin or patient.is_staff:
         return redirect('/admin/')
-    allergies = list(Allergy.objects.filter(id_patient=patient_id))
+    data = list(Allergy.objects.filter(id_patient=patient_id))
 
     # need to handle the POST data for all notes
     if request.method == 'POST':
         #         posted = request.POST
-        for i in allergies:
+        for i in data:
             # update ONLY the notes that the patient wanted to update
             if i.id == int(request.POST['allergies_id']):
                 # set the notes on THIS record to the new notes
@@ -86,7 +90,8 @@ def allergies(request, patient_id):
                 i.save()
 
     return render(request, 'patient/allergies.html',
-                  {'patient': patient, 'allergies': allergies, 'page_name': 'Allergies'})
+                  {'patient': patient, 'data': data, 'page_name': 'Allergies'})
+
 
 @csrf_protect
 @login_required
@@ -95,14 +100,14 @@ def medication(request, patient_id):
     if request.user.id <> patient_id:
         patient_id = request.user.id
     patient = get_object_or_404(Patient, pk=patient_id)
-    medication = list(Medication.objects.filter(id_patient=patient_id))
+    data = list(Medication.objects.filter(id_patient=patient_id))
     if patient.is_admin or patient.is_staff:
         return redirect('/admin/')
 
     # need to handle the POST data for all notes
     if request.method == 'POST':
         #         posted = request.POST
-        for i in medication:
+        for i in data:
             # update ONLY the notes that the patient wanted to update
             if i.id == int(request.POST['medication_id']):
                 # set the notes on THIS record to the new notes
@@ -111,7 +116,8 @@ def medication(request, patient_id):
                 i.save()
 
     return render(request, 'patient/medication.html',
-                  {'patient': patient, 'medication': medication, 'page_name': 'Medication'})
+                  {'patient': patient, 'data': data, 'page_name': 'Medication'})
+
 
 @csrf_protect
 @login_required
@@ -122,21 +128,22 @@ def insurance(request, patient_id):
     patient = get_object_or_404(Patient, pk=patient_id)
     if patient.is_admin or patient.is_staff:
         return redirect('/admin/')
-    insurance = list(InsurancePolicy.objects.filter(id_patient=patient_id))
+    data = list(InsurancePolicy.objects.filter(id_patient=patient_id))
 
-#     # need to handle the POST data for all notes
+# need to handle the POST data for all notes
 #     if request.method == 'POST':
-#         #         posted = request.POST
-#         for i in insurance:
-#             # update ONLY the notes that the patient wanted to update
+# posted = request.POST
+#         for i in data:
+# update ONLY the notes that the patient wanted to update
 #             if i.id == int(request.POST['insurance_id']):
-#                 # set the notes on THIS record to the new notes
+# set the notes on THIS record to the new notes
 #                 i.insurance_notes = request.POST['insurance_notes']
-#                 # save changes to the DB
+# save changes to the DB
 #                 i.save()
 
     return render(request, 'patient/insurance.html',
-                  {'patient': patient, 'insurance': insurance, 'page_name': 'Insurance Policies'})
+                  {'patient': patient, 'data': data, 'page_name': 'Insurance Policies'})
+
 
 @csrf_protect
 @login_required
@@ -147,12 +154,12 @@ def medicalHistory(request, patient_id):
     patient = get_object_or_404(Patient, pk=patient_id)
     if patient.is_admin or patient.is_staff:
         return redirect('/admin/')
-    medicalHistory = list(MedicalHistory.objects.filter(id_patient=patient_id))
+    data = list(MedicalHistory.objects.filter(id_patient=patient_id))
 
     # need to handle the POST data for all notes
     if request.method == 'POST':
         #         posted = request.POST
-        for i in medicalHistory:
+        for i in data:
             # update ONLY the notes that the patient wanted to update
             if i.id == int(request.POST['history_id']):
                 # set the notes on THIS record to the new notes
@@ -161,23 +168,25 @@ def medicalHistory(request, patient_id):
                 i.save()
 
     return render(request, 'patient/medicalHistory.html',
-                  {'patient': patient, 'medicalHistory': medicalHistory, 'page_name': 'Medical History'})
+                  {'patient': patient, 'data': data, 'page_name': 'Medical History'})
+
 
 @csrf_protect
 @login_required
 def diagnosticresults(request, patient_id):
-    '''function for labresults, uses labresults template'''
+    '''function for diagnosticresults, uses diagnosticresults template'''
     if request.user.id <> patient_id:
         patient_id = request.user.id
     patient = get_object_or_404(Patient, pk=patient_id)
     if patient.is_admin or patient.is_staff:
         return redirect('/admin/')
-    diagnosticresults = list(DiagnosticResult.objects.filter(id_patient=patient_id))
+    data = list(
+        DiagnosticResult.objects.filter(id_patient=patient_id))
 
     # need to handle the POST data for all notes
     if request.method == 'POST':
         #         posted = request.POST
-        for i in diagnosticresults:
+        for i in data:
             # update ONLY the notes that the patient wanted to update
             if i.id == int(request.POST['lab_id']):
                 # set the notes on THIS record to the new notes
@@ -186,7 +195,8 @@ def diagnosticresults(request, patient_id):
                 i.save()
 
     return render(request, 'patient/diagnosticresults.html',
-                  {'patient': patient, 'diagnosticresults': diagnosticresults, 'page_name': 'Diagnostic Results'})
+                  {'patient': patient, 'data': data, 'page_name': 'Diagnostic Results'})
+
 
 @csrf_protect
 @login_required
@@ -197,13 +207,13 @@ def appts(request, patient_id):
     patient = get_object_or_404(Patient, pk=patient_id)
     if patient.is_admin or patient.is_staff:
         return redirect('/admin/')
-#     appts = get_list_or_404(Appointment, id_patient=patient_id)
-    appts = list(Appointment.objects.filter(id_patient=patient_id))
+#     data = get_list_or_404(Appointment, id_patient=patient_id)
+    data = list(Appointment.objects.filter(id_patient=patient_id))
 
     # need to handle the POST data for all notes
     if request.method == 'POST':
         #         posted = request.POST
-        for i in appts:
+        for i in data:
             # update ONLY the notes that the patient wanted to update
             if i.id == int(request.POST['appts_id']):
                 # set the notes on THIS record to the new notes
@@ -212,7 +222,7 @@ def appts(request, patient_id):
                 i.save()
 
     return render(request, 'patient/appts.html',
-                  {'patient': patient, 'appts': appts, 'page_name': 'Appointments'})
+                  {'patient': patient, 'data': data, 'page_name': 'Appointments'})
 
 
 @csrf_protect
@@ -260,7 +270,7 @@ def settings(request, patient_id):
     #             return HttpResponseRedirect(post_change_redirect)
 
     return render(request, 'patient/settings.html',
-                  {'patient' : patient, 'settings' : settings,
-                   'page_name' : 'Settings', 'pw_form' : pw_form,
-                   'errMsg' : errMsg, 'successMsg' : successMsg,
-                   'pwSuccessMsg' : pwSuccessMsg})
+                  {'patient': patient, 'settings': settings,
+                   'page_name': 'Settings', 'pw_form': pw_form,
+                   'errMsg': errMsg, 'successMsg': successMsg,
+                   'pwSuccessMsg': pwSuccessMsg})

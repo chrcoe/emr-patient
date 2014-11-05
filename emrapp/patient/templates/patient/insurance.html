@@ -1,25 +1,14 @@
 {% extends 'main/base.html' %}
 {% block nav-insurance %} class="active"{% endblock %}
 
-{% block content %}
-<div class="container">
-  <div class="well well-lg clearfix">
-    <h1>Welcome to your {{ page_name }} page, {{ patient.first_name }} </h1>
-    <div id="insurance_info">
-        {% if insurance %}
-            <h3>Your insurance currently on file is:</h3>
-            {% for i in insurance reversed %}
-                <ul>
-                    <li><b>Insurance Plan/Program Name:</b> {{ i.comp_name }}
-                    <li><b>Policy Number:</b> {{ i.policy_num }}
-		    <li><b>Group Number:</b> {{ i.group_num }}
-                    <li><b>Expiration Date:</b> {{ i.exp_date }} 
-                </ul>
-            {% endfor %}
-        {% else %}
-            <p>You currently have no insurance policies on file.</p>
-        {% endif %}
-    </div>
-  </div>
-</div>
+{% block content-data %}
+<h3>{{ i.comp_name }}</h3>
+<ul>
+    <li><b>Policy Number:</b> {{ i.policy_num }}
+    <li><b>Group Number:</b> {{ i.group_num }}
+    <li><b>Expiration Date:</b> {{ i.exp_date }}
+</ul>
+{% endblock %}
+{% block content-picture %}
+  overwrite place holder with img-responsive tag here
 {% endblock %}

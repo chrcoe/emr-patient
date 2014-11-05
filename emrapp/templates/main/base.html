@@ -59,7 +59,35 @@
 </div> <!--/.header-->
 {% endblock %}
 
-{% block content%}{% endblock %}
+{% block content%}
+<div class="container">
+  <div class="well well-lg clearfix">
+    <h1>{{ page_name }}</h1>
+    <div class="col-md-4 col-lg-4">
+        {% block content-loop %}
+            {% if data %}
+                {% for i in data reversed %}
+                    {% block content-data %}
+                    <!-- each page fills in their own data to be displayed -->
+                    {% endblock %}
+                {% endfor %}
+            {% else %}
+                <p>You currently have no {{ page_name|lower }} on file.</p>
+            {% endif %}
+        {% endblock %}
+    </div> <!-- data column -->
+    <div class="col-md-4 col-lg-4 hidden-xs hidden-sm">
+    </div><!-- empty column -->
+
+    <div class="col-md-4 col-lg-4 hidden-xs hidden-sm">
+    {% block content-picture %}
+      picture goes here
+    {% endblock %}
+    </div><!-- picture column -->
+  </div>
+  </div>
+</div>
+{% endblock %}
 
 {% comment %}
 <noscript>

@@ -1,43 +1,24 @@
 {% extends 'main/base.html' %}
 {% block nav-allergies %} class="active"{% endblock %}
 
-{% block content %}
-<div class="container">
-  <div class="well well-lg clearfix">
-    <h1>{{ page_name }}</h1>
-    <div class="col-md-4 col-lg-4">
-      <div id="allergy_item">
-        {% if allergies %}
-            {% for i in allergies reversed %}
-                <h3>{{ i.allergy_name }}</h3>
-                <ul>
-                    <li><b>Severity:</b> {{ i.severity }}
-                    <li><b>Allergy description:</b> {{ i.allergy_description }}
-                    <p>Allergy notes: {{ i.allergy_notes }}
-                </ul>
-                <form class="form-horizontal" role="form" action="{% url 'patient:allergies' patient.id %}" method='post'>
-                      {% csrf_token %}
-                      <div class="form-group">
-                        <textarea class="form-control" name="allergy_notes" placeholder="enter new notes here" textarea></textarea>
-                        <input type="hidden" name="allergies_id" value='{{ i.id }}' />
-                      </div>
-                      <div class="form-group">
-                          <button type="submit" class="btn btn-default">Submit</button>
-                       </div>
-                </form>
-            {% endfor %}
-        {% else %}
-            <p>You currently have no allergies on file</p>
-        {% endif %}
+{% block content-data %}
+<h3>{{ i.allergy_name }}</h3>
+<ul>
+    <li><b>Severity:</b> {{ i.severity }}
+    <li><b>Allergy description:</b> {{ i.allergy_description }}
+    <p>Allergy notes: {{ i.allergy_notes }}
+</ul>
+<form class="form-horizontal" role="form" action="{% url 'patient:allergies' patient.id %}" method='post'>
+      {% csrf_token %}
+      <div class="form-group">
+        <textarea class="form-control" name="allergy_notes" placeholder="enter new notes here" textarea></textarea>
+        <input type="hidden" name="allergies_id" value='{{ i.id }}' />
       </div>
-    </div> <!-- data column -->
-
-    <div class="col-md-4 col-lg-4">
-    </div><!-- empty column -->
-
-    <div class="col-md-4 col-lg-4">
-      picture goes in this column
-    </div><!-- picture column -->
-  </div>
-</div>
+      <div class="form-group">
+          <button type="submit" class="btn btn-default">Submit</button>
+       </div>
+</form>
+{% endblock %}
+{% block content-picture %}
+  overwrite place holder with img-responsive tag here
 {% endblock %}

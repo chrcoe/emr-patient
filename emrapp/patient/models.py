@@ -48,12 +48,15 @@ AlphanumericValidator = RegexValidator(
 
 
 class Patient(AbstractBaseUser):
-    # http://stackoverflow.com/questions/11351619/how-to-make-djangos-datetimefield-optional
+    # http://stackoverflow.com/questions/11351619/
+    #     how-to-make-djangos-datetimefield-optional
     email = models.EmailField(max_length=254, unique=True, db_index=True)
     first_name = models.CharField(
-        ('First Name'), max_length=30, blank=True, null=True, validators=[AlphaValidator])
+        ('First Name'), max_length=30, blank=True, null=True,
+        validators=[AlphaValidator])
     last_name = models.CharField(
-        ('Last Name'), max_length=30, blank=True, null=True, validators=[AlphaValidator])
+        ('Last Name'), max_length=30, blank=True, null=True,
+        validators=[AlphaValidator])
     phone_num = models.CharField(max_length=12, blank=True, null=True)
     street_address = models.CharField(max_length=255, blank=True, null=True)
     city = models.CharField(
@@ -106,6 +109,10 @@ class Allergy(models.Model):
     def __unicode__(self):
         return self.allergy_name
 
+    class Meta:
+        verbose_name = 'Allergy'
+        verbose_name_plural = 'Allergies'
+
 
 class Appointment(models.Model):
     id_patient = models.ForeignKey(settings.AUTH_USER_MODEL)
@@ -130,6 +137,10 @@ class InsurancePolicy(models.Model):
     def __unicode__(self):
         return self.policy_num
 
+    class Meta:
+        verbose_name = 'Insurance Policy'
+        verbose_name_plural = 'Insurance Policies'
+
 
 class DiagnosticResult(models.Model):
     id_patient = models.ForeignKey(settings.AUTH_USER_MODEL)
@@ -152,6 +163,10 @@ class MedicalHistory(models.Model):
 
     def __unicode__(self):
         return self.history_item_name
+
+    class Meta:
+        verbose_name = 'Medical History'
+        verbose_name_plural = 'Medical History'
 
 
 class Medication(models.Model):

@@ -8,11 +8,11 @@
     <div id="vitals_item">
         {% if vitals %}
             <h3>Your recorded vitals:</h3>
-            {% for i in vitals %}
+            {% for i in vitals reversed %}
                 <ul>
                     <li><b>Height:</b> {{ i.height_inches }} inches
                     <li><b>Weight:</b> {{ i.weight_pounds }} pounds
-                    <li><b>Blood Pressure:</b> {{ i.blood_pressure }}
+                    <li><b>Blood Pressure:</b> {{ i.bp_sys }}/{{ i.bp_dias }}
                     <li><b>Pulse:</b> {{ i.pulse }} beats per minute - A resting pulse of 60 to 80 is ideal.
                     <p>Patient notes: {{ i.vitals_notes }}
                 </ul>

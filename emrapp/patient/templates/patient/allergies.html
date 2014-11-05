@@ -4,13 +4,13 @@
 {% block content %}
 <div class="container">
   <div class="well well-lg clearfix">
-    <h1>Welcome to your {{ page_name }} page, {{ patient.first_name }} </h1>
-    <div id="allergy_item">
+    <h1>{{ page_name }}</h1>
+    <div class="col-md-4 col-lg-4">
+      <div id="allergy_item">
         {% if allergies %}
-            <h3>Your recorded allergies:</h3>
             {% for i in allergies reversed %}
+                <h3>{{ i.allergy_name }}</h3>
                 <ul>
-                    <li><b>Allergy name:</b> {{ i.allergy_name }}
                     <li><b>Severity:</b> {{ i.severity }}
                     <li><b>Allergy description:</b> {{ i.allergy_description }}
                     <p>Allergy notes: {{ i.allergy_notes }}
@@ -30,6 +30,14 @@
             <p>You currently have no allergies on file</p>
         {% endif %}
       </div>
+    </div> <!-- data column -->
+
+    <div class="col-md-4 col-lg-4">
+    </div><!-- empty column -->
+
+    <div class="col-md-4 col-lg-4">
+      picture goes in this column
+    </div><!-- picture column -->
   </div>
 </div>
 {% endblock %}

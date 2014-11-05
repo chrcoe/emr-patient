@@ -7,6 +7,19 @@
          <!-- Display and Center Page Heading -->
         <h1><p class="text-center">Welcome to your {{ page_name }}, {{ patient.first_name }}</p></h1>
         <div class="col-md-4 col-lg-4">
+            <h3>Latest Appointment:</h3>
+            {% if appts %}
+                   <!-- Display the last item entered into array -->
+                {% with appts|last as last_item %}
+                    <p><b>Date:</b> {{ last_item.appointment_date }}</p>
+                    <p><b>Notes:</b> {{ last_item.appointment_notes }}</p>
+                    <p>-----------------------------------------------</p>
+                {% endwith %}
+            {% else %}
+              <p>You currently have no scheduled appointments</p>
+            {% endif %}
+
+
             <h3>Last recorded vitals</h3>
             {% if vitals %}
                 <!-- Display the last item entered into array -->
@@ -22,31 +35,8 @@
             {% endif %}
            <a href="http://prohealthsys.com/site/resources/assessment/physical-assessment/vital-signs/vital_signs_table/">Table of normal vital ranges.</a>
 
-            <h3>Latest Appointment:</h3>
-            {% if appts %}
-                   <!-- Display the last item entered into array -->
-                {% with appts|last as last_item %}
-                    <p><b>Date:</b> {{ last_item.appointment_date }}</p>
-                    <p><b>Notes:</b> {{ last_item.appointment_notes }}</p>
-                    <p>-----------------------------------------------</p>
-                {% endwith %}
-            {% else %}
-              <p>You currently have no scheduled appointments</p>
-            {% endif %}
 
-            <h3>Insurance Information:</h3>
-            {% if insurance %}
-                <!-- Display the last item entered into array -->
-                {% with insurance|last as last_item %}
-                    <p><b>Policy #:</b> {{ last_item.policy_num }}</p>
-                    <p><b>Exp. Date:</b> {{ last_item.exp_date }}</p>
-                    <p><b>Company Name:</b> {{ last_item.comp_name }}</p>
-                    <p><b>Group Number:</b> {{ last_item.group_num }}</p>
-                    <p>-----------------------------------------------</p>
-                {% endwith %}
-            {% else %}
-                <p>You currently have no insurance policies on file.</p>
-            {% endif %}
+
         </div>
         <div class="col-md-4 col-lg-4">
         <!-- empty column -->
@@ -64,6 +54,21 @@
                    <p>You currently have no diagnostic results on file.</p>
             {% endif %}
 
+            <h3>Insurance Information:</h3>
+            {% if insurance %}
+                <!-- Display the last item entered into array -->
+                {% with insurance|last as last_item %}
+                    <p><b>Policy #:</b> {{ last_item.policy_num }}</p>
+                    <p><b>Exp. Date:</b> {{ last_item.exp_date }}</p>
+                    <p><b>Company Name:</b> {{ last_item.comp_name }}</p>
+                    <p><b>Group Number:</b> {{ last_item.group_num }}</p>
+                    <p>-----------------------------------------------</p>
+                {% endwith %}
+            {% else %}
+                <p>You currently have no insurance policies on file.</p>
+            {% endif %}
+
+    {% comment %}
             <h3>Latest Medical History:</h3>
             {% if medicalHistory %}
                 <!-- Display the last item entered into array -->
@@ -78,6 +83,7 @@
             {% else %}
                 <p>You currently have no medical history on file.</p>
             {% endif %}
+    {% endcomment %}
         </div>
         <div class="col-md-4 col-lg-4">
             <h3>Current Medications:</h3>

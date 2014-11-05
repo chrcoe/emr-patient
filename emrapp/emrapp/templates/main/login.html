@@ -2,14 +2,20 @@
 
 {% block nav%}{% endblock %}
 
+{% block title %}<TITLE>EMR Patient Portal</TITLE>{% endblock %}
+
 {% block content %}
 <div id="fullBg">
   <div class="container">
     <div class="row">
       <div class="col-md-12 col-lg-12">
+          <br />
+          <br />
+    <!--
         <div class="well well-lg clearfix">
           <h3>Welcome to "Franklin14" The Electronic Medical Record</h3>
         </div>
+    -->
       </div>
       <div class="col-md-4 col-lg-4"></div>
       <div class="col-md-4 col-lg-4">
@@ -24,7 +30,7 @@
             <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
           {{ success_msg }}
           </div>
-        {% endif %}        <h2 class="form-signin-heading">Please Login</h2>
+        {% endif %}        <h2 class="form-signin-heading">EMR Patient Portal</h2>
         <form class="form-signin" role="form" action="{% url 'login' %}" method="post">
           {% csrf_token %}
           {% if next %}
@@ -45,6 +51,9 @@
       <div class="col-lg-1 col-md-1 hidden-sm hidden-xs">
           <!-- center buffer div -->
       </div>
+
+      <!--
+
       <div class="col-md-4 col-lg-4">
         <div class="well well-lg clearfix">
           <h4>Login with the username and password provided and have
@@ -62,6 +71,9 @@
           </ul>
         </div>
       </div>
+      -->
+
+
     </div>
   </div>
 </div>

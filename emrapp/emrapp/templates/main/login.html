@@ -30,13 +30,13 @@
             <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
           {{ success_msg }}
           </div>
-        {% endif %}        <h2 class="form-signin-heading">EMR Patient Portal</h2>
+        {% endif %}        <h1 class="form-signin-heading">EMR Patient Portal</h1>
         <form class="form-signin" role="form" action="{% url 'login' %}" method="post">
           {% csrf_token %}
           {% if next %}
             <input type="hidden" class="form-control" name="next" value="{{ next }}" />
           {% endif %}
-          <input type="text" class="form-control" name="username" placeholder="Email" value="{{ username }}" />
+          <input type="email" class="form-control" name="username" placeholder="Email" value="{{ username }}" />
           <input type="password" class="form-control" name="password" placeholder="Password" value="" />
 
           <button class="btn btn-lg btn-primary btn-block" type="submit">Log in</button>
@@ -88,13 +88,12 @@
           <span aria-hidden="true">x</span>
           <span class="sr-only">Close</span>
         </button>
-        <h4 class="modal-title">Recovery password</h4>
+        <h4 class="modal-title">Recovery instructions</h4>
       </div>
       <form action="/reset/" method="post">
         {% csrf_token %}
         <div class="modal-body">
-          <p>Type your email</p>
-          <input type="email" maxlength="254" name="email" id="id_email" class="form-control" autocomplete="off">
+          <input type="email" class="form-control" maxlength="254" name="email" id="id_email" placeholder="Email" autocomplete="off" />
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>

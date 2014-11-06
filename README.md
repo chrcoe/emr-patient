@@ -49,8 +49,9 @@ Version History
 ===============
 _versioning based on [Semantic Versioning 2.0.0](http://semver.org/ "Semantic Versioning 2.0.0")_
 
-#### v0.3.0 (not released yet)
+#### v1.0.0 (not released yet)
 - addressed data type bugs in staff site
+- adjusted models according to data type change requirements
 - built out basic patient pages
 - moved child class edits to the patient section on the staff site
 - added user password change functionality

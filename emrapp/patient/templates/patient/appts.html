@@ -2,11 +2,11 @@
 {% block nav-appts %} class="active"{% endblock %}
 
 {% block content-data %}
-<h3>TODO: appt type will go here</h3>
+<h3>{{ i.appointment_type }}</h3>
 <ul>
     <li><b>Date:</b> {{ i.appointment_date }}
-    <li><b>Description:</b> TODO: appt details will go here
-    <li>Appointment notes: {{ i.appointment_notes }}
+    <li><b>Description:</b> {{ i.appointment_description }}
+    <li>Patient notes: {{ i.appointment_notes }}
 </ul>
 <form class="form-horizontal" role="form" action="{% url 'patient:appts' patient.id %}" method='post'>
       {% csrf_token %}

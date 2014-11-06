@@ -11,6 +11,8 @@
             {% if appts %}
                    <!-- Display the last item entered into array -->
                 {% with appts|last as last_item %}
+                    <p><b>Type:</b> {{ last_item.appointment_type }}</p>
+                    <p><b>Description:</b> {{ last_item.appointment_description }}</p>
                     <p><b>Date:</b> {{ last_item.appointment_date }}</p>
                     <p><b>Notes:</b> {{ last_item.appointment_notes }}</p>
                     <p>-----------------------------------------------</p>

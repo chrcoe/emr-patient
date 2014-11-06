@@ -1,11 +1,9 @@
 from django.conf import settings
-# from django.core.exceptions import ValidationError
 from django.core.validators import RegexValidator, MaxValueValidator
 from django.contrib.auth.models import (
     BaseUserManager, AbstractBaseUser
 )
 from django.db import models
-# import datetime
 
 
 class PatientManager(BaseUserManager):
@@ -103,8 +101,7 @@ class Allergy(models.Model):
         max_length=255, validators=[AlphanumericValidator])
     allergy_description = models.CharField(
         max_length=255, validators=[AlphanumericValidator])
-    allergy_notes = models.CharField(
-        max_length=255, blank=True, validators=[AlphanumericValidator])
+    allergy_notes = models.CharField(max_length=255, blank=True)
 
     def __unicode__(self):
         return self.allergy_name
@@ -116,12 +113,13 @@ class Allergy(models.Model):
 
 class Appointment(models.Model):
     id_patient = models.ForeignKey(settings.AUTH_USER_MODEL)
-    appointment_notes = models.CharField(
-        max_length=255, null=True, validators=[AlphanumericValidator])
-    appointment_date = models.DateField('appointment date')
+    appointment_type = models.CharField(max_length=255, null=True)
+    appointment_description = models.CharField(max_length=255, null=True)
+    appointment_notes = models.CharField(max_length=255, null=True, blank=True)
+    appointment_date = models.DateField('Date of appointment')
 
     def __unicode__(self):
-        return self.appointment_notes
+        return self.appointment_type
 
 
 class InsurancePolicy(models.Model):
@@ -144,13 +142,13 @@ class InsurancePolicy(models.Model):
 
 class DiagnosticResult(models.Model):
     id_patient = models.ForeignKey(settings.AUTH_USER_MODEL)
-    lab_title = models.CharField(max_length=255)
-    lab_date = models.DateField('lab results date')
-    lab_description = models.CharField(max_length=255)
-    lab_notes = models.CharField(max_length=255, null=True, blank=True)
+    result_title = models.CharField(max_length=255)
+    result_date = models.DateField('date of result')
+    result_description = models.CharField(max_length=255)
+    result_notes = models.CharField(max_length=255, null=True, blank=True)
 
     def __unicode__(self):
-        return self.lab_title
+        return self.result_title
 
 
 class MedicalHistory(models.Model):
@@ -183,8 +181,10 @@ class Medication(models.Model):
 
 class Vital(models.Model):
     id_patient = models.ForeignKey(settings.AUTH_USER_MODEL)
-    height_inches = models.IntegerField(null=True, blank=True)
-    weight_pounds = models.IntegerField(null=True, blank=True)
+    height_inches = models.DecimalField(
+        max_digits=4, decimal_places=2, null=True, blank=True)
+    weight_pounds = models.DecimalField(
+        max_digits=5, decimal_places=2, null=True, blank=True)
     bp_sys = models.IntegerField(null=True, blank=True)
     bp_dias = models.IntegerField(null=True, blank=True)
     pulse = models.IntegerField(null=True, blank=True)

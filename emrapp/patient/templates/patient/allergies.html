@@ -6,7 +6,7 @@
 <ul>
     <li><b>Severity:</b> {{ i.severity }}
     <li><b>Allergy description:</b> {{ i.allergy_description }}
-    <p>Allergy notes: {{ i.allergy_notes }}
+    <p>Patient notes: {{ i.allergy_notes }}
 </ul>
 <form class="form-horizontal" role="form" action="{% url 'patient:allergies' patient.id %}" method='post'>
       {% csrf_token %}

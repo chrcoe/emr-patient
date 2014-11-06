@@ -2,17 +2,17 @@
 {% block nav-labresults %} class="active"{% endblock %}
 
 {% block content-data %}
-<h3>{{ i.lab_title }}</h3>
+<h3>{{ i.result_title }}</h3>
 <ul>
-    <li><b>Date of Lab:</b> {{ i.lab_date }}
-    <li><b>Description of Lab:</b> {{ i.lab_description }}
-    <p>Patient notes: {{ i.lab_notes }}
+    <li><b>Date of Diagnostic:</b> {{ i.result_date }}
+    <li><b>Description of Diagnostic:</b> {{ i.result_description }}
+    <p>Patient notes: {{ i.result_notes }}
 </ul>
 <form class="form-horizontal" role="form" action="{% url 'patient:diagnosticresults' patient.id %}" method='post'>
       {% csrf_token %}
       <div class="form-group">
-        <textarea class="form-control" name="lab_notes" placeholder="enter new notes here" textarea></textarea>
-        <input type="hidden" name="lab_id" value='{{ i.id }}' />
+        <textarea class="form-control" name="result_notes" placeholder="enter new notes here" textarea></textarea>
+        <input type="hidden" name="result_id" value='{{ i.id }}' />
       </div>
       <div class="form-group">
           <button type="submit" class="btn btn-default">Submit</button>

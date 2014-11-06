@@ -1,5 +1,3 @@
-#from patient.models import Patient
-from django.contrib import messages
 from django.contrib.auth import get_user_model, update_session_auth_hash
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import PasswordChangeForm
@@ -49,7 +47,6 @@ def vitals(request, patient_id):
     patient = get_object_or_404(Patient, pk=patient_id)
     if patient.is_admin or patient.is_staff:
         return redirect('/admin/')
-#     data = get_list_or_404(Vital, id_patient=patient_id)
     data = list(Vital.objects.filter(id_patient=patient_id))
 
     # need to handle the POST data for all notes
@@ -188,9 +185,9 @@ def diagnosticresults(request, patient_id):
         #         posted = request.POST
         for i in data:
             # update ONLY the notes that the patient wanted to update
-            if i.id == int(request.POST['lab_id']):
+            if i.id == int(request.POST['result_id']):
                 # set the notes on THIS record to the new notes
-                i.lab_notes = request.POST['lab_notes']
+                i.result_notes = request.POST['result_notes']
                 # save changes to the DB
                 i.save()
 
@@ -207,7 +204,6 @@ def appts(request, patient_id):
     patient = get_object_or_404(Patient, pk=patient_id)
     if patient.is_admin or patient.is_staff:
         return redirect('/admin/')
-#     data = get_list_or_404(Appointment, id_patient=patient_id)
     data = list(Appointment.objects.filter(id_patient=patient_id))
 
     # need to handle the POST data for all notes

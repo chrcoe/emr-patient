@@ -58,6 +58,7 @@ _versioning based on [Semantic Versioning 2.0.0](http://semver.org/ "Semantic Ve
 - added user password reset functionality
 - added responsive design to all pages except the staff site pages
 - added staff site form validation for entering patient information
+- 'beautified' the patient pages and the login screen
 
 #### v0.2.0
 - setup authentication for the site

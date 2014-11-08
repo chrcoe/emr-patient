@@ -1,4 +1,5 @@
 {% extends 'main/base.html' %}
+{% load staticfiles %}
 {% block nav-vitals %} class="active"{% endblock %}
 
 {% block content-data %}
@@ -22,5 +23,5 @@
 </form>
 {% endblock %}
 {% block content-picture %}
-  overwrite place holder with img-responsive tag here
+  <img class='img-responsive' src='{% static 'img/vitals-4.jpg' %}' />
 {% endblock %}

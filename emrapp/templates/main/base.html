@@ -62,7 +62,9 @@
 {% block content%}
 <div class="container">
   <div class="well well-lg clearfix">
-    <h1>{{ page_name }}</h1>
+      <div class="col-md-12 col-lg-12">
+        <h1>{{ page_name }}</h1>
+      </div>
     <div class="col-md-4 col-lg-4">
         {% block content-loop %}
             {% if data %}
@@ -81,7 +83,7 @@
 
     <div class="col-md-4 col-lg-4 hidden-xs hidden-sm">
     {% block content-picture %}
-      picture goes here
+      <img class='img-responsive' src='' alt="img goes here"/>
     {% endblock %}
     </div><!-- picture column -->
   </div>

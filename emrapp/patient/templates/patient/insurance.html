@@ -1,4 +1,5 @@
 {% extends 'main/base.html' %}
+{% load staticfiles %}
 {% block nav-insurance %} class="active"{% endblock %}
 
 {% block content-data %}
@@ -9,6 +10,7 @@
     <li><b>Expiration Date:</b> {{ i.exp_date }}
 </ul>
 {% endblock %}
+
 {% block content-picture %}
-  overwrite place holder with img-responsive tag here
+  <img class='img-responsive' src='{% static 'img/insurance-2.jpg' %}' />
 {% endblock %}

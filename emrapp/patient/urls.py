@@ -3,7 +3,7 @@ from django.conf.urls import patterns, url
 from patient import views
 
 urlpatterns = patterns('',
-    url(r'^$', views.index, name='index'),
+#    url(r'^$', views.index, name='index'),
 
     # /patient/patient_id/
     url(r'^(?P<patient_id>\d+)/$', views.dashboard, name='dashboard'), # after the patient logs in, you do not need to build this view yet
@@ -21,15 +21,29 @@ urlpatterns = patterns('',
     url(r'^(?P<patient_id>\d+)/insurance/$', views.insurance, name='insurance'), # this calls the views.insurance() function when this link is requested
 
     # /patient/patient_id/conditions/
-    url(r'^(?P<patient_id>\d+)/conditions/$', views.conditions, name='conditions'), # this calls the views.conditions() function when this link is requested
+    url(r'^(?P<patient_id>\d+)/medicalHistory/$', views.medicalHistory, name='medicalHistory'), # this calls the views.conditions() function when this link is requested
 
-    # /patient/patient_id/labresults/
-    url(r'^(?P<patient_id>\d+)/labresults/$', views.labresults, name='labresults'), # this calls the views.labresults() function when this link is requested
+    # /patient/patient_id/diagnosticresults/
+    url(r'^(?P<patient_id>\d+)/diagnosticresults/$', views.diagnosticresults, name='diagnosticresults'), # this calls the views.labresults() function when this link is requested
 
     # /patient/patient_id/appts/
     url(r'^(?P<patient_id>\d+)/appts/$', views.appts, name='appts'), # this calls the views.appts() function when this link is requested
-     
+
      # /patient/patient_id/settings/
     url(r'^(?P<patient_id>\d+)/settings/$', views.settings, name='settings'), # this calls the views.settings() function when this link is requested
+
+#     url(r'^change/$', 'django.contrib.auth.views.password_change',
+#         {'template_name' : 'patient/password_change_form.html',
+#          'post_change_redirect' : '/patient/change/done/',
+#          'current_app' : 'patient'},
+#         name="password_change"),
+#     url(r'^(?P<patient_id>\d+)/change/$', views.password_change,
+#         {'template_name' : 'patient/password_change_form.html',
+#         'post_change_redirect' : '/patient/change/done/',
+#         'current_app' : 'patient'},
+#         name='password_change'),
+#    url(r'^change/done/$', 'django.contrib.auth.views.password_change_done',
+#        {'template_name' : 'patient/password_change_done.html'},
+#        name="password_change_done"),
 
 )

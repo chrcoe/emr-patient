@@ -1,12 +1,16 @@
 {% extends 'main/base.html' %}
+{% load staticfiles %}
 {% block nav-insurance %} class="active"{% endblock %}
-{% block title %}
-<TITLE>{{ page_name }}</TITLE>
-{% endblock %} {% block content %}
-<div class="container">
-  <div class="well well-lg clearfix">
-    <h1>This is the {{ page_name }} page</h1>
-    <p>Hello, This page is EMPTY!!!! Except of course but this text, WOOT!!!</p>
-  </div>
-</div>
-{% endblock %} {% include 'main/footer.html' %}
+
+{% block content-data %}
+<h3>{{ i.comp_name }}</h3>
+<ul>
+    <li><b>Policy Number:</b> {{ i.policy_num }}
+    <li><b>Group Number:</b> {{ i.group_num }}
+    <li><b>Expiration Date:</b> {{ i.exp_date }}
+</ul>
+{% endblock %}
+
+{% block content-picture %}
+  <img class='img-responsive img-rounded' src='{% static 'img/insurance-2.jpg' %}' />
+{% endblock %}

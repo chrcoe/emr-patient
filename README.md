@@ -49,9 +49,32 @@ Version History
 ===============
 _versioning based on [Semantic Versioning 2.0.0](http://semver.org/ "Semantic Versioning 2.0.0")_
 
+#### v1.0.0
+- addressed data type bugs in staff site
+- adjusted models according to data type change requirements
+- built out basic patient pages
+- moved child class edits to the patient section on the staff site
+- added user password change functionality
+- added user password reset functionality
+- added responsive design to all pages except the staff site pages
+- added staff site form validation for entering patient information
+- 'beautified' the patient pages and the login screen
+
+#### v0.2.0
+- setup authentication for the site
+- included bootstrap on authentication pages (now you have to be logged in,
+    and one patient cannot see another's information!)
+- minor adjustments to data types in the DB schema
+- staff now get redirected to the Admin/Staff page and no longer can access the
+    patient portal site since they are staff not patients
+- responsive pages (not 100% fully responsive, but a good start)
+
+#### v0.1.1
+- hotfix for navbar - javascript was not being included properly on all pages
+
 #### v0.1.0
-* added first models
-* added skeleton dashboard pages and layout
+- added first models
+- added skeleton dashboard pages and layout
 
 #### v0.0.1
 * added base project

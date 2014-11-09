@@ -1,11 +1,173 @@
-{% include 'main/base.html' %}
-{% block title %}
-<TITLE>{{ page_name }}</TITLE>
-{% endblock %} {% block content %}
+{% extends 'main/base.html' %}
+{% block dashboard %} class="active"{% endblock %}
+
+{% block content %}
 <div class="container">
-  <div class="well well-lg clearfix">
-    <h1>This is the {{ page_name }} page</h1>
-    <p>Hello, This page is EMPTY!!!! Except of course but this text, WOOT!!!</p>
-  </div>
+     <div class="well well-lg clearfix">
+         <!-- Display and Center Page Heading -->
+        <div class="col-md-12 col-lg-12">
+            <h1><p class="text-center">{{ page_name }}</p></h1>
+        </div>
+        <div class="col-md-4 col-lg-4">
+            <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+              <div class="panel panel-default">
+                <div class="panel-heading" role="tab" id="headingOne">
+                  <h4 class="panel-title">
+                    <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                        <h3>Latest Appointment</h3>
+                    </a>
+                  </h4>
+                </div>
+                <div id="collapseOne" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
+                  <div class="panel-body">
+                    {% if appts %}
+                           <!-- Display the last item entered into array -->
+                        {% with appts|last as last_item %}
+                            <p><b>Type:</b> {{ last_item.appointment_type }}</p>
+                            <p><b>Description:</b> {{ last_item.appointment_description }}</p>
+                            <p><b>Date:</b> {{ last_item.appointment_date }}</p>
+                            <p><b>Notes:</b> {{ last_item.appointment_notes }}</p>
+                        {% endwith %}
+                    {% else %}
+                      <p>You currently have no scheduled appointments</p>
+                    {% endif %}
+                  </div>
+                </div>
+              </div>
+              <div class="panel panel-default">
+                <div class="panel-heading" role="tab" id="headingTwo">
+                  <h4 class="panel-title">
+                    <a class="collapsed" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                        <h3>Last recorded vitals</h3>
+                    </a>
+                  </h4>
+                </div>
+                <div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
+                  <div class="panel-body">
+                    {% if vitals %}
+                        <!-- Display the last item entered into array -->
+                        {% with vitals|last as last_item %}
+                            <p><b>Height:</b> {{ last_item.height_inches }}</p>
+                            <p><b>Weight:</b> {{ last_item.weight_pounds }}</p>
+                            <p><b>BP:</b> {{ last_item.bp_sys }}/{{ last_item.bp_dias }}</p>
+                            <p><b>Pulse:</b> {{ last_item.pulse }}</p>
+                            <p><b>Notes:</b> {{ last_item.vitals_notes }}</p>
+                        {% endwith %}
+                    {% else %}
+                      <p>You currently have no vitals on file</p>
+                    {% endif %}
+                   <a href="http://prohealthsys.com/site/resources/assessment/physical-assessment/vital-signs/vital_signs_table/">Table of normal vital ranges.</a>
+                  </div>
+                </div>
+              </div>
+            </div> <!-- end accordion -->
+        </div><!-- end left column -->
+        <div class="col-md-4 col-lg-4">
+            <div class="panel-group" id="accordion2" role="tablist" aria-multiselectable="true">
+              <div class="panel panel-default">
+                <div class="panel-heading" role="tab" id="headingThree">
+                  <h4 class="panel-title">
+                    <a data-toggle="collapse" data-parent="#accordion2" href="#collapseThree" aria-expanded="true" aria-controls="collapseThree">
+                        <h3>Latest Diagnostic Result</h3>
+                    </a>
+                  </h4>
+                </div>
+                <div id="collapseThree" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingThree">
+                  <div class="panel-body">
+                    {% if diagnosticresults %}
+                        <!-- Display the last item entered into array -->
+                        {% with diagnosticresults|last as last_item %}
+                            <p><b>Lab:</b> {{ last_item.result_title }}</p>
+                            <p><b>Date:</b> {{ last_item.result_date }}</p>
+                            <p><b>Description:</b> {{ last_item.result_description }}</p>
+                            <p><b>Notes:</b> {{ last_item.result_notes }}</p>
+                        {% endwith %}
+                    {% else %}
+                           <p>You currently have no diagnostic results on file.</p>
+                    {% endif %}
+                  </div>
+                </div>
+              </div>
+              <div class="panel panel-default">
+                <div class="panel-heading" role="tab" id="headingFour">
+                  <h4 class="panel-title">
+                    <a class="collapsed" data-toggle="collapse" data-parent="#accordion2" href="#collapseFour" aria-expanded="false" aria-controls="collapseFour">
+                        <h3>Insurance Information</h3>
+                    </a>
+                  </h4>
+                </div>
+                <div id="collapseFour" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingFour">
+                  <div class="panel-body">
+                    {% if insurance %}
+                        <!-- Display the last item entered into array -->
+                        {% with insurance|last as last_item %}
+                            <p><b>Policy #:</b> {{ last_item.policy_num }}</p>
+                            <p><b>Exp. Date:</b> {{ last_item.exp_date }}</p>
+                            <p><b>Company Name:</b> {{ last_item.comp_name }}</p>
+                            <p><b>Group Number:</b> {{ last_item.group_num }}</p>
+                        {% endwith %}
+                    {% else %}
+                        <p>You currently have no insurance policies on file.</p>
+                    {% endif %}
+                  </div>
+                </div>
+              </div>
+            </div> <!-- end accordion -->
+        </div><!-- end center column -->
+        <div class="col-md-4 col-lg-4">
+            <div class="panel-group" id="accordion3" role="tablist" aria-multiselectable="true">
+              <div class="panel panel-default">
+                <div class="panel-heading" role="tab" id="headingFive">
+                  <h4 class="panel-title">
+                    <a data-toggle="collapse" data-parent="#accordion3" href="#collapseFive" aria-expanded="true" aria-controls="collapseFive">
+                        <h3>Current Medications</h3>
+                    </a>
+                  </h4>
+                </div>
+                <div id="collapseFive" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingFive">
+                  <div class="panel-body">
+                    {% if medication %}
+                        <!-- Display all items in medication -->
+                        {% for i in medication reversed %}
+                            <p><b>Medication:</b> {{ i.medication_name }}</p>
+                            <p><b>Dosage:</b> {{ i.dosage }}</p>
+                            <p><b>Description:</b> {{ i.medication_description }}</p>
+                            <p><b>Notes:</b> {{ i.medication_notes }}</p>
+                            <hr>
+                        {% endfor %}
+                    {% else %}
+                        <p>You currently have no medications on file</p>
+                    {% endif %}
+                  </div>
+                </div>
+              </div>
+              <div class="panel panel-default">
+                <div class="panel-heading" role="tab" id="headingSix">
+                  <h4 class="panel-title">
+                    <a class="collapsed" data-toggle="collapse" data-parent="#accordion3" href="#collapseSix" aria-expanded="false" aria-controls="collapseSix">
+                        <h3>Current Allergies</h3>
+                    </a>
+                  </h4>
+                </div>
+                <div id="collapseSix" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingSix">
+                  <div class="panel-body">
+                    {% if allergies %}
+                        <!-- Display all items in allergies -->
+                        {% for i in allergies reversed %}
+                            <p><b>Name:</b> {{ i.allergy_name }}</p>
+                            <p><b>Severity:</b> {{ i.severity }}</p>
+                            <p><b>Description:</b> {{ i.allergy_description }}</p>
+                            <p><b>Notes:</b> {{ i.allergy_notes }}</p>
+                            <hr>
+                        {% endfor %}
+                    {% else %}
+                        <p>You currently have no allergies on file</p>
+                    {% endif %}
+                  </div>
+                </div>
+              </div>
+            </div> <!-- end accordion -->
+        </div><!-- end right column -->
+    </div>
 </div>
-{% endblock %} {% include 'main/footer.html' %}
+{% endblock %}

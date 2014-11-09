@@ -1,11 +1,95 @@
-{% include 'main/base.html' %}
-{% block title %}
-<TITLE>{{ page_name }}</TITLE>
-{% endblock %} {% block content %}
+{% extends 'main/base.html' %}
+{% block nav-settings %} class="active"{% endblock %}
+
+{% block content %}
 <div class="container">
   <div class="well well-lg clearfix">
-    <h1>This is the {{ page_name }} page</h1>
-    <p>Hello, This page is EMPTY!!!! Except of course but this text, WOOT!!!</p>
+      <div class="col-md-12 col-lg-12">
+        <h1><p class="text-center">{{ page_name }}</p></h1>
+      </div>
+    <div class="col-md-4 col-lg-4">
+      {% if errMsg %}
+        <div class="alert alert-danger alert-dismissible" role="alert">
+          <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+          {{ errMsg }}
+        </div>
+      {% endif %}
+      {% if successMsg %}
+        <div class="alert alert-success alert-dismissible" role="alert">
+          <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+          {{ successMsg }}
+        </div>
+      {% endif %}
+      <form class="form-horizontal" role="form" action="{% url 'patient:settings' patient.id %}" method='post'>
+        {% csrf_token %}
+        <div class="form-group">
+          <b>Phone Number:</b><textarea class="form-control" name="phone_num" style="resize:none">{{ patient.phone_num }}</textarea>
+          <input type="hidden" name="patient_id" value='{{ patient.id }}' />
+        </div>
+        <div class="form-group">
+          <b>Street Address:</b><textarea class="form-control" name="street_address" style="resize:none">{{ patient.street_address}}</textarea>
+          <input type="hidden" name="patient_id" value='{{ patient.id }}' />
+        </div>
+        <div class="form-group">
+          <b>City:</b><textarea class="form-control" name="city" style="resize:none">{{ patient.city }}</textarea>
+          <input type="hidden" name="patient_id" value='{{ patient.id }}' />
+        </div>
+        <div class="form-group">
+          <b>State:</b><textarea class="form-control" name="state" style="resize:none">{{ patient.state }}</textarea>
+          <input type="hidden" name="patient_id" value='{{ patient.id }}' />
+        </div>
+        <div class="form-group">
+          <b>Zip Code:</b><textarea class="form-control" name="zip_code" style="resize:none">{{ patient.zip_code }}</textarea>
+          <input type="hidden" name="patient_id" value='{{ patient.id }}' />
+        </div>
+        <input type="hidden" name="is_changing_demographics" value="True">
+        <div class="form-group">
+          <button type="submit" class="btn btn-primary" onclick="return confirm('Save Changes?')">Submit</button>
+        </div>
+      </form>
+    </div>
+    <div class="col-md-4 col-lg-4">
+    <!-- hidden div for spacing -->
+    </div>
+    <div class="col-md-4 col-lg-4">
+      <form class="form-horizontal" role="form" action="" method='post'>
+      {% csrf_token %}
+        {% if pw_form.errors %}
+            <div class="alert alert-danger alert-dismissible" role="alert">
+              <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+            {% if pw_form.errors.items|length == 1 %}
+              Please correct the error below.
+            {% else %}
+              Please correct the errors below.
+            {% endif %}
+            </div>
+        {% endif %}
+        {% if pwSuccessMsg %}
+          <div class="alert alert-success alert-dismissible" role="alert">
+            <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+            {{ pwSuccessMsg }}
+          </div>
+        {% endif %}
+          <div class="form-group">
+              {{ pw_form.old_password.errors }}
+              <input type="password" class="form-control" name="old_password" placeholder="Current Password" value="" />
+          </div>
+          <div class="form-group">
+              {{ pw_form.new_password1.errors }}
+              <input type="password" class="form-control" name="new_password1" placeholder="New Password" value="" />
+          </div>
+          <div class="form-group">
+              {{ pw_form.new_password2.errors }}
+              <input type="password" class="form-control" name="new_password2" placeholder="Confirm New Password" value="" />
+          </div>
+          <input type="hidden" name="is_changing_password" value="True">
+          <div class="form-group">
+              <button type="submit" class="btn btn-primary">Change my password</button>
+          </div>
+        <script type="text/javascript">document.getElementById("id_old_password").focus();</script>
+      </form>
+    </div>
+    </div>
   </div>
 </div>
-{% endblock %} {% include 'main/footer.html' %}
+{% endblock %}

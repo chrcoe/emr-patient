@@ -1,12 +1,27 @@
 {% extends 'main/base.html' %}
+{% load staticfiles %}
 {% block nav-vitals %} class="active"{% endblock %}
-{% block title %}
-<TITLE>{{ page_name }}</TITLE>
-{% endblock %} {% block content %}
-<div class="container">
-  <div class="well well-lg clearfix">
-    <h1>This is the {{ page_name }} page</h1>
-    <p>Hello, This page is EMPTY!!!! Except of course but this text, WOOT!!!</p>
-  </div>
-</div>
-{% endblock %} {% include 'main/footer.html' %}
+
+{% block content-data %}
+<h3>{{ i.vitals_date }}</h3>
+<ul>
+    <li><b>Height:</b> {{ i.height_inches }} inches
+    <li><b>Weight:</b> {{ i.weight_pounds }} pounds
+    <li><b>Blood Pressure:</b> {{ i.bp_sys }}/{{ i.bp_dias }}
+    <li><b>Pulse:</b> {{ i.pulse }} beats per minute - A resting pulse of 60 to 80 is ideal.
+    <p>Patient notes: {{ i.vitals_notes }}
+</ul>
+<form class="form-horizontal" role="form" action="{% url 'patient:vitals' patient.id %}" method='post'>
+      {% csrf_token %}
+      <div class="form-group">
+        <textarea class="form-control" name="vitals_notes" placeholder="enter new notes here" textarea></textarea>
+        <input type="hidden" name="vitals_id" value='{{ i.id }}' />
+      </div>
+      <div class="form-group">
+          <button type="submit" class="btn btn-primary">Submit</button>
+      </div>
+</form>
+{% endblock %}
+{% block content-picture %}
+  <img class='img-responsive img-rounded' src='{% static 'img/vitals-4.jpg' %}' />
+{% endblock %}

@@ -2,6 +2,40 @@
 {% block nav-settings %} class="active"{% endblock %}
 
 {% block content %}
+<script type='text/javascript'>
+function validateForm() {
+    var x = document.forms["myForm"]["phone_num"].value;
+    var temp_num = x.replace(/-/g, '');
+    if (temp_num==null || temp_num=="" || temp_num.length!==10 || /\D/.test(temp_num)) {
+        alert("Phone number must be in this format: 555-555-5555.");
+        return false;
+    }
+    
+    x = document.forms["myForm"]["street_address"].value;
+    if (x==null || x=="") {
+        alert("Street address must not be empty.");
+        return false;
+    }    
+    
+    x = document.forms["myForm"]["city"].value;
+    if (x==null || x=="" || /^[a-zA-Z]*$/.test(x)==false) {
+        alert("City must be all alphabet characters.");
+        return false;
+    }    
+
+    x = document.forms["myForm"]["state"].value;
+    if (x==null || x=="" || /^[a-zA-Z]*$/.test(x)==false) {
+        alert("State must be all alphabet characters.");
+        return false;
+    }
+
+    x = document.forms["myForm"]["zip_code"].value;
+    if (x==null || x.length!==5 || /\D/.test(x)) {
+        alert("Zip code must be 5 numbers.");
+        return false;
+    }
+}
+</script>
 <div class="container">
   <div class="well well-lg clearfix">
       <div class="col-md-12 col-lg-12">
@@ -20,10 +54,10 @@
           {{ successMsg }}
         </div>
       {% endif %}
-      <form class="form-horizontal" role="form" action="{% url 'patient:settings' patient.id %}" method='post'>
+      <form name="myForm" class="form-horizontal" role="form" action="{% url 'patient:settings' patient.id %}" onsubmit="return validateForm();" method='post'>
         {% csrf_token %}
         <div class="form-group">
-          <b>Phone Number:</b><textarea class="form-control" name="phone_num" style="resize:none">{{ patient.phone_num }}</textarea>
+          <b>Phone Number:</b> (ex. 555-555-5555 or 5555555555)<textarea class="form-control" name="phone_num" style="resize:none">{{ patient.phone_num }}</textarea>
           <input type="hidden" name="patient_id" value='{{ patient.id }}' />
         </div>
         <div class="form-group">
@@ -39,12 +73,12 @@
           <input type="hidden" name="patient_id" value='{{ patient.id }}' />
         </div>
         <div class="form-group">
-          <b>Zip Code:</b><textarea class="form-control" name="zip_code" style="resize:none">{{ patient.zip_code }}</textarea>
+          <b>Zip Code:</b> (ex. 55555)<textarea class="form-control" name="zip_code" style="resize:none">{{ patient.zip_code }}</textarea>
           <input type="hidden" name="patient_id" value='{{ patient.id }}' />
         </div>
         <input type="hidden" name="is_changing_demographics" value="True">
         <div class="form-group">
-          <button type="submit" class="btn btn-primary" onclick="return confirm('Save Changes?')">Submit</button>
+          <button type="submit" class="btn btn-primary">Submit</button>
         </div>
       </form>
     </div>

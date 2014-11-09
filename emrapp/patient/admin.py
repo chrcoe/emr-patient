@@ -24,7 +24,12 @@ class PatientCreationForm(forms.ModelForm):
             'date_of_birth',
             'first_name',
             'last_name',
-            'ssn'
+            'ssn',
+            'phone_num',
+            'street_address',
+            'city',
+            'state',
+            'zip_code',
         )
 
     def clean_password2(self):
@@ -80,40 +85,46 @@ class PatientChangeForm(forms.ModelForm):
         # field does not have access to the initial value
         return self.initial["password"]
 
+
 class VitalsInline(admin.TabularInline):
     model = Vital
     extra = 1
+
 
 class AllergyInline(admin.TabularInline):
     model = Allergy
     extra = 1
 
+
 class AppointmentInline(admin.TabularInline):
     model = Appointment
     extra = 1
+
 
 class InsuranceInline(admin.TabularInline):
     model = InsurancePolicy
     extra = 1
 
+
 class DiagResultsInline(admin.TabularInline):
     model = DiagnosticResult
     extra = 1
+
 
 class MedHisInline(admin.TabularInline):
     model = MedicalHistory
     extra = 1
 
+
 class MedicationInline(admin.TabularInline):
     model = Medication
     extra = 1
+
 
 class PatientAdmin(UserAdmin):
     # The forms to add and change user instances
     form = PatientChangeForm
     add_form = PatientCreationForm
-
-
 
     # The fields to be used in displaying the User model.
     # These override the definitions on the base UserAdmin
@@ -133,19 +144,31 @@ class PatientAdmin(UserAdmin):
             'city',
             'state',
             'zip_code',
-        ), 'classes' : ['collapse']}),
-        ('Permissions', {'fields': ('is_admin', 'is_active', 'is_staff'), 'classes' : ['collapse']}),
-        ('Important dates', {'fields': ('last_login',), 'classes' : ['collapse']}),
+        ), 'classes': ['collapse']}),
+        ('Permissions', {
+         'fields': ('is_admin', 'is_active', 'is_staff'), 'classes': ['collapse']}),
+        ('Important dates', {
+         'fields': ('last_login',), 'classes': ['collapse']}),
     )
     add_fieldsets = (
         (None, {
             'classes': ('wide',),
-            'fields': ('email', 'date_of_birth', 'ssn', 'first_name',
-                       'last_name', 'password1', 'password2',
-                       'is_admin', 'is_staff', 'is_active')}
+            'fields': (
+                'email',
+                'date_of_birth',
+                'first_name',
+                'last_name',
+                'ssn',
+                'phone_num',
+                'street_address',
+                'city',
+                'state',
+                'zip_code',
+                'password1', 'password2',
+                'is_admin', 'is_staff', 'is_active')}
          ),
     )
-    search_fields = ('email','first_name','last_name','date_of_birth')
+    search_fields = ('email', 'first_name', 'last_name', 'date_of_birth')
     ordering = ('email',)
     filter_horizontal = ()
 

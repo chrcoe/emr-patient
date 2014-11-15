@@ -7,6 +7,7 @@
 <ul>
     <li><b>Severity:</b> {{ i.severity }}
     <li><b>Allergy description:</b> {{ i.allergy_description }}
+    <li><b>Allergy Date:</b> {{ i.allergy_date }}
     <p>Patient notes: {{ i.allergy_notes }}
 </ul>
 <form class="form-horizontal" role="form" action="{% url 'patient:allergies' patient.id %}" method='post'>

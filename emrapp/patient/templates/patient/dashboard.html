@@ -23,7 +23,7 @@
                     {% if appts %}
                            <!-- Display the last item entered into array -->
                         {% with appts|first as item %}
-                            <p><b>Type:</b> {{ item.appointment_type }}</p>
+                            <p><b>Type:</b> {{ item.get_appointment_type_display }}</p>
                             <p><b>Description:</b> {{ item.appointment_description }}</p>
                             <p><b>Date:</b> {{ item.appointment_date }}</p>
                             <p><b>Notes:</b> {{ item.appointment_notes }}</p>
@@ -157,7 +157,7 @@
                         <!-- Display all items in allergies -->
                         {% for i in allergies %}
                             <p><b>Name:</b> {{ i.allergy_name }}</p>
-                            <p><b>Severity:</b> {{ i.severity }}</p>
+                            <p><b>Severity:</b> {{ i.get_severity_display }}</p>
                             <p><b>Description:</b> {{ i.allergy_description }}</p>
                             <p><b>Date:</b> {{ i.allergy_date }}</p>
                             <p><b>Notes:</b> {{ i.allergy_notes }}</p>

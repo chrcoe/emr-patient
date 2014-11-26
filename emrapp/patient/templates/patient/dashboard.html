@@ -22,11 +22,11 @@
                   <div class="panel-body">
                     {% if appts %}
                            <!-- Display the last item entered into array -->
-                        {% with appts|last as last_item %}
-                            <p><b>Type:</b> {{ last_item.appointment_type }}</p>
-                            <p><b>Description:</b> {{ last_item.appointment_description }}</p>
-                            <p><b>Date:</b> {{ last_item.appointment_date }}</p>
-                            <p><b>Notes:</b> {{ last_item.appointment_notes }}</p>
+                        {% with appts|first as item %}
+                            <p><b>Type:</b> {{ item.get_appointment_type_display }}</p>
+                            <p><b>Description:</b> {{ item.appointment_description }}</p>
+                            <p><b>Date:</b> {{ item.appointment_date }}</p>
+                            <p><b>Notes:</b> {{ item.appointment_notes }}</p>
                         {% endwith %}
                     {% else %}
                       <p>You currently have no scheduled appointments</p>
@@ -46,12 +46,13 @@
                   <div class="panel-body">
                     {% if vitals %}
                         <!-- Display the last item entered into array -->
-                        {% with vitals|last as last_item %}
-                            <p><b>Height:</b> {{ last_item.height_inches }}</p>
-                            <p><b>Weight:</b> {{ last_item.weight_pounds }}</p>
-                            <p><b>BP:</b> {{ last_item.bp_sys }}/{{ last_item.bp_dias }}</p>
-                            <p><b>Pulse:</b> {{ last_item.pulse }}</p>
-                            <p><b>Notes:</b> {{ last_item.vitals_notes }}</p>
+                        {% with vitals|first as item %}
+                            <p><b>Height:</b> {{ item.height_inches }}</p>
+                            <p><b>Weight:</b> {{ item.weight_pounds }}</p>
+                            <p><b>BP:</b> {{ item.bp_sys }}/{{ item.bp_dias }}</p>
+                            <p><b>Pulse:</b> {{ item.pulse }}</p>
+                            <p><b>Date:</b> {{ item.vitals_date }}</p>
+                            <p><b>Notes:</b> {{ item.vitals_notes }}</p>
                         {% endwith %}
                     {% else %}
                       <p>You currently have no vitals on file</p>
@@ -76,11 +77,11 @@
                   <div class="panel-body">
                     {% if diagnosticresults %}
                         <!-- Display the last item entered into array -->
-                        {% with diagnosticresults|last as last_item %}
-                            <p><b>Lab:</b> {{ last_item.result_title }}</p>
-                            <p><b>Date:</b> {{ last_item.result_date }}</p>
-                            <p><b>Description:</b> {{ last_item.result_description }}</p>
-                            <p><b>Notes:</b> {{ last_item.result_notes }}</p>
+                        {% with diagnosticresults|first as item %}
+                            <p><b>Lab:</b> {{ item.result_title }}</p>
+                            <p><b>Description:</b> {{ item.result_description }}</p>
+                            <p><b>Date:</b> {{ item.result_date }}</p>
+                            <p><b>Notes:</b> {{ item.result_notes }}</p>
                         {% endwith %}
                     {% else %}
                            <p>You currently have no diagnostic results on file.</p>
@@ -100,11 +101,11 @@
                   <div class="panel-body">
                     {% if insurance %}
                         <!-- Display the last item entered into array -->
-                        {% with insurance|last as last_item %}
-                            <p><b>Policy #:</b> {{ last_item.policy_num }}</p>
-                            <p><b>Exp. Date:</b> {{ last_item.exp_date }}</p>
-                            <p><b>Company Name:</b> {{ last_item.comp_name }}</p>
-                            <p><b>Group Number:</b> {{ last_item.group_num }}</p>
+                        {% with insurance|first as item %}
+                            <p><b>Policy #:</b> {{ item.policy_num }}</p>
+                            <p><b>Company Name:</b> {{ item.comp_name }}</p>
+                            <p><b>Group Number:</b> {{ item.group_num }}</p>
+                            <p><b>Exp. Date:</b> {{ item.exp_date }}</p>
                         {% endwith %}
                     {% else %}
                         <p>You currently have no insurance policies on file.</p>
@@ -128,10 +129,11 @@
                   <div class="panel-body">
                     {% if medication %}
                         <!-- Display all items in medication -->
-                        {% for i in medication reversed %}
+                        {% for i in medication %}
                             <p><b>Medication:</b> {{ i.medication_name }}</p>
                             <p><b>Dosage:</b> {{ i.dosage }}</p>
                             <p><b>Description:</b> {{ i.medication_description }}</p>
+                            <p><b>Date:</b> {{ i.medication_date }}</p>
                             <p><b>Notes:</b> {{ i.medication_notes }}</p>
                             <hr>
                         {% endfor %}
@@ -153,10 +155,11 @@
                   <div class="panel-body">
                     {% if allergies %}
                         <!-- Display all items in allergies -->
-                        {% for i in allergies reversed %}
+                        {% for i in allergies %}
                             <p><b>Name:</b> {{ i.allergy_name }}</p>
-                            <p><b>Severity:</b> {{ i.severity }}</p>
+                            <p><b>Severity:</b> {{ i.get_severity_display }}</p>
                             <p><b>Description:</b> {{ i.allergy_description }}</p>
+                            <p><b>Date:</b> {{ i.allergy_date }}</p>
                             <p><b>Notes:</b> {{ i.allergy_notes }}</p>
                             <hr>
                         {% endfor %}

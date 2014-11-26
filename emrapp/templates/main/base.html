@@ -68,7 +68,7 @@
     <div class="col-md-4 col-lg-4">
         {% block content-loop %}
             {% if data %}
-                {% for i in data reversed %}
+                {% for i in data %}
                     {% block content-data %}
                     <!-- each page fills in their own data to be displayed -->
                     {% endblock %}

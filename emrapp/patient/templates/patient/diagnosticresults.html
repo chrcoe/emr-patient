@@ -5,8 +5,8 @@
 {% block content-data %}
 <h3>{{ i.result_title }}</h3>
 <ul>
-    <li><b>Date of Diagnostic:</b> {{ i.result_date }}
-    <li><b>Description of Diagnostic:</b> {{ i.result_description }}
+    <li><b>Description:</b> {{ i.result_description }}
+    <li><b>Date of Results:</b> {{ i.result_date }}
     <p>Patient notes: {{ i.result_notes }}
 </ul>
 <form class="form-horizontal" role="form" action="{% url 'patient:diagnosticresults' patient.id %}" method='post'>

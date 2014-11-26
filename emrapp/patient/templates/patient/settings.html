@@ -2,6 +2,34 @@
 {% block nav-settings %} class="active"{% endblock %}
 
 {% block content %}
+<script type='text/javascript'>
+function validateForm() {
+    var x = document.forms["settingsForm"]["phone_num"].value;
+    var temp_num = x.replace(/-/g, '');
+    if (temp_num==null || temp_num=="" || temp_num.length!==10 || /\D/.test(temp_num)) {
+        alert("Phone number must be in this format: 555-555-5555.");
+        return false;
+    }
+
+    x = document.forms["settingsForm"]["street_address"].value;
+    if (x==null || x=="") {
+        alert("Street address must not be empty.");
+        return false;
+    }
+
+    x = document.forms["settingsForm"]["city"].value;
+    if (x==null || x=="" || /^[a-zA-Z]*$/.test(x)==false) {
+        alert("City must be all alphabet characters.");
+        return false;
+    }
+
+    x = document.forms["settingsForm"]["zip_code"].value;
+    if (x==null || x.length!==5 || /\D/.test(x)) {
+        alert("Zip code must be 5 numbers.");
+        return false;
+    }
+}
+</script>
 <div class="container">
   <div class="well well-lg clearfix">
       <div class="col-md-12 col-lg-12">
@@ -20,31 +48,33 @@
           {{ successMsg }}
         </div>
       {% endif %}
-      <form class="form-horizontal" role="form" action="{% url 'patient:settings' patient.id %}" method='post'>
+      <form name="settingsForm" class="form-horizontal" role="form" action="{% url 'patient:settings' patient.id %}" onsubmit="return validateForm();" method='post'>
         {% csrf_token %}
         <div class="form-group">
-          <b>Phone Number:</b><textarea class="form-control" name="phone_num" style="resize:none">{{ patient.phone_num }}</textarea>
-          <input type="hidden" name="patient_id" value='{{ patient.id }}' />
+          <label class="control-label" for="id_phone">Phone Number (ex. 555-555-5555 or 5555555555):</label>
+          <textarea id="id_phone" class="form-control" name="phone_num" style="resize:none">{{ patient.phone_num }}</textarea>
         </div>
         <div class="form-group">
-          <b>Street Address:</b><textarea class="form-control" name="street_address" style="resize:none">{{ patient.street_address}}</textarea>
-          <input type="hidden" name="patient_id" value='{{ patient.id }}' />
+          <label class="control-label" for="id_street">Street Address:</label>
+          <textarea id="id_street" class="form-control" name="street_address" style="resize:none">{{ patient.street_address}}</textarea>
         </div>
         <div class="form-group">
-          <b>City:</b><textarea class="form-control" name="city" style="resize:none">{{ patient.city }}</textarea>
-          <input type="hidden" name="patient_id" value='{{ patient.id }}' />
+          <label class="control-label" for="id_city">City:</label>
+          <textarea id="id_city" class="form-control" name="city" style="resize:none">{{ patient.city }}</textarea>
+        </div>
+        <!-- Select Basic -->
+        <div class="form-group">
+          <label class="control-label" for="id_state">State:</label>
+          {{ settings_form.state }}
         </div>
         <div class="form-group">
-          <b>State:</b><textarea class="form-control" name="state" style="resize:none">{{ patient.state }}</textarea>
-          <input type="hidden" name="patient_id" value='{{ patient.id }}' />
+          <label class="control-label" for="id_zip">Zip Code (ex. 55555):</label>
+          <textarea id="id_zip" class="form-control" name="zip_code" style="resize:none">{{ patient.zip_code }}</textarea>
         </div>
-        <div class="form-group">
-          <b>Zip Code:</b><textarea class="form-control" name="zip_code" style="resize:none">{{ patient.zip_code }}</textarea>
-          <input type="hidden" name="patient_id" value='{{ patient.id }}' />
-        </div>
+        <input type="hidden" name="patient_id" value='{{ patient.id }}' />
         <input type="hidden" name="is_changing_demographics" value="True">
         <div class="form-group">
-          <button type="submit" class="btn btn-primary" onclick="return confirm('Save Changes?')">Submit</button>
+          <button type="submit" class="btn btn-primary">Submit</button>
         </div>
       </form>
     </div>

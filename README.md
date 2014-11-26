@@ -49,6 +49,12 @@ Version History
 ===============
 _versioning based on [Semantic Versioning 2.0.0](http://semver.org/ "Semantic Versioning 2.0.0")_
 
+#### v1.1.0
+- reworked design of ordering code, it is now more dynamic with less work
+- changed timezone setting to match server physical location
+- cleaned up password reset email
+- added dropdown lists for states, appointment types and severity of allergies
+
 #### v1.0.0
 - addressed data type bugs in staff site
 - adjusted models according to data type change requirements

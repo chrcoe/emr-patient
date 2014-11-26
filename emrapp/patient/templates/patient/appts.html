@@ -3,7 +3,7 @@
 {% block nav-appts %} class="active"{% endblock %}
 
 {% block content-data %}
-<h3>{{ i.appointment_type }}</h3>
+<h3>{{ i.get_appointment_type_display }}</h3>
 <ul>
     <li><b>Date:</b> {{ i.appointment_date }}
     <li><b>Description:</b> {{ i.appointment_description }}

@@ -32,18 +32,4 @@ urlpatterns = patterns('',
      # /patient/patient_id/settings/
     url(r'^(?P<patient_id>\d+)/settings/$', views.settings, name='settings'), # this calls the views.settings() function when this link is requested
 
-#     url(r'^change/$', 'django.contrib.auth.views.password_change',
-#         {'template_name' : 'patient/password_change_form.html',
-#          'post_change_redirect' : '/patient/change/done/',
-#          'current_app' : 'patient'},
-#         name="password_change"),
-#     url(r'^(?P<patient_id>\d+)/change/$', views.password_change,
-#         {'template_name' : 'patient/password_change_form.html',
-#         'post_change_redirect' : '/patient/change/done/',
-#         'current_app' : 'patient'},
-#         name='password_change'),
-#    url(r'^change/done/$', 'django.contrib.auth.views.password_change_done',
-#        {'template_name' : 'patient/password_change_done.html'},
-#        name="password_change_done"),
-
 )

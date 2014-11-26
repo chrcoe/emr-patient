@@ -48,6 +48,27 @@ AlphanumericValidator = RegexValidator(
 class Patient(AbstractBaseUser):
     # http://stackoverflow.com/questions/11351619/
     #     how-to-make-djangos-datetimefield-optional
+
+    STATE_CHOICES = (
+        ('AL', 'Alabama'), ('AK', 'Alaska'), ('AZ', 'Arizona'),
+        ('AR', 'Arkansas'), ('CA', 'California'), ('CO', 'Colorado'),
+        ('CT', 'Connecticut'), ('DE', 'Delaware'), ('FL', 'Florida'),
+        ('GA', 'Georgia'), ('HI', 'Hawaii'), ('ID', 'Idaho'),
+        ('IL', 'Illinois'), ('IN', 'Indiana'), ('IA', 'Iowa'),
+        ('KS', 'Kansas'), ('KY', 'Kentucky'), ('LA', 'Louisiana'),
+        ('ME', 'Maine'), ('MD', 'Maryland'), ('MA', 'Massachusetts'),
+        ('MI', 'Michigan'), ('MN', 'Minnesota'), ('MS', 'Mississippi'),
+        ('MO', 'Missouri'), ('MT', 'Montana'), ('NE', 'Nebraska'),
+        ('NV', 'Nevada'), ('NH', 'New Hampshire'), ('NJ', 'New Jersey'),
+        ('NM', 'New Mexico'), ('NY', 'New York'), ('NC', 'North Carolina'),
+        ('ND', 'North Dakota'), ('OH', 'Ohio'), ('OK', 'Oklahoma'),
+        ('OR', 'Oregon'), ('PA', 'Pennsylvania'), ('RI', 'Rhode Island'),
+        ('SC', 'South Carolina'), ('SD', 'South Dakota'), ('TN', 'Tennessee'),
+        ('TX', 'Texas'), ('UT', 'Utah'), ('VT', 'Vermont'), ('VA', 'Virginia'),
+        ('WA', 'Washington'), ('WV', 'West Virginia'), ('WI', 'Wisconsin'),
+        ('WY', 'Wyoming'),
+    )
+
     email = models.EmailField(max_length=254, unique=True, db_index=True)
     first_name = models.CharField(
         ('First Name'), max_length=30, blank=True, null=True,
@@ -59,7 +80,9 @@ class Patient(AbstractBaseUser):
     street_address = models.CharField(max_length=255, blank=True, null=True)
     city = models.CharField(
         max_length=255, blank=True, null=True, validators=[AlphaValidator])
-    state = models.CharField(max_length=255, blank=True, null=True)
+    state = models.CharField(
+        max_length=255, blank=True, null=True, choices=STATE_CHOICES
+    )
     zip_code = models.IntegerField(
         blank=True, null=True, validators=[MaxValueValidator(99999)])
     date_of_birth = models.DateField(blank=True, null=True)
@@ -94,11 +117,22 @@ class Patient(AbstractBaseUser):
 
 
 class Allergy(models.Model):
+
+    SEVERITY_CHOICES = (
+        ('1', 'Mild'),
+        ('2', 'Mild - Moderate'),
+        ('3', 'Moderate'),
+        ('4', 'Moderate - Severe'),
+        ('5', 'Severe'),
+    )
+
     id_patient = models.ForeignKey(settings.AUTH_USER_MODEL)
     allergy_name = models.CharField(
         max_length=255, null=True, validators=[AlphaValidator])
     severity = models.CharField(
-        max_length=255, validators=[AlphanumericValidator])
+        max_length=255, validators=[AlphanumericValidator],
+        choices=SEVERITY_CHOICES
+    )
     allergy_description = models.CharField(
         max_length=255, validators=[AlphanumericValidator])
     allergy_date = models.DateField('Date of allergy diagnosis')
@@ -114,8 +148,25 @@ class Allergy(models.Model):
 
 
 class Appointment(models.Model):
+
+    TYPE_CHOICES = (
+        ('OV', 'Office Visit'),
+        ('CPX', 'Annual Physical'),
+        ('WC', 'Well Child'),
+        ('NV', 'Nurse Visit'),
+        ('AI', 'Allergy Injection'),
+        ('PAT', 'Pre-Admission Testing'),
+        ('PAP', 'PAP'),
+        ('BLDWK', 'Blood Work'),
+        ('FU', 'Hospital Followup'),
+        ('DEXA', 'Bone Density Scan'),
+        ('NP', 'New Patient'),
+    )
+
     id_patient = models.ForeignKey(settings.AUTH_USER_MODEL)
-    appointment_type = models.CharField(max_length=255, null=True)
+    appointment_type = models.CharField(
+        max_length=255, null=True, choices=TYPE_CHOICES
+    )
     appointment_description = models.CharField(max_length=255, null=True)
     appointment_date = models.DateField('Date of appointment')
     appointment_notes = models.CharField(max_length=255, null=True, blank=True)
@@ -126,12 +177,13 @@ class Appointment(models.Model):
     class Meta:
         ordering = ['-appointment_date']
 
+
 class InsurancePolicy(models.Model):
     id_patient = models.ForeignKey(settings.AUTH_USER_MODEL)
     policy_num = models.CharField(
         max_length=255, validators=[AlphanumericValidator])
-    comp_name = models.CharField(
-        max_length=255, validators=[AlphanumericValidator])
+    comp_name = models.CharField('Company Name',
+                                 max_length=255, validators=[AlphanumericValidator])
     group_num = models.CharField(
         max_length=255, validators=[AlphanumericValidator])
     exp_date = models.DateField('expiration date')
@@ -174,6 +226,7 @@ class MedicalHistory(models.Model):
         verbose_name = 'Medical History'
         verbose_name_plural = 'Medical History'
         ordering = ['-history_item_date']
+
 
 class Medication(models.Model):
     id_patient = models.ForeignKey(settings.AUTH_USER_MODEL)

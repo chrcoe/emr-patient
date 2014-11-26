@@ -5,6 +5,7 @@ from django.shortcuts import get_object_or_404, redirect
 from django.shortcuts import render
 from django.views.decorators.csrf import csrf_protect
 
+from patient.forms import SettingsForm
 from patient.models import Allergy
 from patient.models import Appointment
 from patient.models import DiagnosticResult
@@ -231,6 +232,7 @@ def settings(request, patient_id):
     if patient.is_admin or patient.is_staff:
         return redirect('/admin/')
 
+    settings_form = SettingsForm(initial= {'state': patient.state})
     pw_form = PasswordChangeForm(user=request.user)
     errMsg = ''
     successMsg = ''
@@ -251,6 +253,8 @@ def settings(request, patient_id):
                 patient.zip_code = request.POST['zip_code']
             # save changes to the DB
             patient.save()
+            # change the displayed default to the new current state
+            settings_form.initial = {'state': patient.state}
             successMsg = 'Saved changes.'
 
         if 'is_changing_password' in request.POST:
@@ -268,5 +272,6 @@ def settings(request, patient_id):
     return render(request, 'patient/settings.html',
                   {'patient': patient, 'settings': settings,
                    'page_name': 'Settings', 'pw_form': pw_form,
+                   'settings_form':settings_form,
                    'errMsg': errMsg, 'successMsg': successMsg,
                    'pwSuccessMsg': pwSuccessMsg})
